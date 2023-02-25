@@ -212,7 +212,16 @@ end
         Discord = "https://discord.gg/xnohub";
     })
 
-    local AutoFarm = UI:CreatePage("Select Units")
+    if game.PlaceId == 8304191830 then
+
+        local unitselecttab = AutoFarm:CreateSection("Units")
+        local slectworld = selworld:CreateSection("Select World")
+        local devilcity = dev:CreateSection("Devil City")
+        local autofarmtab = afset:CreateSection("Auto Farm")
+        local autoclngtab = autoch:CreateSection("Auto Challenge")
+        local webhookserver = Webhook:CreateSection("Webhook")
+
+        local AutoFarm = UI:CreatePage("Select Units")
 
     local selworld = UI:CreatePage("Select World")
 
@@ -225,15 +234,6 @@ end
     local Webhook = UI:CreatePage("Webhook")
 
     local misco = UI:CreatePage("Misc")
-
-    if game.PlaceId == 8304191830 then
-
-        local unitselecttab = AutoFarm:CreateSection("Units")
-        local slectworld = selworld:CreateSection("Select World")
-        local devilcity = dev:CreateSection("Devil City")
-        local autofarmtab = afset:CreateSection("Auto Farm")
-        local autoclngtab = autoch:CreateSection("Auto Challenge")
-        local webhookserver = Webhook:CreateSection("Webhook")
 
 --------------------------------------------------
 --------------- Select Units Tab -----------------
@@ -943,6 +943,9 @@ autoclngtab:CreateToggle({
     local asdfg = UI:CreatePage("Settings")
     local autofarmset = asdfg:CreateSection("Settings")
 
+    local afset = UI:CreatePage("Auto Sell")
+    local Webhook = UI:CreateSection("Webhook")
+
     local autoseltab = afset:CreateSection("Auto Sell")
     local webhooktab = Webhook:CreateSection("Webhook")
     
@@ -1001,7 +1004,7 @@ autoclngtab:CreateToggle({
         
 --#region Auto Farm Tab
 
-autofarmtab:CreateButton({
+autofarmset:CreateButton({
     Name = "Set Unit 1 Posit"; 
     Callback = function()
         warn(1)
@@ -1010,7 +1013,7 @@ autofarmtab:CreateButton({
     end
 })
 
-autofarmtab:CreateButton({
+autofarmset:CreateButton({
     Name = "Set Unit 2 Posit"; 
     Callback = function()
         warn(1)
@@ -1019,7 +1022,7 @@ autofarmtab:CreateButton({
     end
 })
 
-autofarmtab:CreateButton({
+auautofarmsettofarmtab:CreateButton({
     Name = "Set Unit 3 Posit"; 
     Callback = function()
         warn(1)
@@ -1028,7 +1031,7 @@ autofarmtab:CreateButton({
     end
 })
 
-autofarmtab:CreateButton({
+autofarmset:CreateButton({
     Name = "Set Unit 4 Posit"; 
     Callback = function()
         warn(1)
@@ -1041,7 +1044,7 @@ autofarmtab:CreateButton({
 local axxc = game.Players.LocalPlayer.PlayerGui["spawn_units"].Lives.Main.Desc.Level.Text:split(" ")
 
 if tonumber(axxc[2]) >= 20 then
-    autofarmtab:CreateButton({
+    autofarmset:CreateButton({
         Name = "Set Unit 5 Posit"; 
         Callback = function()
             warn(1)
@@ -1052,7 +1055,7 @@ if tonumber(axxc[2]) >= 20 then
 end
 
 if tonumber(axxc[2]) >= 50 then
-    autofarmtab:CreateButton({
+    autofarmset:CreateButton({
         Name = "Set Unit 6 Posit"; 
         Callback = function()
             warn(1)
