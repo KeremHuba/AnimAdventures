@@ -711,7 +711,8 @@ autofarmtab:CreateTextBox({
     Name = "Wave";
     Flag = "wavergdfggee"; 
     Callback = function(inputtedText,enterPressed)
-        print("TextBox:",inputtedText,enterPressed)
+        getgenv().sellatwave = tonumber(inputtedText)
+        updatejson()
     end;
     DefaultText = "";
     PlaceholderText = "Write Wave Number";
@@ -744,12 +745,12 @@ autofarmtab:CreateTextBox({
             Name = "Webhook URL";
             Flag = "wavegfhe"; 
             Callback = function(inputtedText,enterPressed)
-                getgenv().weburl = inputtedText
+                getgenv().weburl = tostring(inputtedText)
             end;
             DefaultText = "";
-            PlaceholderText = "Write Wave Number";
+            PlaceholderText = "Write Webhook";
             TabComplete = function(inputtedText)
-                getgenv().weburl = inputtedText
+                getgenv().weburl = tostring(inputtedText)
                 updatejson()
             end;
             ClearTextOnFocus = false;
@@ -940,8 +941,7 @@ autoclngtab:CreateToggle({
 --------------------------------------------------
 --------------------------------------------------
 --------------------------------------------------
---#region --- Inside match ---
-    else -- When in a match
+    else
         game.Players.LocalPlayer.PlayerGui.MessageGui.Enabled = false
         game:GetService("ReplicatedStorage").packages.assets["ui_sfx"].error.Volume = 0
         game:GetService("ReplicatedStorage").packages.assets["ui_sfx"].error_old.Volume = 0
@@ -952,9 +952,6 @@ autoclngtab:CreateToggle({
     local asdfg = UI:CreatePage("Settings")
     local autofarmset = asdfg:CreateSection("Settings")
 
-    local devilcity = afset:CreateSection("Devil City")
-    local autoclngtab = afset:CreateSection("Auto Challenge")
-    local autoloadtab = afset:CreateSection("Auto Load Script")
     local autoseltab = afset:CreateSection("Auto Sell")
     local webhooktab = Webhook:CreateSection("Webhook")
     
@@ -1189,7 +1186,6 @@ autofarmset:CreateToggle({
                         a.Position = mouse.hit.p
                         task.wait()
                         a.Anchored = true
-                        DiscordLib:Notification("Spawn Unit Posotion:", tostring(a.Position), "Okay!")
                         a.CanCollide = false
                         for i = 0, 1, 0.1 do
                             a.Transparency = i
@@ -1342,13 +1338,13 @@ autofarmset:CreateTextBox({
     Name = "Select Wave Number For Auto Sell"; 
     Flag = "MyTfghfhextBox";
     Callback = function(inputtedText,enterPressed)
-        getgenv().sellatwave = tonumber(t)
+        getgenv().sellatwave = tonumber(inputtedText)
         updatejson()
     end;
     DefaultText = getgenv().sellatwave;
     PlaceholderText = "";
     TabComplete = function(inputtedText)
-        getgenv().sellatwave = tonumber(t)
+        getgenv().sellatwave = tonumber(inputtedText)
             updatejson()
     end;
     ClearTextOnFocus = false;
@@ -3302,7 +3298,7 @@ end
 
 
 --hide name
-task.spawn(function()  -- Hides name for yters (not sure if its Fe)
+task.spawn(function()
     while task.wait() do
         pcall(function()
             if game.Players.LocalPlayer.Character.Head:FindFirstChild("_overhead") then
