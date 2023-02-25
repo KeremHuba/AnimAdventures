@@ -1,28 +1,6 @@
-local Atlas = loadstring(game:HttpGet("https://raw.githubusercontent.com/KeremHuba/AtlasUILib/main/AtlasUI3.lua"))()
-local UI = Atlas.new({
-    Name = "Anime Adventures - Xno Hub";
-    ConfigFolder = "AAXnoHub";
-    Credit = "Made By G.O.A.T";
-    Color = Color3.fromRGB(255,0,0);
-    Bind = "LeftControl";
-    UseLoader = true;
-    FullName = "Anime Adventures Auto Farm";
-    CheckKey = function(inputtedKey)
-        return inputtedKey=="kerem"
-    end;
-    Discord = "https://discord.gg/xnohub";
-})
+local versionx = "1.6.7"
 
-local HttpService = game:GetService("HttpService")
-local Workspace = game:GetService("Workspace") 
-local plr = game:GetService("Players").LocalPlayer
-local RunService = game:GetService("RunService")
-local mouse = game.Players.LocalPlayer:GetMouse()
-local UserInputService = game:GetService("UserInputService")
-
-getgenv().savefilename = "XNOHUBANIMEADVENTURES_10 "..game.Players.LocalPlayer.Name..".json"
-getgenv().door = "_lobbytemplategreen1"
-
+---// Loading Section \\---
 task.wait(2)
 repeat  task.wait() until game:IsLoaded()
 if game.PlaceId == 8304191830 then
@@ -33,6 +11,92 @@ else
     game:GetService("ReplicatedStorage").endpoints.client_to_server.vote_start:InvokeServer()
     repeat task.wait() until game:GetService("Workspace")["_waves_started"].Value == true
 end
+------------------------------
+local HttpService = game:GetService("HttpService")
+local Workspace = game:GetService("Workspace") 
+local plr = game:GetService("Players").LocalPlayer
+local RunService = game:GetService("RunService")
+local mouse = game.Players.LocalPlayer:GetMouse()
+local UserInputService = game:GetService("UserInputService")
+
+getgenv().savefilename = "XnoHUBANIMEADVENTURES_"..game.Players.LocalPlayer.Name..".json"
+getgenv().door = "_lobbytemplategreen1"
+
+--#region Webhook Sender
+local function webhook()
+	pcall(function()
+		local url = tostring(getgenv().weburl) --webhook
+		print("webhook?")
+		if url == "" then
+			return
+		end 
+			
+    	XP = tostring(game:GetService("Players").LocalPlayer.PlayerGui.ResultsUI.Holder.LevelRewards.ScrollingFrame.XPReward.Main.Amount.Text)
+		gems = tostring(game:GetService("Players").LocalPlayer.PlayerGui.ResultsUI.Holder.LevelRewards.ScrollingFrame.GemReward.Main.Amount.Text)
+		cwaves = game:GetService("Players").LocalPlayer.PlayerGui.ResultsUI.Holder.Middle.WavesCompleted.Text
+		ctime = game:GetService("Players").LocalPlayer.PlayerGui.ResultsUI.Holder.Middle.Timer.Text
+		waves = cwaves:split(": ")
+		ttime = ctime:split(": ")
+
+		local data = {
+			["content"] = "",
+			["username"] = "Anime Adventures",
+			["avatar_url"] = "https://tr.rbxcdn.com/e5b5844fb26df605986b94d87384f5fb/150/150/Image/Jpeg",
+			["embeds"] = {
+				{
+					["author"] = {
+						["name"] = "Anime Adventures | Result ✔",
+						["icon_url"] = "https://cdn.discordapp.com/emojis/997123585476927558.webp?size=96&quality=lossless"
+					},
+					["description"] = "🎮 ||**"..game:GetService("Players").LocalPlayer.Name.."**|| 🎮",
+					["color"] = 110335,
+
+					["thumbnail"] = {
+						['url'] = "https://www.roblox.com/headshot-thumbnail/image?userId=" .. game.Players.LocalPlayer.userId .. "&width=420&height=420&format=png"
+					},
+
+					["fields"] = {
+						{
+							["name"] = "Total Waves:",
+							["value"] = tostring(waves[2]) ..
+								" <:wave:997136622363627530>",
+							["inline"] = true
+						}, {
+							["name"] = "Recieved Gems:",
+							["value"] = gems .. " <:gem:997123585476927558>",
+							["inline"] = true
+						}, {
+                            ["name"] = "Recieved XP:",
+                            ["value"] = XP .. " 🧪",
+                            ["inline"] = true
+                        }, {
+                            ["name"] = "Total Time:",
+                            ["value"] = tostring(ttime[2]) .. " ⏳",
+                            ["inline"] = true
+                        }, {
+                            ["name"] = "Current Gems:",
+                            ["value"] = tostring(game.Players.LocalPlayer._stats.gem_amount.Value).." <:gem:997123585476927558>",
+                            ["inline"] = true
+                        }, {
+                            ["name"] = "Current Level:",
+                            ["value"] = tostring(game.Players.LocalPlayer.PlayerGui.spawn_units.Lives.Main.Desc.Level.Text).. " ✨",
+                            ["inline"] = true
+                        }
+					}
+				}
+			}
+		}
+
+		local porn = game:GetService("HttpService"):JSONEncode(data)
+
+		local headers = {["content-type"] = "application/json"}
+		request = http_request or request or HttpPost or syn.request or http.request
+		local sex = {Url = url, Body = porn, Method = "POST", Headers = headers}
+		warn("Sending webhook notification...")
+		request(sex)
+	end)
+end
+--#endregion
 
 getgenv().UnitCache = {}
 
@@ -44,9 +108,23 @@ for _, Module in next, game:GetService("ReplicatedStorage"):WaitForChild("src"):
     end
 end
 
+--\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\--
+--\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\--
+--\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\--
+
 function sex()
+    -- reads jsonfile
     local jsonData = readfile(savefilename)
     local data = HttpService:JSONDecode(jsonData)
+
+--#region global values
+
+    --DEVIL CITY
+    getgenv().portalnameX = data.portalnameX
+    getgenv().farmprotal = data.farmportal
+    getgenv().buyportal = data.buyportal
+    getgenv().PortalID = data.PortalID
+
 
     getgenv().AutoLeave = data.AutoLeave
     getgenv().AutoReplay = data.AutoReplay
@@ -66,63 +144,112 @@ function sex()
     getgenv().difficulty = data.difficulty
     getgenv().world = data.world
     getgenv().level = data.level
+    --getgenv().door = data.door
 
     getgenv().SpawnUnitPos = data.xspawnUnitPos
     getgenv().SelectedUnits = data.xselectedUnits
     getgenv().autoabilities = data.autoabilities
-end
+--#endregion
 
-function updatejson()
+---// updates the json file
+--#region update json
+    function updatejson()
 
-    local xdata = {
-        portalnameX = getgenv().portalnameX,
-        farmportal = getgenv().farmprotal,
-        buyportal = getgenv().buyportal,
-        PortalID = getgenv().PortalID,
+        local xdata = {
+            --Devil City
+            portalnameX = getgenv().portalnameX,
+            farmportal = getgenv().farmprotal,
+            buyportal = getgenv().buyportal,
+            PortalID = getgenv().PortalID,
 
-        -- unitname = getgenv().unitname,
-        -- unitid = getgenv().unitid,
-        autoloadtp = getgenv().AutoLoadTP,
-        AutoLeave = getgenv().AutoLeave,
-        AutoReplay = getgenv().AutoReplay,
-        AutoChallenge  = getgenv().AutoChallenge, 
-        selectedreward = getgenv().selectedreward,
-        AutoChallengeAll = getgenv().AutoChallengeAll, 
-        sellatwave = getgenv().sellatwave,
-        autosell = getgenv().autosell,
-        webhook = getgenv().weburl,
-        autofarm = getgenv().AutoFarm,
-        autofarmic = getgenv().AutoFarmIC,
-        autofarmtp = getgenv().AutoFarmTP,
-        autostart = getgenv().autostart,
-        autoupgrade = getgenv().autoupgrade,
-        difficulty = getgenv().difficulty,
-        world = getgenv().world,
-        level = getgenv().level,
+            -- unitname = getgenv().unitname,
+            -- unitid = getgenv().unitid,
+            autoloadtp = getgenv().AutoLoadTP,
+            AutoLeave = getgenv().AutoLeave,
+            AutoReplay = getgenv().AutoReplay,
+            AutoChallenge  = getgenv().AutoChallenge, 
+            selectedreward = getgenv().selectedreward,
+            AutoChallengeAll = getgenv().AutoChallengeAll, 
+            sellatwave = getgenv().sellatwave,
+            autosell = getgenv().autosell,
+            webhook = getgenv().weburl,
+            autofarm = getgenv().AutoFarm,
+            autofarmic = getgenv().AutoFarmIC,
+            autofarmtp = getgenv().AutoFarmTP,
+            autostart = getgenv().autostart,
+            autoupgrade = getgenv().autoupgrade,
+            difficulty = getgenv().difficulty,
+            world = getgenv().world,
+            level = getgenv().level,
+            --door = getgenv().door,
 
-        xspawnUnitPos = getgenv().SpawnUnitPos,
-        xselectedUnits = getgenv().SelectedUnits,
-        autoabilities = getgenv().autoabilities
-    }
+            xspawnUnitPos = getgenv().SpawnUnitPos,
+            xselectedUnits = getgenv().SelectedUnits,
+            autoabilities = getgenv().autoabilities
+        }
 
-    local json = HttpService:JSONEncode(xdata)
-    writefile(savefilename, json)
-end
+        local json = HttpService:JSONEncode(xdata)
+        writefile(savefilename, json)
+    end
+--#endregion
 
-local exec = tostring(identifyexecutor())
-print(exec)
+    --\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\--
+    --\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\--
 
+    -- Uilib Shits
 
-local settings = {
-    unit1 = nil,
-    unit2 = nil,
-    unit3 = nil,
-    unit4 = nil,
-    unit5 = nil,
-    unit6 = nil,
-}
+    local exec = tostring(identifyexecutor())
 
-local Units = {}
+    local Atlas = loadstring(game:HttpGet("https://raw.githubusercontent.com/KeremHuba/AtlasUILib/main/AtlasUI3.lua"))()
+    local UI = Atlas.new({
+        Name = "Anime Adventures - Xno Hub";
+        ConfigFolder = "AAXnoHub";
+        Credit = "Made By G.O.A.T";
+        Color = Color3.fromRGB(255,0,0);
+        Bind = "LeftControl";
+        UseLoader = true;
+        FullName = "Anime Adventures Auto Farm";
+        CheckKey = function(inputtedKey)
+            return inputtedKey=="kerem"
+        end;
+        Discord = "https://discord.gg/xnohub";
+    })
+       
+    if exec == "Synapse X" or exec == "ScriptWare" or exec == "Trigon" then
+        print("Good boi")
+    else
+        
+    end
+
+    local AutoFarm = UI:CreatePage("Select Units")
+
+    local selworld = UI:CreatePage("Select World")
+
+    local dev = UI:CreatePage("Devil City")
+
+    local afset = UI:CreatePage("Auto Farm Settings")
+
+    local autoch = UI:CreatePage("Auto Challenge")
+
+    local Webhook = UI:CreatePage("Webhook")
+
+    local misco = UI:CreatePage("Misc")
+
+    if game.PlaceId == 8304191830 then
+
+        local unitselecttab = AutoFarm:CreateSection("Units")
+        local slectworld = selworld:CreateSection("Select World")
+        local devilcity = dev:CreateSection("Devil City")
+        local autofarmtab = afset:CreateSection("Auto Farm")
+        local autoclngtab = autoch:CreateSection("Auto Challenge")
+        local webhookserver = Webhook:CreateSection("Webhook")
+    
+
+--------------------------------------------------
+--------------- Select Units Tab -----------------
+--------------------------------------------------
+--#region Select Units Tab
+        local Units = {}
 
         local function loadUnit()
             repeat task.wait() until game.Players.LocalPlayer.PlayerGui:FindFirstChild("collection"):FindFirstChild("grid"):FindFirstChild("List"):FindFirstChild("Outer"):FindFirstChild("UnitFrames")
@@ -138,7 +265,7 @@ local Units = {}
 
         loadUnit()
 
-        --[[local function Check(x, y)
+        local function Check(x, y)
             for i, v in ipairs(game:GetService("Players").LocalPlayer.PlayerGui.collection.grid.List.Outer.UnitFrames:GetChildren()) do
                 if v:IsA("ImageButton") then
                     if v.EquippedList.Equipped.Visible == true then
@@ -151,13 +278,13 @@ local Units = {}
                     end
                 end
             end
-        end]]
+        end
 
         local function Equip()
             game:GetService("ReplicatedStorage").endpoints.client_to_server.unequip_all:InvokeServer()
             
             for i = 1, 6 do
-                local unitinfo = getgenv().SelectedUnits["U"..i]
+                local unitinfo = getgenv().SelectedUnits["U" .. i]
                 warn(unitinfo)
                 if unitinfo ~= nil then
                     local unitinfo_ = unitinfo:split(" #")
@@ -168,265 +295,326 @@ local Units = {}
             updatejson()
         end
 
-local AutoFarm = UI:CreatePage("Units")
-local AutoFa = AutoFarm:CreateSection("Select Units")
-
-local worlddd = UI:CreatePage("World")
-local SelectWorld = worlddd:CreateSection("Select World")
-
-local af = UI:CreatePage("Auto Farm")
-local AutoSet = af:CreateSection("Auto Farm Settings")
-
-local autoch = UI:CreatePage("Auto Challenge")
-local autochh = autoch:CreateSection("Auto Challenge")
-
-local posit = UI:CreatePage("Positions")
-local positio = posit:CreateSection("Set Positions")
-
-local drop = AutoFa:CreateDropdown({
-    Name = "Select Unit 1";
-    Callback = function(bool)
-        getgenv().SelectedUnits["U1"] = bool
-        Equip()
-    end;
-    Options = Units; 
-    ItemSelecting = true;
-    DefaultItemSelected = ""; 
-    Warning = "";
-    WarningIcon = 12345;
-})
-
-local drop2 = AutoFa:CreateDropdown({
-    Name = "Select Unit 2";
-    Callback = function(bool)
-        getgenv().SelectedUnits["U2"] = bool
-        Equip()
-    end;
-    Options = Units; 
-    ItemSelecting = true;
-    DefaultItemSelected = ""; 
-    Warning = "";
-    WarningIcon = 12345;
-})
-
-local drop3 = AutoFa:CreateDropdown({
-    Name = "Select Unit 3";
-    Callback = function(bool)
-        getgenv().SelectedUnits["U3"] = bool
-        Equip()
-    end;
-    Options = Units; 
-    ItemSelecting = true;
-    DefaultItemSelected = ""; 
-    Warning = "";
-    WarningIcon = 12345;
-})
-
-local drop4 = AutoFa:CreateDropdown({
-    Name = "Select Unit 4";
-    Callback = function(bool)
-        getgenv().SelectedUnits["U4"] = bool
-        Equip()
-    end;
-    Options = Units; 
-    ItemSelecting = true;
-    DefaultItemSelected = ""; 
-    Warning = "";
-    WarningIcon = 12345;
-})
-
-local ax = game.Players.LocalPlayer.PlayerGui.spawn_units.Lives.Main.Desc.Level.Text:split(" ")
-_G.drop5 = nil
-_G.drop6 = nil
-
-if tonumber(ax[2]) >= 20 then
-    _G.drop5 = AutoFa:CreateDropdown({
-        Name = "Select Unit 5";
-        Callback = function(bool)
-            getgenv().SelectedUnits["U5"] = bool
-            Equip()
-        end;
-        Options = Units; 
-        ItemSelecting = true;
-        DefaultItemSelected = ""; 
-        Warning = "";
-        WarningIcon = 12345;
-    })
-end
-
-if tonumber(ax[2]) >= 50 then
-    _G.drop6 = AutoFa:CreateDropdown({
-        Name = "Select Unit 6";
-        Callback = function(bool)
-            getgenv().SelectedUnits["U6"] = bool
-            Equip()
-        end;
-        Options = Units; 
-        ItemSelecting = true;
-        DefaultItemSelected = ""; 
-        Warning = "";
-        WarningIcon = 12345;
-    })
-end
-
---------------------------------------------------
--------------SELECT WORLD-------------------------
---------------------------------------------------
---------------------------------------------------
-
-getgenv().levels = {"nill"}
-
-getgenv().diff = SelectWorld:CreateDropdown({
-    Name = "Select Difficulty";
-    Callback = function(diff)
-        getgenv().difficulty = diff
-        updatejson()
-    end;
-    Options = {"Normal","Hard"};
-    ItemSelecting = true; 
-    DefaultItemSelected = getgenv().difficulty;
-    Warning = "";
-    WarningIcon = 12345;
-})
-
-local worlddrop = SelectWorld:CreateDropdown({
-    Name = "Select World";
-    Callback = function(world)
-        getgenv().world = world
-        updatejson()
-        wait(0.1)
-        if world == "Plannet Namak" then
-            table.clear(levels)
-            getgenv().levels = {"namek_infinite", "namek_level_1", "namek_level_2", "namek_level_3",
-                                "namek_level_4", "namek_level_5", "namek_level_6"}
-            for i, v in ipairs(getgenv().levels) do
-                getgenv().leveldrop:Update(getgenv().levels)
+        unitselecttab:CreateButton({
+            Name = "Select Equipped Units";
+            Callback = function()
+                for i, v in ipairs(game:GetService("Players").LocalPlayer.PlayerGui["spawn_units"].Lives.Frame.Units:GetChildren()) do
+                    if v:IsA("ImageButton") then
+                        local unitxx = v.Main.petimage.WorldModel:GetChildren()[1]
+                        if unitxx ~= nil then
+                            if Check(unitxx.Name,v) then
+                                print(unitxx, v)
+                            end
+                        end
+                    end
             end
-        elseif world == "Shiganshinu District" then
-            table.clear(levels)
-            getgenv().levels = {"aot_infinite", "aot_level_1", "aot_level_2", "aot_level_3", "aot_level_4",
-                                "aot_level_5", "aot_level_6"}
-            for i, v in ipairs(getgenv().levels) do
-                getgenv().leveldrop:Update(getgenv().levels)
-            end
-        elseif world == "Snowy Town" then
-            table.clear(levels)
-            getgenv().levels = {"demonslayer_infinite", "demonslayer_level_1", "demonslayer_level_2",
-                                "demonslayer_level_3", "demonslayer_level_4", "demonslayer_level_5",
-                                "demonslayer_level_6"}
-            for i, v in ipairs(getgenv().levels) do
-                getgenv().leveldrop:Update(getgenv().levels)
-            end
-        elseif world == "Hidden Sand Village" then
-            table.clear(levels)
-            getgenv().levels = {"naruto_infinite", "naruto_level_1", "naruto_level_2", "naruto_level_3",
-                                "naruto_level_4", "naruto_level_5", "naruto_level_6"}
-            for i, v in ipairs(getgenv().levels) do
-                getgenv().leveldrop:Update(getgenv().levels)
-            end
-        elseif world == "Marine's Ford" then
-            table.clear(levels)
-            getgenv().levels = {"marineford_infinite","marineford_level_1","marineford_level_2","marineford_level_3",
-            "marineford_level_4","marineford_level_5","marineford_level_6",}
-            for i, v in ipairs(getgenv().levels) do
-                getgenv().leveldrop:Update(getgenv().levels)
-            end
-        elseif world == "Ghoul City" then
-            table.clear(levels)
-            getgenv().levels = {"tokyoghoul_infinite","tokyoghoul_level_1","tokyoghoul_level_2","tokyoghoul_level_3",
-                                "tokyoghoul_level_4","tokyoghoul_level_5","tokyoghoul_level_6",}
-            for i, v in ipairs(getgenv().levels) do
-                getgenv().leveldrop:Update(getgenv().levels)
-            end
-        elseif world == "Hollow World" then
-            table.clear(levels)
-            getgenv().levels = {"hueco_infinite","hueco_level_1","hueco_level_2","hueco_level_3",
-                                "hueco_level_4","hueco_level_5","hueco_level_6",}
-            for i, v in ipairs(getgenv().levels) do
-                getgenv().leveldrop:Update(getgenv().levels)
-            end
-        elseif world == "Ant Kingdom" then
-            table.clear(levels)
-            getgenv().levels = {"hxhant_infinite","hxhant_level_1","hxhant_level_2","hxhant_level_3",
-                                "hxhant_level_4","hxhant_level_5","hxhant_level_6",}
-            for i, v in ipairs(getgenv().levels) do
-                getgenv().leveldrop:Update(getgenv().levels)
-            end
-           
-        elseif world == "Magic Town" then
-            table.clear(levels)
-            getgenv().levels = {"magnolia_infinite","magnolia_level_1","magnolia_level_2","magnolia_level_3",
-                                "magnolia_level_4","magnolia_level_5","magnolia_level_6",}
-            for i, v in ipairs(getgenv().levels) do
-                getgenv().leveldrop:Update(getgenv().levels)
-            end
-        elseif world == "Cursed Academy" then
-            table.clear(levels)
-            getgenv().levels = {"jjk_infinite","jjk_level_1","jjk_level_2","jjk_level_3",
-                                "jjk_level_4","jjk_level_5","jjk_level_6",}
-            for i, v in ipairs(getgenv().levels) do
-                getgenv().leveldrop:Update(getgenv().levels)
-            end
-        elseif world == "Clover Kingdom" then
-            table.clear(levels)
-            getgenv().levels = {"clover_infinite","clover_level_1","clover_level_2","clover_level_3",
-                                "clover_level_4","clover_level_5","clover_level_6",}
-            for i, v in ipairs(getgenv().levels) do
-                getgenv().leveldrop:Update(getgenv().levels)
-            end
-        elseif world == "Clover Legend - HARD" then
-            table.clear(levels)
-            getgenv().levels = {"clover_legend_1","clover_legend_2","clover_legend_3",}
-            for i, v in ipairs(getgenv().levels) do
-                getgenv().leveldrop:Update(getgenv().levels)
-            end
-        elseif world == "Hollow Legend - HARD" then
-            table.clear(levels)
-            getgenv().levels = {"bleach_legend_1","bleach_legend_2","bleach_legend_3","bleach_legend_4","bleach_legend_5",}
-            for i, v in ipairs(getgenv().levels) do
-                getgenv().leveldrop:Update(getgenv().levels)
-            end
-        elseif world =="Cape Canaveral" then
-            table.clear(levels)
-            getgenv().levels = {"jojo_infinite","jojo_level_1","jojo_level_2","jojo_level_3","jojo_level_4","jojo_level_5","jojo_level_6",}
-            for i, v in ipairs(getgenv().levels) do
-                getgenv().leveldrop:Update(getgenv().levels)
-            end
-        elseif world =="Alien Spaceship" then
-            table.clear(levels)
-            getgenv().levels = {"opm_infinite","opm_level_1","opm_level_2","opm_level_3","opm_level_4","opm_level_5","opm_level_6",}
-            for i, v in ipairs(getgenv().levels) do
-                getgenv().leveldrop:Update(getgenv().levels)
-            end
+        })
+
+        local drop = unitselecttab:CreateDropdown({
+            Name = "Unit 1";
+            Callback = function(bool)
+                getgenv().SelectedUnits["U1"] = bool
+                Equip()
+            end;
+            Options = Units;
+            ItemSelecting = true;
+            DefaultItemSelected = getgenv().SelectedUnits["U1"];
+            Warning = "Select Unit 1 Monkey";
+            WarningIcon = 12345;
+        })
+
+        local drop2 = unitselecttab:CreateDropdown({
+            Name = "Unit 2";
+            Callback = function(bool)
+                getgenv().SelectedUnits["U2"] = bool
+                Equip()
+            end;
+            Options = Units;
+            ItemSelecting = true;
+            DefaultItemSelected = getgenv().SelectedUnits["U2"];
+            Warning = "Select Unit 2 Monkey";
+            WarningIcon = 12345;
+        })
+
+        local drop3 = unitselecttab:CreateDropdown({
+            Name = "Unit 3";
+            Callback = function(bool)
+                getgenv().SelectedUnits["U3"] = bool
+                Equip()
+            end;
+            Options = Units;
+            ItemSelecting = true;
+            DefaultItemSelected = getgenv().SelectedUnits["U3"];
+            Warning = "Select Unit 3 Monkey";
+            WarningIcon = 12345;
+        }) 
+
+        local dro4p = unitselecttab:CreateDropdown({
+            Name = "Unit 4";
+            Callback = function(bool)
+                getgenv().SelectedUnits["U4"] = bool
+                Equip()
+            end;
+            Options = Units;
+            ItemSelecting = true;
+            DefaultItemSelected = getgenv().SelectedUnits["U4"];
+            Warning = "Select Unit 4 Monkey";
+            WarningIcon = 12345;
+        })
+
+        local axx =  game.Players.LocalPlayer.PlayerGui["spawn_units"].Lives.Main.Desc.Level.Text:split(" ")
+        _G.drop5 = nil
+        _G.drop6 = nil
+        if tonumber(axx[2]) >= 20 then
+            local drop5 = unitselecttab:CreateDropdown({
+                Name = "Unit 5";
+                Callback = function(bool)
+                    getgenv().SelectedUnits["U5"] = bool
+                    Equip()
+                end;
+                Options = Units;
+                ItemSelecting = true;
+                DefaultItemSelected = getgenv().SelectedUnits["U5"];
+                Warning = "Select Unit 5 Monkey";
+                WarningIcon = 12345;
+            })
         end
-    end;
-    Options = {"Plannet Namak", "Shiganshinu District", "Snowy Town","Hidden Sand Village", "Marine's Ford","Ghoul City", "Hollow World", "Ant Kingdom", "Magic Town", "Cursed Academy","Clover Kingdom", "Clover Legend - HARD","Hollow Legend - HARD","Cape Canaveral","Alien Spaceship"};
-    ItemSelecting = true; 
-    DefaultItemSelected = getgenv().world;
-    Warning = "";
-    WarningIcon = 12345;
-})
 
-getgenv().leveldrop = SelectWorld:CreateDropdown({
-    Name = "Select Level";
-    Callback = function(levell)
-        getgenv().level = levell
+        if tonumber(axx[2]) >= 50 then
+            local drop6 = unitselecttab:CreateDropdown({
+                Name = "Unit 6";
+                Callback = function(bool)
+                    getgenv().SelectedUnits["U6"] = bool
+                    Equip()
+                end;
+                Options = Units;
+                ItemSelecting = true;
+                DefaultItemSelected = getgenv().SelectedUnits["U6"];
+                Warning = "Select Unit 6 Monkey";
+                WarningIcon = 12345;
+            })
+        end
+--------------// Refresh Unit List \\------------- 
+unitselecttab:CreateButton({
+    Name = "Refresh List"; 
+    Callback = function()
+        loadUnit()
+            game:GetService("ReplicatedStorage").endpoints.client_to_server.unequip_all:InvokeServer()
+            for i, v in ipairs(Units) do
+                drop:Update(v)
+                drop2:Update(v)
+                drop3:Update(v)
+                drop4:AUpdatedd(v)
+                if _G.drop5 ~= nil then
+                    _G.drop5:Update(v)
+                end
+                if _G.drop6 ~= nil then
+                    _G.drop6:Update(v)
+                end 
+            end
+            getgenv().SelectedUnits = {
+                U1 = nil,
+                U2 = nil,
+                U3 = nil,
+                U4 = nil,
+                U5 = nil,
+                U6 = nil
+            }
+    end
+})
+--#endregion
+
+--------------------------------------------------
+--------------- Select World Tab -----------------
+--------------------------------------------------
+--#region Select world tab
+        getgenv().levels = {"nill"}
+
+        getgenv().diff = slectworld:CreateDropdown({
+            Name = "Select Difficulty";
+            Callback = function(diff)
+            getgenv().difficulty = diff
+            updatejson()
+            end;
+            Options = {"Normal", "Hard"};
+            ItemSelecting = true;
+            DefaultItemSelected = getgenv().difficulty;
+            Warning = "Select Difficulty";
+            WarningIcon = 12345;
+        })
+
+        local worlddrop = slectworld:CreateDropdown({
+            Name = "Select World";
+            Callback = function(world)
+                getgenv().world = world
+                updatejson()
+
+                iif world == "Plannet Namak" then
+                    table.clear(levels)
+                    getgenv().levels = {"namek_infinite", "namek_level_1", "namek_level_2", "namek_level_3",
+                                        "namek_level_4", "namek_level_5", "namek_level_6"}
+                    for i, v in ipairs(getgenv().levels) do
+                        getgenv().leveldrop:Update(getgenv().levels)
+                    end
+                elseif world == "Shiganshinu District" then
+                    table.clear(levels)
+                    getgenv().levels = {"aot_infinite", "aot_level_1", "aot_level_2", "aot_level_3", "aot_level_4",
+                                        "aot_level_5", "aot_level_6"}
+                    for i, v in ipairs(getgenv().levels) do
+                        getgenv().leveldrop:Update(getgenv().levels)
+                    end
+                elseif world == "Snowy Town" then
+                    table.clear(levels)
+                    getgenv().levels = {"demonslayer_infinite", "demonslayer_level_1", "demonslayer_level_2",
+                                        "demonslayer_level_3", "demonslayer_level_4", "demonslayer_level_5",
+                                        "demonslayer_level_6"}
+                    for i, v in ipairs(getgenv().levels) do
+                        getgenv().leveldrop:Update(getgenv().levels)
+                    end
+                elseif world == "Hidden Sand Village" then
+                    table.clear(levels)
+                    getgenv().levels = {"naruto_infinite", "naruto_level_1", "naruto_level_2", "naruto_level_3",
+                                        "naruto_level_4", "naruto_level_5", "naruto_level_6"}
+                    for i, v in ipairs(getgenv().levels) do
+                        getgenv().leveldrop:Update(getgenv().levels)
+                    end
+                elseif world == "Marine's Ford" then
+                    table.clear(levels)
+                    getgenv().levels = {"marineford_infinite","marineford_level_1","marineford_level_2","marineford_level_3",
+                    "marineford_level_4","marineford_level_5","marineford_level_6",}
+                    for i, v in ipairs(getgenv().levels) do
+                        getgenv().leveldrop:Update(getgenv().levels)
+                    end
+                elseif world == "Ghoul City" then
+                    table.clear(levels)
+                    getgenv().levels = {"tokyoghoul_infinite","tokyoghoul_level_1","tokyoghoul_level_2","tokyoghoul_level_3",
+                                        "tokyoghoul_level_4","tokyoghoul_level_5","tokyoghoul_level_6",}
+                    for i, v in ipairs(getgenv().levels) do
+                        getgenv().leveldrop:Update(getgenv().levels)
+                    end
+                elseif world == "Hollow World" then
+                    table.clear(levels)
+                    getgenv().levels = {"hueco_infinite","hueco_level_1","hueco_level_2","hueco_level_3",
+                                        "hueco_level_4","hueco_level_5","hueco_level_6",}
+                    for i, v in ipairs(getgenv().levels) do
+                        getgenv().leveldrop:Update(getgenv().levels)
+                    end
+                elseif world == "Ant Kingdom" then
+                    table.clear(levels)
+                    getgenv().levels = {"hxhant_infinite","hxhant_level_1","hxhant_level_2","hxhant_level_3",
+                                        "hxhant_level_4","hxhant_level_5","hxhant_level_6",}
+                    for i, v in ipairs(getgenv().levels) do
+                        getgenv().leveldrop:Update(getgenv().levels)
+                    end
+                   
+                elseif world == "Magic Town" then
+                    table.clear(levels)
+                    getgenv().levels = {"magnolia_infinite","magnolia_level_1","magnolia_level_2","magnolia_level_3",
+                                        "magnolia_level_4","magnolia_level_5","magnolia_level_6",}
+                    for i, v in ipairs(getgenv().levels) do
+                        getgenv().leveldrop:Update(getgenv().levels)
+                    end
+                elseif world == "Cursed Academy" then
+                    table.clear(levels)
+                    getgenv().levels = {"jjk_infinite","jjk_level_1","jjk_level_2","jjk_level_3",
+                                        "jjk_level_4","jjk_level_5","jjk_level_6",}
+                    for i, v in ipairs(getgenv().levels) do
+                        getgenv().leveldrop:Update(getgenv().levels)
+                    end
+                elseif world == "Clover Kingdom" then
+                    table.clear(levels)
+                    getgenv().levels = {"clover_infinite","clover_level_1","clover_level_2","clover_level_3",
+                                        "clover_level_4","clover_level_5","clover_level_6",}
+                    for i, v in ipairs(getgenv().levels) do
+                        getgenv().leveldrop:Update(getgenv().levels)
+                    end
+                elseif world == "Clover Legend - HARD" then
+                    table.clear(levels)
+                    getgenv().levels = {"clover_legend_1","clover_legend_2","clover_legend_3",}
+                    for i, v in ipairs(getgenv().levels) do
+                        getgenv().leveldrop:Update(getgenv().levels)
+                    end
+                elseif world == "Hollow Legend - HARD" then
+                    table.clear(levels)
+                    getgenv().levels = {"bleach_legend_1","bleach_legend_2","bleach_legend_3","bleach_legend_4","bleach_legend_5",}
+                    for i, v in ipairs(getgenv().levels) do
+                        getgenv().leveldrop:Update(getgenv().levels)
+                    end
+                elseif world =="Cape Canaveral" then
+                    table.clear(levels)
+                    getgenv().levels = {"jojo_infinite","jojo_level_1","jojo_level_2","jojo_level_3","jojo_level_4","jojo_level_5","jojo_level_6",}
+                    for i, v in ipairs(getgenv().levels) do
+                        getgenv().leveldrop:Update(getgenv().levels)
+                    end
+                elseif world =="Alien Spaceship" then
+                    table.clear(levels)
+                    getgenv().levels = {"opm_infinite","opm_level_1","opm_level_2","opm_level_3","opm_level_4","opm_level_5","opm_level_6",}
+                    for i, v in ipairs(getgenv().levels) do
+                        getgenv().leveldrop:Update(getgenv().levels)
+                    end
+                end
+            end;
+            Options = {"Plannet Namak", "Shiganshinu District", "Snowy Town","Hidden Sand Village", "Marine's Ford","Ghoul City", "Hollow World", "Ant Kingdom", "Magic Town", "Cursed Academy","Clover Kingdom", "Clover Legend - HARD","Hollow Legend - HARD","Cape Canaveral","Alien Spaceship"};
+            ItemSelecting = true;
+            DefaultItemSelected = getgenv().world;
+            Warning = "Select World;
+            WarningIcon = 12345;
+        })
+
+        
+        getgenv().leveldrop = slectworld:CreateDropdown({
+            Name = "Select Act";
+            Callback = function(level)
+                getgenv().level = level
+                updatejson()
+            end;
+            Options = {"Apple","Orange","Banana"};
+            ItemSelecting = true;
+            DefaultItemSelected = getgenv().level;
+            Warning = "Select Act";
+            WarningIcon = 12345;
+        })
+--#endregion
+
+getgenv().portalname = devilcity:CreateDropdown({
+    Name = "Select Portal";
+    Callback = function(pornname)
+        getgenv().portalnameX = pornname
         updatejson()
     end;
-    Options = levels;
-    ItemSelecting = true; 
-    DefaultItemSelected = getgenv().level;
-    Warning = "";
+    Options = {"csm_contract_0", "csm_contract_1","csm_contract_2","csm_contract_3","csm_contract_4","csm_contract_5"};
+    ItemSelecting = true;
+    DefaultItemSelected = getgenv().portalnameX;
+    Warning = "Select Portal";
     WarningIcon = 12345;
 })
 
---------------------------------------
---------------------------------------
----------AUTOFARM---------------------
---------------------------------------
---------------------------------------
+devilcity:CreateButton({
+    Name = "Buy Portal"; 
+    Callback = function()
+        local args = {
+            [1] = tostring(getgenv().portalnameX)
+        }
+        game:GetService("ReplicatedStorage").endpoints.client_to_server.buy_csmportal_shop_item:InvokeServer(unpack(args))
+    end
+})
 
-AutoSet:CreateToggle({
+devilcity:CreateToggle({
+    Name = "Auto Farm Devil Portal";
+    Flag = "devil";
+    Default = getgenv().farmportal;
+    Callback = function(bool)
+        getgenv().farmprotal = bool
+        updatejson()
+    end;
+    SavingDisabled = true;
+})
+
+--------------------------------------------------
+------------------ Auto Farm Tab -----------------
+--------------------------------------------------
+--#region Auto Farm Tab
+autofarmtab:CreateToggle({
     Name = "Auto Replay";
     Flag = "replay";
     Default = getgenv().AutoReplay;
@@ -437,7 +625,7 @@ AutoSet:CreateToggle({
     SavingDisabled = true;
 })
 
-AutoSet:CreateToggle({
+autofarmtab:CreateToggle({
     Name = "Auto Leave";
     Flag = "leave";
     Default = getgenv().AutoLeave;
@@ -448,7 +636,7 @@ AutoSet:CreateToggle({
     SavingDisabled = true;
 })
 
-AutoSet:CreateToggle({
+autofarmtab:CreateToggle({
     Name = "Auto Farm Event";
     Flag = "farmev";
     Default = getgenv().AutoFarmTP;
@@ -459,7 +647,7 @@ AutoSet:CreateToggle({
     SavingDisabled = true;
 })
 
-AutoSet:CreateToggle({
+autofarmtab:CreateToggle({
     Name = "Auto Infinity Castle";
     Flag = "infinitycastle";
     Default = getgenv().AutoFarmIC;
@@ -470,7 +658,7 @@ AutoSet:CreateToggle({
     SavingDisabled = true;
 })
 
-AutoSet:CreateToggle({
+autofarmtab:CreateToggle({
     Name = "Auto Farm";
     Flag = "farm";
     Default = getgenv().AutoFarm;
@@ -481,7 +669,7 @@ AutoSet:CreateToggle({
     SavingDisabled = true;
 })
 
-AutoSet:CreateToggle({
+autofarmtab:CreateToggle({
     Name = "Auto Start";
     Flag = "start";
     Default = getgenv().autostart;
@@ -492,7 +680,7 @@ AutoSet:CreateToggle({
     SavingDisabled = true;
 })
 
-AutoSet:CreateToggle({
+autofarmtab:CreateToggle({
     Name = "Auto Abilities";
     Flag = "ability";
     Default = getgenv().autoabilities;
@@ -503,7 +691,7 @@ AutoSet:CreateToggle({
     SavingDisabled = true;
 })
 
-AutoSet:CreateToggle({
+autofarmtab:CreateToggle({
     Name = "Auto Upgrade Units";
     Flag = "upgrade";
     Default = getgenv().autoupgrade;
@@ -514,7 +702,7 @@ AutoSet:CreateToggle({
     SavingDisabled = true;
 })
 
-AutoSet:CreateToggle({
+autofarmtab:CreateToggle({
     Name = "Auto Sell At Spectic Wave";
     Flag = "wave";
     Default = getgenv().autosell;
@@ -528,7 +716,7 @@ AutoSet:CreateToggle({
     SavingDisabled = true;
 })
 
-AutoSet:CreateTextBox({
+autofarmtab:CreateTextBox({
     Name = "Wave";
     Flag = "wavee"; 
     Callback = function(inputtedText,enterPressed)
@@ -544,211 +732,651 @@ AutoSet:CreateTextBox({
     Warning = "";
     WarningIcon = 12345;
 })
+        getgenv().AutoLoadTP = true
 
+        if getgenv().AutoLoadTP == true then
+            if exec == "Synapse X" and getgenv().AutoLoadTP then
+                syn.queue_on_teleport("loadstring(game:HttpGet('https://raw.githubusercontent.com/ArponAG/Scripts/main/AnimeAdventures.lua'))()")
+            elseif exec ~= "Synapse X" and getgenv().AutoLoadTP then
+                queue_on_teleport("loadstring(game:HttpGet('https://raw.githubusercontent.com/ArponAG/Scripts/main/AnimeAdventures.lua'))()")
+            end
+        end
+		
+		local webhoolPlaceholde
+		if getgenv().weburl == "" then
+			webhoolPlaceholder = "Insert url here!"
+		else
+			webhoolPlaceholder = getgenv().weburl
+		end
 
------------------------------------------------------------
----------------------AUTOCHALLENGE--------------------------
--------------------------------------------------------------
-------------------------------------------------------------
-
-autochh:CreateToggle({
+        webhookserver:CreateTextBox({
+            Name = "Webhook URL";
+            Flag = "wavee"; 
+            Callback = function(inputtedText,enterPressed)
+                getgenv().weburl = inputtedText
+            end;
+            DefaultText = "";
+            PlaceholderText = "Write Wave Number";
+            TabComplete = function(inputtedText)
+                getgenv().weburl = inputtedText
+                updatejson()
+            end;
+            ClearTextOnFocus = false;
+            Warning = "";
+            WarningIcon = 12345;
+        })
+--#endregion
+--------------------------------------------------
+-------------------- Auto Challenge --------------
+--------------------------------------------------
+--#region Auto Challenge
+autoclngtab:CreateToggle({
     Name = "Auto Challenge";
-    Flag = "challenge";
+    Flag = "chal";
     Default = getgenv().AutoChallenge;
-    Callback = function(x)
-        getgenv().AutoChallenge = x
+    Callback = function(bool)
+        getgenv().AutoChallenge = bool
+        updatejson()
     end;
     SavingDisabled = true;
 })
 
-local dropchallenge = autochh:CreateDropdown({
-    Name = "Select Challenge";
+local worlddrop = autoclngtab:CreateDropdown({
+    Name = "Select Reward";
     Callback = function(reward)
         getgenv().selectedreward = reward
+        updatejson()
     end;
     Options = {"star_fruit_random","star_remnant","gems", "gold"};
     ItemSelecting = true;
-    DefaultItemSelected = getgenv().selectedreward;
+    DefaultItemSelected = "Deez";
+    Warning = "Select Reward";
+    WarningIcon = 12345;
+})
+
+autoclngtab:CreateToggle({
+    Name = "Farm All Rewards";
+    Flag = "alrew";
+    Default = getgenv().AutoChallengeAll;
+    Callback = function(bool)
+        getgenv().AutoChallengeAll = bool
+        updatejson()
+    end;
+    SavingDisabled = true;
+})
+--#endregion
+--------------------------------------------------
+-------------------- Auto Buy/Sell ---------------
+--------------------------------------------------
+--#region Auto Buy/Sell
+        getgenv().UnitSellTog = false
+        getgenv().autosummontickets = false
+        getgenv().autosummongem = false
+        getgenv().autosummongem10 = false
+
+        getgenv().autosummonticketse = false
+        getgenv().autosummongeme = false
+        getgenv().autosummongem10e = false
+
+        local misc = misco:CreateSection("Auto Summon")
+
+
+        local function autobuyfunc(xx, item)
+            task.wait()
+
+            local args = {
+                [1] = xx,
+                [2] = item
+            }
+            game:GetService("ReplicatedStorage").endpoints.client_to_server.buy_from_banner:InvokeServer(unpack(args))
+            
+        end
+
+        local MyParagraph = misc:CreateParagraph("2X Mythic")
+
+        misc:CreateToggle({
+            Name = "Auto Summon {Use Ticket 1}";
+            Flag = "auto1";
+            Default = getgenv().autosummonticketse;
+            Callback = function(bool)
+                getgenv().autosummonticketse = bool
+            while getgenv().autosummonticketse do
+                autobuyfunc("EventClover", "ticket")
+            end
+            updatejson()
+            end;
+            SavingDisabled = true;
+        })
+
+        misc:CreateToggle({
+            Name = "Auto Summon {Buy 1}";
+            Flag = "asd";
+            Default = getgenv().autosummongeme;
+            Callback = function(bool)
+                getgenv().autosummongeme = bool
+                while getgenv().autosummongeme do
+                    autobuyfunc("EventClover", "gems")
+                end
+                updatejson()
+            end;
+            SavingDisabled = true;
+        })
+
+        misc:CreateToggle({
+            Name = "Auto Summon {Buy 10}";
+            Flag = "asddf";
+            Default = getgenv().autosummongem10e;
+            Callback = function(bool)
+                getgenv().autosummongem10e = bool
+                while getgenv().autosummongem10e do
+                    autobuyfunc("EventClover", "gems")
+                end
+                updatejson()
+            end;
+            SavingDisabled = true;
+        })
+
+        local MyParagraph = misc:CreateParagraph("Standart")
+
+        misc:CreateToggle({
+            Name = "Auto Summon {Use Ticket 1}";
+            Flag = "asddfh";
+            Default = getgenv().autosummontickets;
+            Callback = function(bool)
+                getgenv().autosummontickets = bool
+                while getgenv().autosummontickets do
+                    autobuyfunc("Standard", "ticket")
+                end
+                updatejson()
+            end;
+            SavingDisabled = true;
+        })
+
+        misc:CreateToggle({
+            Name = "Auto Summon {Buy 1}";
+            Flag = "asddffg";
+            Default = getgenv().autosummongem;
+            Callback = function(bool)
+                getgenv().autosummongem = bool
+                while getgenv().autosummongem do
+                    autobuyfunc("Standard", "gems")
+                end
+                updatejson()
+            end;
+            SavingDisabled = true;
+        })
+
+        misc:CreateToggle({
+            Name = "Auto Summon {Buy 10}";
+            Flag = "asddffgha";
+            Default = getgenv().autosummongem10;
+            Callback = function(bool)
+                getgenv().autosummongem10 = bool
+                while getgenv().autosummongem10 do
+                    autobuyfunc("Standard", "gems10")
+                end
+                updatejson()
+            end;
+            SavingDisabled = true;
+        })
+
+        local MyParagraph = misc:CreateParagraph("Sell Units")
+
+        local utts = misc:CreateDropdown({
+            Name = "Select Rarity";
+            Callback = function(u)
+                getgenv().UnitToSell = u
+            end;
+            Options = {"Rare", "Epic"};
+            ItemSelecting = true;
+            DefaultItemSelected = getgenv().UnitToSell;
+            Warning = "Select Rarity noob";
+            WarningIcon = 12345;
+        })
+
+        
+        misc:CreateToggle({
+            Name = "Auto Sell Units";
+            Flag = "autosellasd";
+            Default = getgenv().UnitSellTog;
+            Callback = function(bool)
+                getgenv().UnitSellTog = bool
+            end;
+            SavingDisabled = true;
+        })
+
+--#endregion
+--------------------------------------------------
+--------------------------------------------------
+--------------------------------------------------
+--#region --- Inside match ---
+    else -- When in a match
+        game.Players.LocalPlayer.PlayerGui.MessageGui.Enabled = false
+        game:GetService("ReplicatedStorage").packages.assets["ui_sfx"].error.Volume = 0
+        game:GetService("ReplicatedStorage").packages.assets["ui_sfx"].error_old.Volume = 0
+        
+
+
+
+
+    local autofarmtab = autofrmserver:CreateSection("Auto Farm")
+    local devilcity = autofrmserver:CreateSection("Devil City")
+    local autoclngtab = autofrmserver:CreateSection("Auto Challenge")
+    local autoloadtab = autofrmserver:CreateSection("Auto Load Script")
+    local autoseltab = autofrmserver:CreateSection("Auto Sell")
+    local webhooktab = webhookserver:CreateSection("Webhook")
+    
+    MySection:CreateToggle({
+        autoloadtab = "Auto Load Script";
+        Flag = "loadd";
+        Default = getgenv().AutoLoadTP;
+        Callback = function(bool)
+            getgenv().AutoLoadTP = bool
+            updatejson()
+            if exec == "Synapse X" and getgenv().AutoLoadTP then
+                syn.queue_on_teleport("loadstring(game:HttpGet('https://raw.githubusercontent.com/ArponAG/Scripts/main/AnimeAdventures.lua'))()")
+            elseif exec ~= "Synapse X" and getgenv().AutoLoadTP then
+                queue_on_teleport("loadstring(game:HttpGet('https://raw.githubusercontent.com/ArponAG/Scripts/main/AnimeAdventures.lua'))()")
+            end
+        end;
+        SavingDisabled = true;
+    })  
+
+
+    getgenv().portalname = devilcity:CreateDropdown({
+        Name = "Select Portal";
+        Callback = function(pornname)
+            getgenv().portalnameX = pornname
+            updatejson()
+        end;
+        Options = {"csm_contract_0", "csm_contract_1","csm_contract_2","csm_contract_3","csm_contract_4","csm_contract_5"};
+        ItemSelecting = true;
+        DefaultItemSelected = getgenv().portalnameX;
+        Warning = "Select Portal";
+        WarningIcon = 12345;
+    })
+    
+    devilcity:CreateButton({
+        Name = "Buy Portal"; 
+        Callback = function()
+            local args = {
+                [1] = tostring(getgenv().portalnameX)
+            }
+            game:GetService("ReplicatedStorage").endpoints.client_to_server.buy_csmportal_shop_item:InvokeServer(unpack(args))
+        end
+    })
+    
+    devilcity:CreateToggle({
+        Name = "Auto Farm Devil Portal";
+        Flag = "devil";
+        Default = getgenv().farmportal;
+        Callback = function(bool)
+            getgenv().farmprotal = bool
+            updatejson()
+        end;
+        SavingDisabled = true;
+    })
+
+
+        
+--#region Auto Farm Tab
+autofarmtab:CreateToggle({
+    Name = "Auto Replay";
+    Flag = "replay";
+    Default = getgenv().AutoReplay;
+    Callback = function(bool)
+        getgenv().AutoReplay = bool
+        updatejson()
+    end;
+    SavingDisabled = true;
+})
+
+autofarmtab:CreateToggle({
+    Name = "Auto Leave";
+    Flag = "leave";
+    Default = getgenv().AutoLeave;
+    Callback = function(bool)
+        getgenv().AutoLeave = bool
+        updatejson()
+    end;
+    SavingDisabled = true;
+})
+
+autofarmtab:CreateToggle({
+    Name = "Auto Farm Event";
+    Flag = "farmev";
+    Default = getgenv().AutoFarmTP;
+    Callback = function(bool)
+        getgenv().AutoFarmTP = bool
+        updatejson()
+    end;
+    SavingDisabled = true;
+})
+
+autofarmtab:CreateToggle({
+    Name = "Auto Infinity Castle";
+    Flag = "infinitycastle";
+    Default = getgenv().AutoFarmIC;
+    Callback = function(bool)
+        getgenv().AutoFarmIC = bool
+        updatejson()
+    end;
+    SavingDisabled = true;
+})
+
+autofarmtab:CreateToggle({
+    Name = "Auto Farm";
+    Flag = "farm";
+    Default = getgenv().AutoFarm;
+    Callback = function(bool)
+        getgenv().AutoFarm = bool
+        updatejson()
+    end;
+    SavingDisabled = true;
+})
+
+autofarmtab:CreateToggle({
+    Name = "Auto Start";
+    Flag = "start";
+    Default = getgenv().autostart;
+    Callback = function(bool)
+        getgenv().autostart = bool
+        updatejson()
+    end;
+    SavingDisabled = true;
+})
+
+autofarmtab:CreateToggle({
+    Name = "Auto Abilities";
+    Flag = "ability";
+    Default = getgenv().autoabilities;
+    Callback = function(bool)
+        getgenv().autoabilities = bool
+        updatejson()
+    end;
+    SavingDisabled = true;
+})
+
+autofarmtab:CreateToggle({
+    Name = "Auto Upgrade Units";
+    Flag = "upgrade";
+    Default = getgenv().autoupgrade;
+    Callback = function(bool)
+        getgenv().autoupgrade = bool
+        updatejson()
+    end;
+    SavingDisabled = true;
+})
+
+autofarmtab:CreateToggle({
+    Name = "Auto Sell At Spectic Wave";
+    Flag = "wave";
+    Default = getgenv().autosell;
+    Callback = function(x)
+        getgenv().autosell = x
+        updatejson()
+        if getgenv().autosell == false then
+            getgenv().disableatuofarm = false
+        end
+    end;
+    SavingDisabled = true;
+})
+
+        function MouseClick(UnitPos)
+            local connection
+            local _map = game:GetService("Workspace")["_BASES"].player.base["fake_unit"]:WaitForChild("HumanoidRootPart")
+            connection = UserInputService.InputBegan:Connect(
+                function(input, gameProcessed)
+                    if input.UserInputType == Enum.UserInputType.MouseButton1 then
+                        connection:Disconnect()
+                        local a = Instance.new("Part", game.Workspace)
+                        a.Size = Vector3.new(1, 1, 1)
+                        a.Material = Enum.Material.Neon
+                        a.Position = mouse.hit.p
+                        task.wait()
+                        a.Anchored = true
+                        DiscordLib:Notification("Spawn Unit Posotion:", tostring(a.Position), "Okay!")
+                        a.CanCollide = false
+                        for i = 0, 1, 0.1 do
+                            a.Transparency = i
+                            task.wait()
+                        end
+                        a:Destroy()
+
+                        if game.Workspace._map:FindFirstChild("namek mushroom model") then
+                            print("Namak")
+                            SpawnUnitPos["Namak"][UnitPos]["x"] = a.Position.X
+                            SpawnUnitPos["Namak"][UnitPos]["y"] = a.Position.Y
+                            SpawnUnitPos["Namak"][UnitPos]["z"] = a.Position.Z
+                        elseif game.Workspace._map:FindFirstChild("houses_new") then
+                            print("Aot")
+                            SpawnUnitPos["Aot"][UnitPos]["x"] = a.Position.X
+                            SpawnUnitPos["Aot"][UnitPos]["y"] = a.Position.Y
+                            SpawnUnitPos["Aot"][UnitPos]["z"] = a.Position.Z
+                        elseif game.Workspace._map:FindFirstChild("Snow Particles") then
+                            print("Snowy")
+                            SpawnUnitPos["Snowy"][UnitPos]["x"] = a.Position.X
+                            SpawnUnitPos["Snowy"][UnitPos]["y"] = a.Position.Y
+                            SpawnUnitPos["Snowy"][UnitPos]["z"] = a.Position.Z
+                        elseif game.Workspace._map:FindFirstChild("sand_gate") then
+                            warn("Sand")
+                            SpawnUnitPos["Sand"][UnitPos]["x"] = a.Position.X
+                            SpawnUnitPos["Sand"][UnitPos]["y"] = a.Position.Y
+                            SpawnUnitPos["Sand"][UnitPos]["z"] = a.Position.Z
+                        elseif game.Workspace._map:FindFirstChild("icebergs") then
+                            print("Marine")
+                            SpawnUnitPos["Marine"][UnitPos]["x"] = a.Position.X
+                            SpawnUnitPos["Marine"][UnitPos]["y"] = a.Position.Y
+                            SpawnUnitPos["Marine"][UnitPos]["z"] = a.Position.Z
+                        elseif game.Workspace._map:FindFirstChild("Helicopter Pad") then
+                            print("Ghoul")
+                            SpawnUnitPos["Ghoul"][UnitPos]["x"] = a.Position.X
+                            SpawnUnitPos["Ghoul"][UnitPos]["y"] = a.Position.Y
+                            SpawnUnitPos["Ghoul"][UnitPos]["z"] = a.Position.Z
+                        elseif game.Workspace._map:FindFirstChild("Bones/dust") then
+                            print("Hollow")
+                            SpawnUnitPos["Hollow"][UnitPos]["x"] = a.Position.X
+                            SpawnUnitPos["Hollow"][UnitPos]["y"] = a.Position.Y
+                            SpawnUnitPos["Hollow"][UnitPos]["z"] = a.Position.Z
+                        elseif game.Workspace._map:FindFirstChild("Ant Nest") then
+                            print("Ant")
+                            SpawnUnitPos["Ant"][UnitPos]["x"] = a.Position.X
+                            SpawnUnitPos["Ant"][UnitPos]["y"] = a.Position.Y
+                            SpawnUnitPos["Ant"][UnitPos]["z"] = a.Position.Z
+                        elseif game.Workspace._map:FindFirstChild("light poles") then
+                            print("Magic")
+                            SpawnUnitPos["Magic"][UnitPos]["x"] = a.Position.X
+                            SpawnUnitPos["Magic"][UnitPos]["y"] = a.Position.Y
+                            SpawnUnitPos["Magic"][UnitPos]["z"] = a.Position.Z
+                        elseif game.Workspace._map:FindFirstChild("LanternsGround") then
+                            print("Cursed")    
+                            SpawnUnitPos["Cursed"][UnitPos]["x"] = a.Position.X
+                            SpawnUnitPos["Cursed"][UnitPos]["y"] = a.Position.Y
+                            SpawnUnitPos["Cursed"][UnitPos]["z"] = a.Position.Z
+                        elseif game.Workspace._map:FindFirstChild("pumpkins") then
+                            print("thriller_park")    
+                            SpawnUnitPos["thriller_park"][UnitPos]["x"] = a.Position.X
+                            SpawnUnitPos["thriller_park"][UnitPos]["y"] = a.Position.Y
+                            SpawnUnitPos["thriller_park"][UnitPos]["z"] = a.Position.Z
+                        elseif game.Workspace._map:FindFirstChild("skeleton") then
+                            print("black_clover")    
+                            SpawnUnitPos["black_clover"][UnitPos]["x"] = a.Position.X
+                            SpawnUnitPos["black_clover"][UnitPos]["y"] = a.Position.Y
+                            SpawnUnitPos["black_clover"][UnitPos]["z"] = a.Position.Z
+                        elseif game.Workspace._map:FindFirstChild("graves") then
+                            print("hollow_leg")    
+                            SpawnUnitPos["hollow_leg"][UnitPos]["x"] = a.Position.X
+                            SpawnUnitPos["hollow_leg"][UnitPos]["y"] = a.Position.Y
+                            SpawnUnitPos["hollow_leg"][UnitPos]["z"] = a.Position.Z
+                        elseif game.Workspace._map:FindFirstChild("SpaceCenter") then
+                            print("Cape Canaveral")    
+                            SpawnUnitPos["jojo"][UnitPos]["x"] = a.Position.X
+                            SpawnUnitPos["jojo"][UnitPos]["y"] = a.Position.Y
+                            SpawnUnitPos["jojo"][UnitPos]["z"] = a.Position.Z
+                        elseif game.Workspace._map:FindFirstChild("vending machines") then
+                            print("chainsaw")    
+                            SpawnUnitPos["chainsaw"][UnitPos]["x"] = a.Position.X
+                            SpawnUnitPos["chainsaw"][UnitPos]["y"] = a.Position.Y
+                            SpawnUnitPos["chainsaw"][UnitPos]["z"] = a.Position.Z
+                        elseif game.Workspace._map:FindFirstChild("secret") then
+                            print("opm")    
+                            SpawnUnitPos["opm"][UnitPos]["x"] = a.Position.X
+                            SpawnUnitPos["opm"][UnitPos]["y"] = a.Position.Y
+                            SpawnUnitPos["opm"][UnitPos]["z"] = a.Position.Z
+                        end
+
+                        updatejson()
+                    end
+                end)
+        end
+
+        --// Set Position \\--
+
+        autofarmtab:CreateButton({
+            Name = "Set Unit 1 Posit"; 
+            Callback = function()
+                warn(1)
+                MouseClick("UP1")
+                warn(2)
+            end
+        })
+
+        autofarmtab:CreateButton({
+            Name = "Set Unit 2 Posit"; 
+            Callback = function()
+                warn(1)
+                MouseClick("UP2")
+                warn(2)
+            end
+        })
+
+        autofarmtab:CreateButton({
+            Name = "Set Unit 3 Posit"; 
+            Callback = function()
+                warn(1)
+                MouseClick("UP3")
+                warn(2)
+            end
+        })
+
+        autofarmtab:CreateButton({
+            Name = "Set Unit 4 Posit"; 
+            Callback = function()
+                warn(1)
+                MouseClick("UP4")
+                warn(2)
+            end
+        })
+
+
+        local axxc = game.Players.LocalPlayer.PlayerGui["spawn_units"].Lives.Main.Desc.Level.Text:split(" ")
+
+        if tonumber(axxc[2]) >= 20 then
+            autofarmtab:CreateButton({
+                Name = "Set Unit 5 Posit"; 
+                Callback = function()
+                    warn(1)
+                    MouseClick("UP5")
+                    warn(2)
+                end
+            })
+        end
+
+        if tonumber(axxc[2]) >= 50 then
+            autofarmtab:CreateButton({
+                Name = "Set Unit 6 Posit"; 
+                Callback = function()
+                    warn(1)
+                    MouseClick("UP6")
+                    warn(2)
+                end
+            })
+        end
+
+--#endregion
+
+--#region Auto Challenge 
+autoclngtab:CreateToggle({
+    Name = "Auto Challenge";
+    Flag = "chal";
+    Default = getgenv().AutoChallenge;
+    Callback = function(bool)
+        getgenv().AutoChallenge = bool
+        updatejson()
+    end;
+    SavingDisabled = true;
+})
+
+local worlddrop = autoclngtab:CreateDropdown({
+    Name = "Select Reward";
+    Callback = function(reward)
+        getgenv().selectedreward = reward
+        updatejson()
+    end;
+    Options = {"star_fruit_random","star_remnant","gems", "gold"};
+    ItemSelecting = true;
+    DefaultItemSelected = "Deez";
+    Warning = "Select Reward";
+    WarningIcon = 12345;
+})
+
+autoclngtab:CreateToggle({
+    Name = "Farm All Rewards";
+    Flag = "alrew";
+    Default = getgenv().AutoChallengeAll;
+    Callback = function(bool)
+        getgenv().AutoChallengeAll = bool
+        updatejson()
+    end;
+    SavingDisabled = true;
+})
+--#endregion
+
+--#region Auto Sell Tab
+autoseltab:CreateToggle({
+    Name = "Auto Sell At Specfic Wave";
+    Flag = "selatsp";
+    Default = true;
+    Callback = function(x)
+        getgenv().autosell = x
+            updatejson()
+            if getgenv().autosell == false then
+                getgenv().disableatuofarm = false
+            end
+    end;
+    SavingDisabled = true;
+})
+
+autoseltab:CreateTextBox({
+    Name = "Select Wave Number For Auto Sell"; 
+    Flag = "MyTextBox";
+    Callback = function(inputtedText,enterPressed)
+        getgenv().sellatwave = tonumber(t)
+        updatejson()
+    end;
+    DefaultText = getgenv().sellatwave;
+    PlaceholderText = "";
+    TabComplete = function(inputtedText)
+        getgenv().sellatwave = tonumber(t)
+            updatejson()
+    end;
+    ClearTextOnFocus = false;
     Warning = "";
     WarningIcon = 12345;
 })
 
-autochh:CreateToggle({
-    Name = "Farm All Rewards";
-    Flag = "challengeall";
-    Default = getgenv().AutoChallengeAll;
-    Callback = function(x)
-        getgenv().AutoChallengeAll = bool
-    end;
-    SavingDisabled = true;
-})
+--#endregion
 
-function MouseClick(UnitPos)
-    local connection
-    local _map = game:GetService("Workspace")["_BASES"].player.base["fake_unit"]:WaitForChild("HumanoidRootPart")
-    connection = UserInputService.InputBegan:Connect(
-        function(input, gameProcessed)
-            if input.UserInputType == Enum.UserInputType.MouseButton1 then
-                connection:Disconnect()
-                local a = Instance.new("Part", game.Workspace)
-                a.Size = Vector3.new(1, 1, 1)
-                a.Material = Enum.Material.Neon
-                a.Position = mouse.hit.p
-                task.wait()
-                a.Anchored = true
-                DiscordLib:Notification("Spawn Unit Posotion:", tostring(a.Position), "Okay!")
-                a.CanCollide = false
-                for i = 0, 1, 0.1 do
-                    a.Transparency = i
-                    task.wait()
-                end
-                a:Destroy()
-
-                if game.Workspace._map:FindFirstChild("namek mushroom model") then
-                    print("Namak")
-                    SpawnUnitPos["Namak"][UnitPos]["x"] = a.Position.X
-                    SpawnUnitPos["Namak"][UnitPos]["y"] = a.Position.Y
-                    SpawnUnitPos["Namak"][UnitPos]["z"] = a.Position.Z
-                elseif game.Workspace._map:FindFirstChild("houses_new") then
-                    print("Aot")
-                    SpawnUnitPos["Aot"][UnitPos]["x"] = a.Position.X
-                    SpawnUnitPos["Aot"][UnitPos]["y"] = a.Position.Y
-                    SpawnUnitPos["Aot"][UnitPos]["z"] = a.Position.Z
-                elseif game.Workspace._map:FindFirstChild("Snow Particles") then
-                    print("Snowy")
-                    SpawnUnitPos["Snowy"][UnitPos]["x"] = a.Position.X
-                    SpawnUnitPos["Snowy"][UnitPos]["y"] = a.Position.Y
-                    SpawnUnitPos["Snowy"][UnitPos]["z"] = a.Position.Z
-                elseif game.Workspace._map:FindFirstChild("sand_gate") then
-                    warn("Sand")
-                    SpawnUnitPos["Sand"][UnitPos]["x"] = a.Position.X
-                    SpawnUnitPos["Sand"][UnitPos]["y"] = a.Position.Y
-                    SpawnUnitPos["Sand"][UnitPos]["z"] = a.Position.Z
-                elseif game.Workspace._map:FindFirstChild("icebergs") then
-                    print("Marine")
-                    SpawnUnitPos["Marine"][UnitPos]["x"] = a.Position.X
-                    SpawnUnitPos["Marine"][UnitPos]["y"] = a.Position.Y
-                    SpawnUnitPos["Marine"][UnitPos]["z"] = a.Position.Z
-                elseif game.Workspace._map:FindFirstChild("Helicopter Pad") then
-                    print("Ghoul")
-                    SpawnUnitPos["Ghoul"][UnitPos]["x"] = a.Position.X
-                    SpawnUnitPos["Ghoul"][UnitPos]["y"] = a.Position.Y
-                    SpawnUnitPos["Ghoul"][UnitPos]["z"] = a.Position.Z
-                elseif game.Workspace._map:FindFirstChild("Bones/dust") then
-                    print("Hollow")
-                    SpawnUnitPos["Hollow"][UnitPos]["x"] = a.Position.X
-                    SpawnUnitPos["Hollow"][UnitPos]["y"] = a.Position.Y
-                    SpawnUnitPos["Hollow"][UnitPos]["z"] = a.Position.Z
-                elseif game.Workspace._map:FindFirstChild("Ant Nest") then
-                    print("Ant")
-                    SpawnUnitPos["Ant"][UnitPos]["x"] = a.Position.X
-                    SpawnUnitPos["Ant"][UnitPos]["y"] = a.Position.Y
-                    SpawnUnitPos["Ant"][UnitPos]["z"] = a.Position.Z
-                elseif game.Workspace._map:FindFirstChild("light poles") then
-                    print("Magic")
-                    SpawnUnitPos["Magic"][UnitPos]["x"] = a.Position.X
-                    SpawnUnitPos["Magic"][UnitPos]["y"] = a.Position.Y
-                    SpawnUnitPos["Magic"][UnitPos]["z"] = a.Position.Z
-                elseif game.Workspace._map:FindFirstChild("LanternsGround") then
-                    print("Cursed")    
-                    SpawnUnitPos["Cursed"][UnitPos]["x"] = a.Position.X
-                    SpawnUnitPos["Cursed"][UnitPos]["y"] = a.Position.Y
-                    SpawnUnitPos["Cursed"][UnitPos]["z"] = a.Position.Z
-                elseif game.Workspace._map:FindFirstChild("pumpkins") then
-                    print("thriller_park")    
-                    SpawnUnitPos["thriller_park"][UnitPos]["x"] = a.Position.X
-                    SpawnUnitPos["thriller_park"][UnitPos]["y"] = a.Position.Y
-                    SpawnUnitPos["thriller_park"][UnitPos]["z"] = a.Position.Z
-                elseif game.Workspace._map:FindFirstChild("skeleton") then
-                    print("black_clover")    
-                    SpawnUnitPos["black_clover"][UnitPos]["x"] = a.Position.X
-                    SpawnUnitPos["black_clover"][UnitPos]["y"] = a.Position.Y
-                    SpawnUnitPos["black_clover"][UnitPos]["z"] = a.Position.Z
-                elseif game.Workspace._map:FindFirstChild("graves") then
-                    print("hollow_leg")    
-                    SpawnUnitPos["hollow_leg"][UnitPos]["x"] = a.Position.X
-                    SpawnUnitPos["hollow_leg"][UnitPos]["y"] = a.Position.Y
-                    SpawnUnitPos["hollow_leg"][UnitPos]["z"] = a.Position.Z
-                elseif game.Workspace._map:FindFirstChild("SpaceCenter") then
-                    print("Cape Canaveral")    
-                    SpawnUnitPos["jojo"][UnitPos]["x"] = a.Position.X
-                    SpawnUnitPos["jojo"][UnitPos]["y"] = a.Position.Y
-                    SpawnUnitPos["jojo"][UnitPos]["z"] = a.Position.Z
-                elseif game.Workspace._map:FindFirstChild("vending machines") then
-                    print("chainsaw")    
-                    SpawnUnitPos["chainsaw"][UnitPos]["x"] = a.Position.X
-                    SpawnUnitPos["chainsaw"][UnitPos]["y"] = a.Position.Y
-                    SpawnUnitPos["chainsaw"][UnitPos]["z"] = a.Position.Z
-                elseif game.Workspace._map:FindFirstChild("secret") then
-                    print("opm")    
-                    SpawnUnitPos["opm"][UnitPos]["x"] = a.Position.X
-                    SpawnUnitPos["opm"][UnitPos]["y"] = a.Position.Y
-                    SpawnUnitPos["opm"][UnitPos]["z"] = a.Position.Z
-                end
-
-                updatejson()
-            end
-        end)
 end
 
-positio:CreateButton({
-    Name = "Set Unit 1 Position";
-    Callback = function()
-        MouseClick("UP1")
-    end
-})
+--------------------------------------------------
+--------------------------------------------------
 
-positio:CreateButton({
-    Name = "Set Unit 2 Position";
-    Callback = function()
-        MouseClick("UP2")
-    end
-})
-
-positio:CreateButton({
-    Name = "Set Unit 3 Position";
-    Callback = function()
-        MouseClick("UP3")
-    end
-})
-
-positio:CreateButton({
-    Name = "Set Unit 1 Position";
-    Callback = function()
-        MouseClick("UP4")
-    end
-})
-
-local axxc = game.Players.LocalPlayer.PlayerGui["spawn_units"].Lives.Main.Desc.Level.Text:split(" ")
-
-if tonumber(axxc[2]) >= 20 then
-    positio:CreateButton({
-        Name = "Set Unit 5 Position";
-        Callback = function()
-            MouseClick("UP5")
-        end
-    })
-end
-
-if tonumber(axxc[2]) >= 50 then
-    positio:CreateButton({
-        Name = "Set Unit 6 Position";
-        Callback = function()
-            MouseClick("UP6")
-        end
-    })
-end
-
-
-
-
-
-
-
+---// Checks if file exist or not\\---
 if isfile(savefilename) then 
+
     local jsonData = readfile(savefilename)
     local data = HttpService:JSONDecode(jsonData)
-    print("asdada")
 
     sex()
 
@@ -1315,7 +1943,13 @@ else
     writefile(savefilename, json)
 
     sex()
+--#endregion
 end
+
+--#region ----------------------
+--#endregion
+--------------------------------------------------
+
 
 function placesex()
     if getgenv().AutoFarm and not getgenv().disableatuofarm then
@@ -2147,105 +2781,116 @@ function placesex()
 end
 
 
---AUTOFARM LOOPER--
-
+------// Auto Farm \\------
+--#region Auto Farm Loop
 coroutine.resume(coroutine.create(function()
     while task.wait(1.5) do
         local _wave = game:GetService("Workspace"):WaitForChild("_wave_num")
         repeat task.wait() until game:GetService("Workspace"):WaitForChild("_map")
 
         placesex()
+
+        print("function called")
     end
 end))
+--#endregion
 
 
+
+------// Auto Leave \\------
+--#region Auto Leave 
+
+
+
+--- Made by "CharWar" # Modified by "binsfr" (V3rm)
 local PlaceID = 8304191830
 local AllIDs = {}
 local foundAnything = ""
 local actualHour = os.date("!*t").hour
 local Deleted = false
+
 local last
 
 local File = pcall(function()
-    AllIDs = game:GetService('HttpService'):JSONDecode(readfile("SameServers.json"))
- end)
- if not File then
-    table.insert(AllIDs, actualHour)
-    writefile("SameServers.json", game:GetService('HttpService'):JSONEncode(AllIDs))
- end
+   AllIDs = game:GetService('HttpService'):JSONDecode(readfile("SameServer.json"))
+end)
+if not File then
+   table.insert(AllIDs, actualHour)
+   writefile("SameServer.json", game:GetService('HttpService'):JSONEncode(AllIDs))
+end
 
- function TPReturner()
-    local Site;
-    if foundAnything == "" then
-        Site = game.HttpService:JSONDecode(game:HttpGet('https://games.roblox.com/v1/games/' .. PlaceID .. '/servers/Public?sortOrder=Asc&limit=100'))
-    else
-        Site = game.HttpService:JSONDecode(game:HttpGet('https://games.roblox.com/v1/games/' .. PlaceID .. '/servers/Public?sortOrder=Asc&limit=100&cursor=' .. foundAnything))
-    end
-    local ID = ""
-    if Site.nextPageCursor and Site.nextPageCursor ~= "null" and Site.nextPageCursor ~= nil then
-        foundAnything = Site.nextPageCursor
-    end
-    local num = 0;
-    local extranum = 0
-    for i,v in pairs(Site.data) do
-        extranum = extranum + 1
-        local Possible = true
-        ID = tostring(v.id)
-        if tonumber(v.maxPlayers) > tonumber(v.playing) then
-            if extranum ~= 1 and tonumber(v.playing) < last or extranum == 1 then
-                last = tonumber(v.playing)
-            elseif extranum ~= 1 then
-                continue
-            end
-            for _,Existing in pairs(AllIDs) do
-                if num ~= 0 then
-                    if ID == tostring(Existing) then
-                        Possible = false
-                    end
-                else
-                    if tonumber(actualHour) ~= tonumber(Existing) then
-                        local delFile = pcall(function()
-                            delfile("NotSameServers.json")
-                            AllIDs = {}
-                            table.insert(AllIDs, actualHour)
-                        end)
-                    end
-                end
-                num = num + 1
-            end
-            if Possible == true then
-                table.insert(AllIDs, ID)
-                wait()
-                pcall(function()
-                    writefile("NotSameServers.json", game:GetService('HttpService'):JSONEncode(AllIDs))
-                    wait()
-                    game:GetService("TeleportService"):TeleportToPlaceInstance(PlaceID, ID, game.Players.LocalPlayer)
-                end)
-                wait(4)
-            end
-        end
-    end
- end
+function TPReturner()
+   local Site;
+   if foundAnything == "" then
+       Site = game.HttpService:JSONDecode(game:HttpGet('https://games.roblox.com/v1/games/' .. PlaceID .. '/servers/Public?sortOrder=Asc&limit=100'))
+   else
+       Site = game.HttpService:JSONDecode(game:HttpGet('https://games.roblox.com/v1/games/' .. PlaceID .. '/servers/Public?sortOrder=Asc&limit=100&cursor=' .. foundAnything))
+   end
+   local ID = ""
+   if Site.nextPageCursor and Site.nextPageCursor ~= "null" and Site.nextPageCursor ~= nil then
+       foundAnything = Site.nextPageCursor
+   end
+   local num = 0;
+   local extranum = 0
+   for i,v in pairs(Site.data) do
+       extranum += 1
+       local Possible = true
+       ID = tostring(v.id)
+       if tonumber(v.maxPlayers) > tonumber(v.playing) then
+           if extranum ~= 1 and tonumber(v.playing) < last or extranum == 1 then
+               last = tonumber(v.playing)
+           elseif extranum ~= 1 then
+               continue
+           end
+           for _,Existing in pairs(AllIDs) do
+               if num ~= 0 then
+                   if ID == tostring(Existing) then
+                       Possible = false
+                   end
+               else
+                   if tonumber(actualHour) ~= tonumber(Existing) then
+                       local delFile = pcall(function()
+                           delfile("NotSameServers.json")
+                           AllIDs = {}
+                           table.insert(AllIDs, actualHour)
+                       end)
+                   end
+               end
+               num = num + 1
+           end
+           if Possible == true then
+               table.insert(AllIDs, ID)
+               wait()
+               pcall(function()
+                   writefile("NotSameServers.json", game:GetService('HttpService'):JSONEncode(AllIDs))
+                   wait()
+                   game:GetService("TeleportService"):TeleportToPlaceInstance(PlaceID, ID, game.Players.LocalPlayer)
+               end)
+               wait(4)
+           end
+       end
+   end
+end
 
- function Teleport()
-    while wait() do
-        pcall(function()
-            TPReturner()
-            if foundAnything ~= "" then
-                TPReturner()
-            end
-        end)
-    end
- end
+function Teleport()
+   while wait() do
+       pcall(function()
+           TPReturner()
+           if foundAnything ~= "" then
+               TPReturner()
+           end
+       end)
+   end
+end
+-------------------------------------------
 
- coroutine.resume(coroutine.create(function()
+coroutine.resume(coroutine.create(function()
 	local GameFinished = game:GetService("Workspace"):WaitForChild("_DATA"):WaitForChild("GameFinished")
     GameFinished:GetPropertyChangedSignal("Value"):Connect(function()
         print("Changed", GameFinished.Value == true)
         if GameFinished.Value == true then
             repeat task.wait() until  game:GetService("Players").LocalPlayer.PlayerGui.ResultsUI.Enabled == true
             task.wait()
-            pcall(function() webhook() end)
             task.wait(2.1)
             if getgenv().AutoReplay then
                 local a={[1]="replay"} game:GetService("ReplicatedStorage").endpoints.client_to_server.set_game_finished_vote:InvokeServer(unpack(a))
@@ -2258,32 +2903,36 @@ local File = pcall(function()
         end
 	end)
 end))
+--#endregion
 
+------// Auto Sell Units \\------
 coroutine.resume(coroutine.create(function()
-    while task.wait() do
-        if getgenv().UnitSellTog then
-    
-            for i, v in pairs(game:GetService("Players")[game.Players.LocalPlayer.Name].PlayerGui.collection.grid.List.Outer.UnitFrames:GetChildren()) do
-                if v.Name == "CollectionUnitFrame" then
-                    repeat task.wait() until v:FindFirstChild("name")
-                    for _, Info in next, getgenv().UnitCache do
-                        if Info.name == v.name.Text and Info.rarity == getgenv().UnitToSell then
-                            local args = {
-                                [1] = {
-                                    [1] = tostring(v._uuid.Value)
-                                }
+while task.wait() do
+    if getgenv().UnitSellTog then
+
+        for i, v in pairs(game:GetService("Players")[game.Players.LocalPlayer.Name].PlayerGui.collection.grid.List.Outer.UnitFrames:GetChildren()) do
+            if v.Name == "CollectionUnitFrame" then
+                repeat task.wait() until v:FindFirstChild("name")
+                for _, Info in next, getgenv().UnitCache do
+                    if Info.name == v.name.Text and Info.rarity == getgenv().UnitToSell then
+                        local args = {
+                            [1] = {
+                                [1] = tostring(v._uuid.Value)
                             }
-                            game:GetService("ReplicatedStorage").endpoints.client_to_server.sell_units:InvokeServer(unpack(args))
-                         end
-                    end
+                        }
+                        game:GetService("ReplicatedStorage").endpoints.client_to_server.sell_units:InvokeServer(unpack(args))
+                     end
                 end
             end
-            
         end
+        
     end
-    end))
+end
+end))
 
-    getgenv().autoupgradeerr = false
+------// Auto Upgrade \\------
+--#region Auto Upgrade Loop
+getgenv().autoupgradeerr = false
 
 function autoupgradefunc()
     local success, err = pcall(function() --///
@@ -2323,7 +2972,11 @@ coroutine.resume(coroutine.create(function()
         end
     end
 end))
+--#endregion
 
+
+------// Auto Sell \\------
+--#region Auto Sell loop
 coroutine.resume(coroutine.create(function()
     while task.wait() do
         local _wave = game:GetService("Workspace"):WaitForChild("_wave_num")
@@ -2347,7 +3000,10 @@ coroutine.resume(coroutine.create(function()
         end
     end
 end))
+--#endregion
 
+--//Auto Abilities--
+--#region Auto Abilities loop
 getgenv().autoabilityerr = false
 
 function autoabilityfunc()
@@ -2391,6 +3047,8 @@ coroutine.resume(coroutine.create(function()
     end   
 
 end))
+--#endregion
+
 
 getgenv().teleporting = true
 
@@ -2421,6 +3079,7 @@ local function checkReward()
         return false
     end
 end
+
 
 local function startfarming()
     if getgenv().farmprotal == false and getgenv().autostart and getgenv().AutoFarm and getgenv().teleporting 
@@ -2565,6 +3224,10 @@ coroutine.resume(coroutine.create(function()
         end
     end
 end))
+--#endregion
+
+
+------// Auto Start Infiniy Castle && Thriller Park \\------
 
 local function FarmCastlePark()
     if getgenv().AutoFarmIC and getgenv().AutoFarm then
@@ -2638,16 +3301,18 @@ coroutine.resume(coroutine.create(function()
 end))
 
 if getgenv().AutoLoadTP == true then
-    local exec = tostring(identifyexecutor())
+    local exec = tostring(identifyexecutor())   
 
     if exec == "Synapse X" then
-        syn.queue_on_teleport("loadstring(game:HttpGet('https://raw.githubusercontent.com/KeremHuba/AnimAdventures/main/animeadventures.lua'))()")
+        syn.queue_on_teleport("loadstring(game:HttpGet('https://raw.githubusercontent.com/ArponAG/Scripts/main/AnimeAdventures.lua'))()")
     else
-        queue_on_teleport("loadstring(game:HttpGet('https://raw.githubusercontent.com/KeremHuba/AnimAdventures/main/animeadventures.lua'))()")
+        queue_on_teleport("loadstring(game:HttpGet('https://raw.githubusercontent.com/ArponAG/Scripts/main/AnimeAdventures.lua'))()")
     end
 
 end
 
+
+--hide name
 task.spawn(function()  -- Hides name for yters (not sure if its Fe)
     while task.wait() do
         pcall(function()
@@ -2658,6 +3323,8 @@ task.spawn(function()  -- Hides name for yters (not sure if its Fe)
     end
 end)
 
+
+--anti afk
 pcall(function()
     local vu = game:GetService("VirtualUser")
     game:GetService("Players").LocalPlayer.Idled:connect(function()
@@ -2668,3 +3335,6 @@ pcall(function()
 
     game:GetService("ReplicatedStorage").endpoints.client_to_server.claim_daily_reward:InvokeServer()
 end)
+
+print("Successfully Loaded!!")
+---------------------------------------------------------------------
