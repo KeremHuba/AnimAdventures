@@ -214,7 +214,6 @@ end
 
     if game.PlaceId == 8304191830 then
         local AutoFarm = UI:CreatePage("Select Units")
-
         local selworld = UI:CreatePage("Select World")
     
         local dev = UI:CreatePage("Devil City")
