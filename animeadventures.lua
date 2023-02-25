@@ -211,12 +211,6 @@ end
         end;
         Discord = "https://discord.gg/xnohub";
     })
-       
-    if exec == "Synapse X" or exec == "ScriptWare" or exec == "Trigon" then
-        print("Good boi")
-    else
-        
-    end
 
     local AutoFarm = UI:CreatePage("Select Units")
 
@@ -599,7 +593,7 @@ devilcity:CreateButton({
 
 devilcity:CreateToggle({
     Name = "Auto Farm Devil Portal";
-    Flag = "devil";
+    Flag = "devilqwd";
     Default = getgenv().farmportal;
     Callback = function(bool)
         getgenv().farmprotal = bool
@@ -614,7 +608,7 @@ devilcity:CreateToggle({
 --#region Auto Farm Tab
 autofarmtab:CreateToggle({
     Name = "Auto Replay";
-    Flag = "replay";
+    Flag = "wqdasdqd";
     Default = getgenv().AutoReplay;
     Callback = function(bool)
         getgenv().AutoReplay = bool
@@ -625,7 +619,7 @@ autofarmtab:CreateToggle({
 
 autofarmtab:CreateToggle({
     Name = "Auto Leave";
-    Flag = "leave";
+    Flag = "leaasdqdave";
     Default = getgenv().AutoLeave;
     Callback = function(bool)
         getgenv().AutoLeave = bool
@@ -636,7 +630,7 @@ autofarmtab:CreateToggle({
 
 autofarmtab:CreateToggle({
     Name = "Auto Farm Event";
-    Flag = "farmev";
+    Flag = "farfqdasdmev";
     Default = getgenv().AutoFarmTP;
     Callback = function(bool)
         getgenv().AutoFarmTP = bool
@@ -647,7 +641,7 @@ autofarmtab:CreateToggle({
 
 autofarmtab:CreateToggle({
     Name = "Auto Infinity Castle";
-    Flag = "infinitycastle";
+    Flag = "infinitgfhycastle";
     Default = getgenv().AutoFarmIC;
     Callback = function(bool)
         getgenv().AutoFarmIC = bool
@@ -658,7 +652,7 @@ autofarmtab:CreateToggle({
 
 autofarmtab:CreateToggle({
     Name = "Auto Farm";
-    Flag = "farm";
+    Flag = "farghjghjm";
     Default = getgenv().AutoFarm;
     Callback = function(bool)
         getgenv().AutoFarm = bool
@@ -669,7 +663,7 @@ autofarmtab:CreateToggle({
 
 autofarmtab:CreateToggle({
     Name = "Auto Start";
-    Flag = "start";
+    Flag = "sthjkhart";
     Default = getgenv().autostart;
     Callback = function(bool)
         getgenv().autostart = bool
@@ -680,7 +674,7 @@ autofarmtab:CreateToggle({
 
 autofarmtab:CreateToggle({
     Name = "Auto Abilities";
-    Flag = "ability";
+    Flag = "abilwefsdfity";
     Default = getgenv().autoabilities;
     Callback = function(bool)
         getgenv().autoabilities = bool
@@ -691,7 +685,7 @@ autofarmtab:CreateToggle({
 
 autofarmtab:CreateToggle({
     Name = "Auto Upgrade Units";
-    Flag = "upgrade";
+    Flag = "upgertegdfgrade";
     Default = getgenv().autoupgrade;
     Callback = function(bool)
         getgenv().autoupgrade = bool
@@ -702,7 +696,7 @@ autofarmtab:CreateToggle({
 
 autofarmtab:CreateToggle({
     Name = "Auto Sell At Spectic Wave";
-    Flag = "wave";
+    Flag = "wergdfgave";
     Default = getgenv().autosell;
     Callback = function(x)
         getgenv().autosell = x
@@ -716,7 +710,7 @@ autofarmtab:CreateToggle({
 
 autofarmtab:CreateTextBox({
     Name = "Wave";
-    Flag = "wavee"; 
+    Flag = "wavergdfggee"; 
     Callback = function(inputtedText,enterPressed)
         print("TextBox:",inputtedText,enterPressed)
     end;
@@ -749,7 +743,7 @@ autofarmtab:CreateTextBox({
 
         webhookserver:CreateTextBox({
             Name = "Webhook URL";
-            Flag = "wavee"; 
+            Flag = "wavegfhe"; 
             Callback = function(inputtedText,enterPressed)
                 getgenv().weburl = inputtedText
             end;
@@ -770,7 +764,7 @@ autofarmtab:CreateTextBox({
 --#region Auto Challenge
 autoclngtab:CreateToggle({
     Name = "Auto Challenge";
-    Flag = "chal";
+    Flag = "chfghal";
     Default = getgenv().AutoChallenge;
     Callback = function(bool)
         getgenv().AutoChallenge = bool
@@ -794,7 +788,7 @@ local worlddrop = autoclngtab:CreateDropdown({
 
 autoclngtab:CreateToggle({
     Name = "Farm All Rewards";
-    Flag = "alrew";
+    Flag = "alrhjkhew";
     Default = getgenv().AutoChallengeAll;
     Callback = function(bool)
         getgenv().AutoChallengeAll = bool
@@ -834,7 +828,7 @@ autoclngtab:CreateToggle({
 
         misc:CreateToggle({
             Name = "Auto Summon {Use Ticket 1}";
-            Flag = "auto1";
+            Flag = "autorgegfd1";
             Default = getgenv().autosummonticketse;
             Callback = function(bool)
                 getgenv().autosummonticketse = bool
@@ -848,7 +842,7 @@ autoclngtab:CreateToggle({
 
         misc:CreateToggle({
             Name = "Auto Summon {Buy 1}";
-            Flag = "asd";
+            Flag = "asergdfgd";
             Default = getgenv().autosummongeme;
             Callback = function(bool)
                 getgenv().autosummongeme = bool
@@ -862,7 +856,7 @@ autoclngtab:CreateToggle({
 
         misc:CreateToggle({
             Name = "Auto Summon {Buy 10}";
-            Flag = "asddf";
+            Flag = "asdqwdasddf";
             Default = getgenv().autosummongem10e;
             Callback = function(bool)
                 getgenv().autosummongem10e = bool
@@ -878,7 +872,7 @@ autoclngtab:CreateToggle({
 
         misc:CreateToggle({
             Name = "Auto Summon {Use Ticket 1}";
-            Flag = "asddfh";
+            Flag = "asdfghfrdfh";
             Default = getgenv().autosummontickets;
             Callback = function(bool)
                 getgenv().autosummontickets = bool
@@ -892,7 +886,7 @@ autoclngtab:CreateToggle({
 
         misc:CreateToggle({
             Name = "Auto Summon {Buy 1}";
-            Flag = "asddffg";
+            Flag = "asdwqdasddffg";
             Default = getgenv().autosummongem;
             Callback = function(bool)
                 getgenv().autosummongem = bool
@@ -906,7 +900,7 @@ autoclngtab:CreateToggle({
 
         misc:CreateToggle({
             Name = "Auto Summon {Buy 10}";
-            Flag = "asddffgha";
+            Flag = "asddffqwdghasdgha";
             Default = getgenv().autosummongem10;
             Callback = function(bool)
                 getgenv().autosummongem10 = bool
@@ -935,7 +929,7 @@ autoclngtab:CreateToggle({
         
         misc:CreateToggle({
             Name = "Auto Sell Units";
-            Flag = "autosellasd";
+            Flag = "autoselghjlasd";
             Default = getgenv().UnitSellTog;
             Callback = function(bool)
                 getgenv().UnitSellTog = bool
@@ -966,7 +960,7 @@ autoclngtab:CreateToggle({
     
     MySection:CreateToggle({
         autoloadtab = "Auto Load Script";
-        Flag = "loadd";
+        Flag = "loaghjgdd";
         Default = getgenv().AutoLoadTP;
         Callback = function(bool)
             getgenv().AutoLoadTP = bool
@@ -1006,7 +1000,7 @@ autoclngtab:CreateToggle({
     
     devilcity:CreateToggle({
         Name = "Auto Farm Devil Portal";
-        Flag = "devil";
+        Flag = "devilghjgh";
         Default = getgenv().farmportal;
         Callback = function(bool)
             getgenv().farmprotal = bool
@@ -1020,7 +1014,7 @@ autoclngtab:CreateToggle({
 --#region Auto Farm Tab
 autofarmtab:CreateToggle({
     Name = "Auto Replay";
-    Flag = "replay";
+    Flag = "repfhglay";
     Default = getgenv().AutoReplay;
     Callback = function(bool)
         getgenv().AutoReplay = bool
@@ -1031,7 +1025,7 @@ autofarmtab:CreateToggle({
 
 autofarmtab:CreateToggle({
     Name = "Auto Leave";
-    Flag = "leave";
+    Flag = "leregdfgave";
     Default = getgenv().AutoLeave;
     Callback = function(bool)
         getgenv().AutoLeave = bool
@@ -1042,7 +1036,7 @@ autofarmtab:CreateToggle({
 
 autofarmtab:CreateToggle({
     Name = "Auto Farm Event";
-    Flag = "farmev";
+    Flag = "ftyhgrmev";
     Default = getgenv().AutoFarmTP;
     Callback = function(bool)
         getgenv().AutoFarmTP = bool
@@ -1053,7 +1047,7 @@ autofarmtab:CreateToggle({
 
 autofarmtab:CreateToggle({
     Name = "Auto Infinity Castle";
-    Flag = "infinitycastle";
+    Flag = "infinityrtghfcastle";
     Default = getgenv().AutoFarmIC;
     Callback = function(bool)
         getgenv().AutoFarmIC = bool
@@ -1064,7 +1058,7 @@ autofarmtab:CreateToggle({
 
 autofarmtab:CreateToggle({
     Name = "Auto Farm";
-    Flag = "farm";
+    Flag = "farrthfgh";
     Default = getgenv().AutoFarm;
     Callback = function(bool)
         getgenv().AutoFarm = bool
@@ -1075,7 +1069,7 @@ autofarmtab:CreateToggle({
 
 autofarmtab:CreateToggle({
     Name = "Auto Start";
-    Flag = "start";
+    Flag = "starrthfght";
     Default = getgenv().autostart;
     Callback = function(bool)
         getgenv().autostart = bool
@@ -1086,7 +1080,7 @@ autofarmtab:CreateToggle({
 
 autofarmtab:CreateToggle({
     Name = "Auto Abilities";
-    Flag = "ability";
+    Flag = "abilrthfghity";
     Default = getgenv().autoabilities;
     Callback = function(bool)
         getgenv().autoabilities = bool
@@ -1097,7 +1091,7 @@ autofarmtab:CreateToggle({
 
 autofarmtab:CreateToggle({
     Name = "Auto Upgrade Units";
-    Flag = "upgrade";
+    Flag = "upgrarthfghde";
     Default = getgenv().autoupgrade;
     Callback = function(bool)
         getgenv().autoupgrade = bool
@@ -1108,7 +1102,7 @@ autofarmtab:CreateToggle({
 
 autofarmtab:CreateToggle({
     Name = "Auto Sell At Spectic Wave";
-    Flag = "wave";
+    Flag = "wavrthfghe";
     Default = getgenv().autosell;
     Callback = function(x)
         getgenv().autosell = x
@@ -1296,7 +1290,7 @@ autofarmtab:CreateToggle({
 --#region Auto Challenge 
 autoclngtab:CreateToggle({
     Name = "Auto Challenge";
-    Flag = "chal";
+    Flag = "charthfghl";
     Default = getgenv().AutoChallenge;
     Callback = function(bool)
         getgenv().AutoChallenge = bool
@@ -1320,7 +1314,7 @@ local worlddrop = autoclngtab:CreateDropdown({
 
 autoclngtab:CreateToggle({
     Name = "Farm All Rewards";
-    Flag = "alrew";
+    Flag = "altyjhthfgrew";
     Default = getgenv().AutoChallengeAll;
     Callback = function(bool)
         getgenv().AutoChallengeAll = bool
@@ -1333,7 +1327,7 @@ autoclngtab:CreateToggle({
 --#region Auto Sell Tab
 autoseltab:CreateToggle({
     Name = "Auto Sell At Specfic Wave";
-    Flag = "selatsp";
+    Flag = "selafghfhtsp";
     Default = true;
     Callback = function(x)
         getgenv().autosell = x
@@ -1347,7 +1341,7 @@ autoseltab:CreateToggle({
 
 autoseltab:CreateTextBox({
     Name = "Select Wave Number For Auto Sell"; 
-    Flag = "MyTextBox";
+    Flag = "MyTfghfhextBox";
     Callback = function(inputtedText,enterPressed)
         getgenv().sellatwave = tonumber(t)
         updatejson()
