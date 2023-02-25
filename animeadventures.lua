@@ -214,12 +214,6 @@ function sex()
         end;
         Discord = "https://discord.gg/xnohub";
     })
-       
-    if exec == "Synapse X" or exec == "ScriptWare" or exec == "Trigon" then
-        print("Good boi")
-    else
-        
-    end
 
     local AutoFarm = UI:CreatePage("Select Units")
 
@@ -736,9 +730,9 @@ autofarmtab:CreateTextBox({
 
         if getgenv().AutoLoadTP == true then
             if exec == "Synapse X" and getgenv().AutoLoadTP then
-                syn.queue_on_teleport("loadstring(game:HttpGet('https://raw.githubusercontent.com/ArponAG/Scripts/main/AnimeAdventures.lua'))()")
+                syn.queue_on_teleport("loadstring(game:HttpGet('https://raw.githubusercontent.com/KeremHuba/AnimAdventures/main/animeadventures.lua'))()")
             elseif exec ~= "Synapse X" and getgenv().AutoLoadTP then
-                queue_on_teleport("loadstring(game:HttpGet('https://raw.githubusercontent.com/ArponAG/Scripts/main/AnimeAdventures.lua'))()")
+                queue_on_teleport("loadstring(game:HttpGet('https://raw.githubusercontent.com/KeremHuba/AnimAdventures/main/animeadventures.lua'))()")
             end
         end
 		
@@ -3304,9 +3298,9 @@ if getgenv().AutoLoadTP == true then
     local exec = tostring(identifyexecutor())   
 
     if exec == "Synapse X" then
-        syn.queue_on_teleport("loadstring(game:HttpGet('https://raw.githubusercontent.com/ArponAG/Scripts/main/AnimeAdventures.lua'))()")
+        syn.queue_on_teleport("loadstring(game:HttpGet('https://raw.githubusercontent.com/KeremHuba/AnimAdventures/main/animeadventures.lua'))()")
     else
-        queue_on_teleport("loadstring(game:HttpGet('https://raw.githubusercontent.com/ArponAG/Scripts/main/AnimeAdventures.lua'))()")
+        queue_on_teleport("loadstring(game:HttpGet('https://raw.githubusercontent.com/KeremHuba/AnimAdventures/main/animeadventures.lua'))()")
     end
 
 end
