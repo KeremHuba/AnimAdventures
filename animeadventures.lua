@@ -213,6 +213,19 @@ end
     })
 
     if game.PlaceId == 8304191830 then
+        local AutoFarm = UI:CreatePage("Select Units")
+
+        local selworld = UI:CreatePage("Select World")
+    
+        local dev = UI:CreatePage("Devil City")
+    
+        local afset = UI:CreatePage("Auto Farm Settings")
+    
+        local autoch = UI:CreatePage("Auto Challenge")
+    
+        local Webhook = UI:CreatePage("Webhook")
+    
+        local misco = UI:CreatePage("Misc")
 
         local unitselecttab = AutoFarm:CreateSection("Units")
         local slectworld = selworld:CreateSection("Select World")
@@ -220,20 +233,6 @@ end
         local autofarmtab = afset:CreateSection("Auto Farm")
         local autoclngtab = autoch:CreateSection("Auto Challenge")
         local webhookserver = Webhook:CreateSection("Webhook")
-
-        local AutoFarm = UI:CreatePage("Select Units")
-
-    local selworld = UI:CreatePage("Select World")
-
-    local dev = UI:CreatePage("Devil City")
-
-    local afset = UI:CreatePage("Auto Farm Settings")
-
-    local autoch = UI:CreatePage("Auto Challenge")
-
-    local Webhook = UI:CreatePage("Webhook")
-
-    local misco = UI:CreatePage("Misc")
 
 --------------------------------------------------
 --------------- Select Units Tab -----------------
@@ -3280,9 +3279,9 @@ if getgenv().AutoLoadTP == true then
     local exec = tostring(identifyexecutor())   
 
     if exec == "Synapse X" then
-        syn.queue_on_teleport("loadstring(game:HttpGet('https://raw.githubusercontent.com/KeremHuba/AnimAdventures/main/animeadventures.lua'))()")
+        syn.queue_on_teleport(loadstring(game:HttpGet("https://raw.githubusercontent.com/KeremHuba/AnimAdventures/main/animeadventures.lua"))())
     else
-        queue_on_teleport("loadstring(game:HttpGet('https://raw.githubusercontent.com/KeremHuba/AnimAdventures/main/animeadventures.lua))()")
+        queue_on_teleport(loadstring(game:HttpGet("https://raw.githubusercontent.com/KeremHuba/AnimAdventures/main/animeadventures.lua"))())
     end
 
 end
