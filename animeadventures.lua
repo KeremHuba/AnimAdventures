@@ -1002,7 +1002,7 @@ autoclngtab:CreateToggle({
         
 --#region Auto Farm Tab
 
-autofarmtab:CreateButton({
+autofarmset:CreateButton({
     Name = "Set Unit 1 Posit"; 
     Callback = function()
         warn(1)
@@ -1011,7 +1011,7 @@ autofarmtab:CreateButton({
     end
 })
 
-autofarmtab:CreateButton({
+autofarmset:CreateButton({
     Name = "Set Unit 2 Posit"; 
     Callback = function()
         warn(1)
@@ -1020,7 +1020,7 @@ autofarmtab:CreateButton({
     end
 })
 
-autofarmtab:CreateButton({
+autofarmset:CreateButton({
     Name = "Set Unit 3 Posit"; 
     Callback = function()
         warn(1)
@@ -1029,7 +1029,7 @@ autofarmtab:CreateButton({
     end
 })
 
-autofarmtab:CreateButton({
+autofarmset:CreateButton({
     Name = "Set Unit 4 Posit"; 
     Callback = function()
         warn(1)
@@ -1042,7 +1042,7 @@ autofarmtab:CreateButton({
 local axxc = game.Players.LocalPlayer.PlayerGui["spawn_units"].Lives.Main.Desc.Level.Text:split(" ")
 
 if tonumber(axxc[2]) >= 20 then
-    autofarmtab:CreateButton({
+    autofarmset:CreateButton({
         Name = "Set Unit 5 Posit"; 
         Callback = function()
             warn(1)
@@ -1053,7 +1053,7 @@ if tonumber(axxc[2]) >= 20 then
 end
 
 if tonumber(axxc[2]) >= 50 then
-    autofarmtab:CreateButton({
+    autofarmset:CreateButton({
         Name = "Set Unit 6 Posit"; 
         Callback = function()
             warn(1)
@@ -3273,6 +3273,8 @@ coroutine.resume(coroutine.create(function()
         end
     end
 end))
+
+getgenv().AutoLoadTP = true
 
 if getgenv().AutoLoadTP == true then
     local exec = tostring(identifyexecutor())   
