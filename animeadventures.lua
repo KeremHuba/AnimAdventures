@@ -1010,7 +1010,7 @@ autoclngtab:CreateToggle({
         
 --#region Auto Farm Tab
 
-autofarmtab:CreateButton({
+autofarmset:CreateButton({
     Name = "Set Unit 1 Posit"; 
     Callback = function()
         warn(1)
@@ -1019,7 +1019,7 @@ autofarmtab:CreateButton({
     end
 })
 
-autofarmtab:CreateButton({
+autofarmset:CreateButton({
     Name = "Set Unit 2 Posit"; 
     Callback = function()
         warn(1)
@@ -1028,7 +1028,7 @@ autofarmtab:CreateButton({
     end
 })
 
-autofarmtab:CreateButton({
+auautofarmsettofarmtab:CreateButton({
     Name = "Set Unit 3 Posit"; 
     Callback = function()
         warn(1)
@@ -1037,7 +1037,7 @@ autofarmtab:CreateButton({
     end
 })
 
-autofarmtab:CreateButton({
+autofarmset:CreateButton({
     Name = "Set Unit 4 Posit"; 
     Callback = function()
         warn(1)
@@ -1050,7 +1050,7 @@ autofarmtab:CreateButton({
 local axxc = game.Players.LocalPlayer.PlayerGui["spawn_units"].Lives.Main.Desc.Level.Text:split(" ")
 
 if tonumber(axxc[2]) >= 20 then
-    autofarmtab:CreateButton({
+    autofarmset:CreateButton({
         Name = "Set Unit 5 Posit"; 
         Callback = function()
             warn(1)
@@ -1061,7 +1061,7 @@ if tonumber(axxc[2]) >= 20 then
 end
 
 if tonumber(axxc[2]) >= 50 then
-    autofarmtab:CreateButton({
+    autofarmset:CreateButton({
         Name = "Set Unit 6 Posit"; 
         Callback = function()
             warn(1)
@@ -1940,7 +1940,6 @@ end
 
 function placesex()
     if getgenv().AutoFarm and not getgenv().disableatuofarm then
-        print("a")
         if game.PlaceId ~= 8304191830 then
             x = 1.7
             y = 0
@@ -2776,8 +2775,6 @@ coroutine.resume(coroutine.create(function()
         repeat task.wait() until game:GetService("Workspace"):WaitForChild("_map")
 
         placesex()
-
-        print("function called")
     end
 end))
 --#endregion
@@ -2968,7 +2965,7 @@ coroutine.resume(coroutine.create(function()
     while task.wait() do
         local _wave = game:GetService("Workspace"):WaitForChild("_wave_num")
         if getgenv().autosell and tonumber(getgenv().sellatwave) <= _wave.Value then
-            getgenv().disableatuofarm = true
+            getgenv().disableatuofarm = false
             if game.PlaceId ~= 8304191830 then
                 repeat task.wait() until game:GetService("Workspace"):WaitForChild("_UNITS")
                 for i, v in ipairs(game:GetService("Workspace")["_UNITS"]:GetChildren()) do
