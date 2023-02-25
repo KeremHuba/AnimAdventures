@@ -724,15 +724,6 @@ autofarmtab:CreateTextBox({
     Warning = "";
     WarningIcon = 12345;
 })
-        getgenv().AutoLoadTP = true
-
-        if getgenv().AutoLoadTP == true then
-            if exec == "Synapse X" and getgenv().AutoLoadTP then
-                syn.queue_on_teleport("loadstring(game:HttpGet('https://raw.githubusercontent.com/KeremHuba/AnimAdventures/main/animeadventures.lua'))()")
-            elseif exec ~= "Synapse X" and getgenv().AutoLoadTP then
-                queue_on_teleport("loadstring(game:HttpGet('https://raw.githubusercontent.com/KeremHuba/AnimAdventures/main/animeadventures.lua'))()")
-            end
-        end
 		
 		local webhoolPlaceholde
 		if getgenv().weburl == "" then
