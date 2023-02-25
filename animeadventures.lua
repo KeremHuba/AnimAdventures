@@ -316,7 +316,7 @@ end
             end;
             Options = Units;
             ItemSelecting = true;
-            DefaultItemSelected = getgenv().SelectedUnits["U1"];
+            DefaultItemSelected = "";
             Warning = "Select Unit 1 Monkey";
             WarningIcon = 12345;
         })
@@ -329,7 +329,7 @@ end
             end;
             Options = Units;
             ItemSelecting = true;
-            DefaultItemSelected = getgenv().SelectedUnits["U2"];
+            DefaultItemSelected = "";
             Warning = "Select Unit 2 Monkey";
             WarningIcon = 12345;
         })
@@ -342,7 +342,7 @@ end
             end;
             Options = Units;
             ItemSelecting = true;
-            DefaultItemSelected = getgenv().SelectedUnits["U3"];
+            DefaultItemSelected = "";
             Warning = "Select Unit 3 Monkey";
             WarningIcon = 12345;
         }) 
@@ -355,7 +355,7 @@ end
             end;
             Options = Units;
             ItemSelecting = true;
-            DefaultItemSelected = getgenv().SelectedUnits["U4"];
+            DefaultItemSelected = "";
             Warning = "Select Unit 4 Monkey";
             WarningIcon = 12345;
         })
@@ -372,7 +372,7 @@ end
                 end;
                 Options = Units;
                 ItemSelecting = true;
-                DefaultItemSelected = getgenv().SelectedUnits["U5"];
+                DefaultItemSelected = "";
                 Warning = "Select Unit 5 Monkey";
                 WarningIcon = 12345;
             })
@@ -387,7 +387,7 @@ end
                 end;
                 Options = Units;
                 ItemSelecting = true;
-                DefaultItemSelected = getgenv().SelectedUnits["U6"];
+                DefaultItemSelected = "";
                 Warning = "Select Unit 6 Monkey";
                 WarningIcon = 12345;
             })
