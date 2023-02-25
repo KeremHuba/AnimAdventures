@@ -234,7 +234,6 @@ end
         local autofarmtab = afset:CreateSection("Auto Farm")
         local autoclngtab = autoch:CreateSection("Auto Challenge")
         local webhookserver = Webhook:CreateSection("Webhook")
-    
 
 --------------------------------------------------
 --------------- Select Units Tab -----------------
@@ -946,19 +945,20 @@ autoclngtab:CreateToggle({
         game.Players.LocalPlayer.PlayerGui.MessageGui.Enabled = false
         game:GetService("ReplicatedStorage").packages.assets["ui_sfx"].error.Volume = 0
         game:GetService("ReplicatedStorage").packages.assets["ui_sfx"].error_old.Volume = 0
-        
 
-
-
-
-    local autofarmtab = autofrmserver:CreateSection("Auto Farm")
-    local devilcity = autofrmserver:CreateSection("Devil City")
-    local autoclngtab = autofrmserver:CreateSection("Auto Challenge")
-    local autoloadtab = autofrmserver:CreateSection("Auto Load Script")
-    local autoseltab = autofrmserver:CreateSection("Auto Sell")
-    local webhooktab = webhookserver:CreateSection("Webhook")
+    local menu = UI:CreatePage("Main")      
+    local autofarmtab = menu:CreateSection("Main")
     
-    MySection:CreateToggle({
+    local asdfg = UI:CreatePage("Settings")
+    local autofarmset = asdfg:CreateSection("Settings")
+
+    local devilcity = afset:CreateSection("Devil City")
+    local autoclngtab = afset:CreateSection("Auto Challenge")
+    local autoloadtab = afset:CreateSection("Auto Load Script")
+    local autoseltab = afset:CreateSection("Auto Sell")
+    local webhooktab = Webhook:CreateSection("Webhook")
+    
+    --[[webhooktab:CreateToggle({
         autoloadtab = "Auto Load Script";
         Flag = "loaghjgdd";
         Default = getgenv().AutoLoadTP;
@@ -972,10 +972,10 @@ autoclngtab:CreateToggle({
             end
         end;
         SavingDisabled = true;
-    })  
+    }) ]] 
 
 
-    getgenv().portalname = devilcity:CreateDropdown({
+    --[[getgenv().portalname = devilcity:CreateDropdown({
         Name = "Select Portal";
         Callback = function(pornname)
             getgenv().portalnameX = pornname
@@ -1008,11 +1008,73 @@ autoclngtab:CreateToggle({
         end;
         SavingDisabled = true;
     })
-
+]]
 
         
 --#region Auto Farm Tab
-autofarmtab:CreateToggle({
+
+autofarmtab:CreateButton({
+    Name = "Set Unit 1 Posit"; 
+    Callback = function()
+        warn(1)
+        MouseClick("UP1")
+        warn(2)
+    end
+})
+
+autofarmtab:CreateButton({
+    Name = "Set Unit 2 Posit"; 
+    Callback = function()
+        warn(1)
+        MouseClick("UP2")
+        warn(2)
+    end
+})
+
+autofarmtab:CreateButton({
+    Name = "Set Unit 3 Posit"; 
+    Callback = function()
+        warn(1)
+        MouseClick("UP3")
+        warn(2)
+    end
+})
+
+autofarmtab:CreateButton({
+    Name = "Set Unit 4 Posit"; 
+    Callback = function()
+        warn(1)
+        MouseClick("UP4")
+        warn(2)
+    end
+})
+
+
+local axxc = game.Players.LocalPlayer.PlayerGui["spawn_units"].Lives.Main.Desc.Level.Text:split(" ")
+
+if tonumber(axxc[2]) >= 20 then
+    autofarmtab:CreateButton({
+        Name = "Set Unit 5 Posit"; 
+        Callback = function()
+            warn(1)
+            MouseClick("UP5")
+            warn(2)
+        end
+    })
+end
+
+if tonumber(axxc[2]) >= 50 then
+    autofarmtab:CreateButton({
+        Name = "Set Unit 6 Posit"; 
+        Callback = function()
+            warn(1)
+            MouseClick("UP6")
+            warn(2)
+        end
+    })
+end
+
+autofarmset:CreateToggle({
     Name = "Auto Replay";
     Flag = "repfhglay";
     Default = getgenv().AutoReplay;
@@ -1023,7 +1085,7 @@ autofarmtab:CreateToggle({
     SavingDisabled = true;
 })
 
-autofarmtab:CreateToggle({
+autofarmset:CreateToggle({
     Name = "Auto Leave";
     Flag = "leregdfgave";
     Default = getgenv().AutoLeave;
@@ -1034,7 +1096,7 @@ autofarmtab:CreateToggle({
     SavingDisabled = true;
 })
 
-autofarmtab:CreateToggle({
+autofarmset:CreateToggle({
     Name = "Auto Farm Event";
     Flag = "ftyhgrmev";
     Default = getgenv().AutoFarmTP;
@@ -1045,7 +1107,7 @@ autofarmtab:CreateToggle({
     SavingDisabled = true;
 })
 
-autofarmtab:CreateToggle({
+autofarmset:CreateToggle({
     Name = "Auto Infinity Castle";
     Flag = "infinityrtghfcastle";
     Default = getgenv().AutoFarmIC;
@@ -1056,7 +1118,7 @@ autofarmtab:CreateToggle({
     SavingDisabled = true;
 })
 
-autofarmtab:CreateToggle({
+autofarmset:CreateToggle({
     Name = "Auto Farm";
     Flag = "farrthfgh";
     Default = getgenv().AutoFarm;
@@ -1067,7 +1129,7 @@ autofarmtab:CreateToggle({
     SavingDisabled = true;
 })
 
-autofarmtab:CreateToggle({
+autofarmset:CreateToggle({
     Name = "Auto Start";
     Flag = "starrthfght";
     Default = getgenv().autostart;
@@ -1078,7 +1140,7 @@ autofarmtab:CreateToggle({
     SavingDisabled = true;
 })
 
-autofarmtab:CreateToggle({
+autofarmset:CreateToggle({
     Name = "Auto Abilities";
     Flag = "abilrthfghity";
     Default = getgenv().autoabilities;
@@ -1089,7 +1151,7 @@ autofarmtab:CreateToggle({
     SavingDisabled = true;
 })
 
-autofarmtab:CreateToggle({
+autofarmset:CreateToggle({
     Name = "Auto Upgrade Units";
     Flag = "upgrarthfghde";
     Default = getgenv().autoupgrade;
@@ -1100,7 +1162,7 @@ autofarmtab:CreateToggle({
     SavingDisabled = true;
 })
 
-autofarmtab:CreateToggle({
+autofarmset:CreateToggle({
     Name = "Auto Sell At Spectic Wave";
     Flag = "wavrthfghe";
     Default = getgenv().autosell;
@@ -1222,73 +1284,10 @@ autofarmtab:CreateToggle({
                 end)
         end
 
-        --// Set Position \\--
-
-        autofarmtab:CreateButton({
-            Name = "Set Unit 1 Posit"; 
-            Callback = function()
-                warn(1)
-                MouseClick("UP1")
-                warn(2)
-            end
-        })
-
-        autofarmtab:CreateButton({
-            Name = "Set Unit 2 Posit"; 
-            Callback = function()
-                warn(1)
-                MouseClick("UP2")
-                warn(2)
-            end
-        })
-
-        autofarmtab:CreateButton({
-            Name = "Set Unit 3 Posit"; 
-            Callback = function()
-                warn(1)
-                MouseClick("UP3")
-                warn(2)
-            end
-        })
-
-        autofarmtab:CreateButton({
-            Name = "Set Unit 4 Posit"; 
-            Callback = function()
-                warn(1)
-                MouseClick("UP4")
-                warn(2)
-            end
-        })
-
-
-        local axxc = game.Players.LocalPlayer.PlayerGui["spawn_units"].Lives.Main.Desc.Level.Text:split(" ")
-
-        if tonumber(axxc[2]) >= 20 then
-            autofarmtab:CreateButton({
-                Name = "Set Unit 5 Posit"; 
-                Callback = function()
-                    warn(1)
-                    MouseClick("UP5")
-                    warn(2)
-                end
-            })
-        end
-
-        if tonumber(axxc[2]) >= 50 then
-            autofarmtab:CreateButton({
-                Name = "Set Unit 6 Posit"; 
-                Callback = function()
-                    warn(1)
-                    MouseClick("UP6")
-                    warn(2)
-                end
-            })
-        end
-
 --#endregion
 
 --#region Auto Challenge 
-autoclngtab:CreateToggle({
+--[[autoclngtab:CreateToggle({
     Name = "Auto Challenge";
     Flag = "charthfghl";
     Default = getgenv().AutoChallenge;
@@ -1321,11 +1320,11 @@ autoclngtab:CreateToggle({
         updatejson()
     end;
     SavingDisabled = true;
-})
+})]]
 --#endregion
 
 --#region Auto Sell Tab
-autoseltab:CreateToggle({
+autofarmset:CreateToggle({
     Name = "Auto Sell At Specfic Wave";
     Flag = "selafghfhtsp";
     Default = true;
@@ -1339,7 +1338,7 @@ autoseltab:CreateToggle({
     SavingDisabled = true;
 })
 
-autoseltab:CreateTextBox({
+autofarmset:CreateTextBox({
     Name = "Select Wave Number For Auto Sell"; 
     Flag = "MyTfghfhextBox";
     Callback = function(inputtedText,enterPressed)
@@ -3149,9 +3148,7 @@ local function startfarming()
 
           local args = {
             [1] = tostring(getgenv().PortalID),
-            [2] = {
-                ["friends_only"] = true
-            }
+            [2] = {["friends_only"] = true}
         }
         
         game:GetService("ReplicatedStorage").endpoints.client_to_server.use_portal:InvokeServer(unpack(args))
