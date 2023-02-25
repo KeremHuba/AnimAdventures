@@ -223,7 +223,7 @@ end
         local autoch = UI:CreatePage("Auto Challenge")
     
         local Webhook = UI:CreatePage("Webhook")
-    
+        
         local misco = UI:CreatePage("Misc")
 
         local unitselecttab = AutoFarm:CreateSection("Units")
@@ -942,9 +942,9 @@ autoclngtab:CreateToggle({
     local autofarmset = asdfg:CreateSection("Settings")
 
     local afset = UI:CreatePage("Auto Sell")
-    local Webhook = UI:CreateSection("Webhook")
-
     local autoseltab = afset:CreateSection("Auto Sell")
+
+    local Webhook = UI:CreatePage("Webhook")
     local webhooktab = Webhook:CreateSection("Webhook")
     
     --[[webhooktab:CreateToggle({
@@ -1020,7 +1020,7 @@ autofarmset:CreateButton({
     end
 })
 
-auautofarmsettofarmtab:CreateButton({
+autofarmset:CreateButton({
     Name = "Set Unit 3 Posit"; 
     Callback = function()
         warn(1)
