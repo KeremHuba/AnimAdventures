@@ -144,15 +144,12 @@ function sex()
     getgenv().difficulty = data.difficulty
     getgenv().world = data.world
     getgenv().level = data.level
-    --getgenv().door = data.door
 
     getgenv().SpawnUnitPos = data.xspawnUnitPos
     getgenv().SelectedUnits = data.xselectedUnits
     getgenv().autoabilities = data.autoabilities
---#endregion
+end
 
----// updates the json file
---#region update json
     function updatejson()
 
         local xdata = {
@@ -214,6 +211,12 @@ function sex()
         end;
         Discord = "https://discord.gg/xnohub";
     })
+       
+    if exec == "Synapse X" or exec == "ScriptWare" or exec == "Trigon" then
+        print("Good boi")
+    else
+        
+    end
 
     local AutoFarm = UI:CreatePage("Select Units")
 
@@ -298,6 +301,7 @@ function sex()
                         if unitxx ~= nil then
                             if Check(unitxx.Name,v) then
                                 print(unitxx, v)
+                                end
                             end
                         end
                     end
@@ -443,7 +447,7 @@ unitselecttab:CreateButton({
                 getgenv().world = world
                 updatejson()
 
-                iif world == "Plannet Namak" then
+                if world == "Plannet Namak" then
                     table.clear(levels)
                     getgenv().levels = {"namek_infinite", "namek_level_1", "namek_level_2", "namek_level_3",
                                         "namek_level_4", "namek_level_5", "namek_level_6"}
@@ -551,7 +555,7 @@ unitselecttab:CreateButton({
             Options = {"Plannet Namak", "Shiganshinu District", "Snowy Town","Hidden Sand Village", "Marine's Ford","Ghoul City", "Hollow World", "Ant Kingdom", "Magic Town", "Cursed Academy","Clover Kingdom", "Clover Legend - HARD","Hollow Legend - HARD","Cape Canaveral","Alien Spaceship"};
             ItemSelecting = true;
             DefaultItemSelected = getgenv().world;
-            Warning = "Select World;
+            Warning = "Select World";
             WarningIcon = 12345;
         })
 
@@ -968,9 +972,9 @@ autoclngtab:CreateToggle({
             getgenv().AutoLoadTP = bool
             updatejson()
             if exec == "Synapse X" and getgenv().AutoLoadTP then
-                syn.queue_on_teleport("loadstring(game:HttpGet('https://raw.githubusercontent.com/ArponAG/Scripts/main/AnimeAdventures.lua'))()")
+                syn.queue_on_teleport("loadstring(game:HttpGet('https://raw.githubusercontent.com/KeremHuba/AnimAdventures/main/animeadventures.lua'))()")
             elseif exec ~= "Synapse X" and getgenv().AutoLoadTP then
-                queue_on_teleport("loadstring(game:HttpGet('https://raw.githubusercontent.com/ArponAG/Scripts/main/AnimeAdventures.lua'))()")
+                queue_on_teleport("loadstring(game:HttpGet('https://raw.githubusercontent.com/KeremHuba/AnimAdventures/main/animeadventures.lua'))()")
             end
         end;
         SavingDisabled = true;
@@ -3300,7 +3304,7 @@ if getgenv().AutoLoadTP == true then
     if exec == "Synapse X" then
         syn.queue_on_teleport("loadstring(game:HttpGet('https://raw.githubusercontent.com/KeremHuba/AnimAdventures/main/animeadventures.lua'))()")
     else
-        queue_on_teleport("loadstring(game:HttpGet('https://raw.githubusercontent.com/KeremHuba/AnimAdventures/main/animeadventures.lua'))()")
+        queue_on_teleport("loadstring(game:HttpGet('https://raw.githubusercontent.com/KeremHuba/AnimAdventures/main/animeadventures.lua))()")
     end
 
 end
@@ -3329,6 +3333,3 @@ pcall(function()
 
     game:GetService("ReplicatedStorage").endpoints.client_to_server.claim_daily_reward:InvokeServer()
 end)
-
-print("Successfully Loaded!!")
----------------------------------------------------------------------
