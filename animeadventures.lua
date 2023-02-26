@@ -194,7 +194,7 @@ end
         Credit = "Made By G.O.A.T";
         Color = Color3.fromRGB(255,0,0);
         Bind = "LeftControl";
-        UseLoader = true;
+        UseLoader = false;
         FullName = "Anime Adventures Auto Farm";
         CheckKey = function(inputtedKey)
             return inputtedKey=="kerem"
@@ -1324,10 +1324,7 @@ autofarmset:CreateToggle({
                         task.wait()
                         a.Anchored = true
                         a.CanCollide = false
-                        for i = 0, 1, 0.1 do
-                            a.Transparency = i
-                            task.wait()
-                        end
+                        a.Transparency = 1
                         a:Destroy()
 
                         if game.Workspace._map:FindFirstChild("namek mushroom model") then
