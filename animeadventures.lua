@@ -28,7 +28,6 @@ local function webhook()
 			return
 		end 
 			
-    	XP = tostring(game:GetService("Players").LocalPlayer.PlayerGui.ResultsUI.Holder.LevelRewards.ScrollingFrame.XPReward.Main.Amount.Text)
 		gems = tostring(game:GetService("Players").LocalPlayer.PlayerGui.ResultsUI.Holder.LevelRewards.ScrollingFrame.GemReward.Main.Amount.Text)
 		cwaves = game:GetService("Players").LocalPlayer.PlayerGui.ResultsUI.Holder.Middle.WavesCompleted.Text
 		ctime = game:GetService("Players").LocalPlayer.PlayerGui.ResultsUI.Holder.Middle.Timer.Text
@@ -59,10 +58,6 @@ local function webhook()
 							["name"] = "Recieved Gems:",
 							["value"] = gems,
 							["inline"] = true
-						}, {
-                            ["name"] = "Received XP:",
-                            ["value"] = XP,
-                            ["inline"] = true
                         }, {
                             ["name"] = "Monkey's Level:",
                             ["value"] = tostring(game.Players.LocalPlayer.PlayerGui.spawn_units.Lives.Main.Desc.Level.Text).. " ✨",
@@ -1096,9 +1091,6 @@ autoclngtab:CreateToggle({
     
     local asdfg = UI:CreatePage("Settings")
     local autofarmset = asdfg:CreateSection("Settings")
-
-    local afset = UI:CreatePage("Auto Sell")
-    local autoseltab = afset:CreateSection("Auto Sell")
 
     local Webhook = UI:CreatePage("Webhook")
     local webhooktab = Webhook:CreateSection("Webhook")
