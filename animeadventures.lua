@@ -720,6 +720,22 @@ autofarmtab:CreateTextBox({
     Warning = "";
     WarningIcon = 12345;
 })
+
+webhookserver:CreateToggle({
+    Name = "Auto Load Script";
+    Flag = "wergdfgave";
+    Default = getgenv().AutoLoadTP;
+    Callback = function(x)
+        getgenv().AutoLoadTP = x
+        updatejson()
+        if exec == "Synapse X" and getgenv().AutoLoadTP then
+            syn.queue_on_teleport("loadstring(game:HttpGet('https://raw.githubusercontent.com/KeremHuba/AnimAdventures/main/animeadventures.lua'))()")
+        elseif exec ~= "Synapse X" and getgenv().AutoLoadTP then
+            queue_on_teleport("loadstring(game:HttpGet('https://raw.githubusercontent.com/KeremHuba/AnimAdventures/main/animeadventures.lua'))()")
+        end
+    end;
+    SavingDisabled = true;
+})
 		
 		local webhoolPlaceholde
 		if getgenv().weburl == "" then
@@ -1407,11 +1423,10 @@ autofarmset:CreateToggle({
                             SpawnUnitPos["opm"][UnitPos]["z"] = a.Position.Z
                         elseif game.Workspace._map:FindFirstChild("fence") then
                             print("7ds")
-                            SpawnUnitPos["asd"][UnitPos]["x"] = a.Position.X
-                            SpawnUnitPos["asd"][UnitPos]["y"] = a.Position.Y
-                            SpawnUnitPos["asd"][UnitPos]["z"] = a.Position.Z
+                            SpawnUnitPos["seven"][UnitPos]["x"] = a.Position.X
+                            SpawnUnitPos["seven"][UnitPos]["y"] = a.Position.Y
+                            SpawnUnitPos["seven"][UnitPos]["z"] = a.Position.Z
                         end
-
                         updatejson()
                     end
                 end)
@@ -1530,45 +1545,13 @@ else
         autostart = false,
         autoloadtp = false,
         autoupgrade = false,
+        AutoBuyLockPotion = false,
         difficulty = "nil",
         world = "nil",
         level = "nil",
         door = "nil",
-        AutoBuyLockPotion = false,
     
         xspawnUnitPos  = {
-            asd = {
-                UP1 = {
-                    y = 212,9611053466797,
-                    x = -85.12884521484375,
-                    z = -167.95156860351562,
-                },
-                UP3 = {
-                    y = 212,9611053466797,
-                    x = -79.12884521484375,
-                    z = -168.95156860351562,
-                },
-                UP2 = {
-                    y = 212,9611053466797,
-                    x = -75.12884521484375,
-                    z = -174.95156860351562,
-                },
-                UP6 = {
-                    y = 212,9611053466797,
-                    x = -92.12884521484375,
-                    z = -155.95156860351562,
-                },
-                UP5 = {
-                    y = 212,9611053466797,
-                    x = -95.12884521484375,
-                    z = -165.95156860351562,
-                },
-                UP4 = {
-                    y = 212,9611053466797,
-                    x = -62.12884521484375,
-                    z = -171.95156860351562,
-                }
-               },
             black_clover  = {
               UP1  = {
                 y  = 1.4244641065597535,
@@ -1601,6 +1584,38 @@ else
                 z  = -51.20615005493164
              }
            },
+           seven  = {
+            UP1  = {
+              y  = 212,9611053466797,
+              x  = -85.12884521484375,
+              z  = -167.95156860351562
+           },
+            UP3  = {
+              y  = 212,9611053466797,
+              x  = -79.12884521484375,
+              z  = -168.95156860351562
+           },
+            UP2  = {
+              y  = 212,9611053466797,
+              x  = -75.12884521484375,
+              z  = -174.95156860351562
+           },
+            UP6  = {
+              y  = 212,9611053466797,
+              x  = -92.12884521484375,
+              z  = -155.95156860351562
+           },
+            UP5  = {
+              y  = 212,9611053466797,
+              x  = -95.12884521484375,
+              z  = -165.95156860351562
+           },
+            UP4  = {
+              y  = 212,9611053466797,
+              x  = -62.12884521484375,
+              z  = -171.95156860351562
+           }
+         },
            hollow_leg = {
             UP1 = {
                 x = -168.71795654296875,
@@ -2937,7 +2952,7 @@ function placesex()
                     local unitinfo = getgenv().SelectedUnits["U" .. i]
                     if unitinfo ~= nil then
                         local unitinfo_ = unitinfo:split(" #")
-                        local pos = getgenv().SpawnUnitPos["asd"]["UP"..i]
+                        local pos = getgenv().SpawnUnitPos["seven"]["UP"..i]
                         task.wait()
                         --place units 0
                         local args = {
@@ -3038,7 +3053,7 @@ function TPReturner()
    local num = 0;
    local extranum = 0
    for i,v in pairs(Site.data) do
-       extranum += 1
+       extranum = extranum + 1
        local Possible = true
        ID = tostring(v.id)
        if tonumber(v.maxPlayers) > tonumber(v.playing) then
@@ -3154,8 +3169,6 @@ function autoupgradefunc()
     end)
 
     if err then
-        warn("//////////////////////////////////////////////////")
-        warn("//////////////////////////////////////////////////")
         getgenv().autoupgradeerr = true
         error(err)
     end
@@ -3226,8 +3239,6 @@ function autoabilityfunc()
     end)
      
      if err then
-         warn("//////////////////////////////////////////////////")
-         warn("//////////////////////////////////////////////////")
          getgenv().autoabilityerr = true
          error(err)
      end
@@ -3344,7 +3355,7 @@ local function startfarming()
                 end
             end
 
-            warn("farming")
+            warn("Farm Started")
             task.wait(3)
         end
     elseif getgenv().autostart and getgenv().AutoFarm and getgenv().teleporting 
@@ -3473,20 +3484,6 @@ coroutine.resume(coroutine.create(function()
         end
     end
 end))
-
-getgenv().AutoLoadTP = true
-
-if getgenv().AutoLoadTP == true then
-    local exec = tostring(identifyexecutor())   
-
-    if exec == "Synapse X" then
-        syn.queue_on_teleport(loadstring(game:HttpGet("https://raw.githubusercontent.com/KeremHuba/AnimAdventures/main/animeadventures.lua"))())
-    else
-        queue_on_teleport(loadstring(game:HttpGet("https://raw.githubusercontent.com/KeremHuba/AnimAdventures/main/animeadventures.lua"))())
-    end
-
-end
-
 
 --hide name
 task.spawn(function()
