@@ -547,6 +547,9 @@ unitselecttab:CreateButton({
                 elseif world == "Fabled Kingdom" then
                     table.clear(levels)
                     getgenv().levels = {"7ds_infinite","7ds_level_1","7ds_level_2","7ds_level_3","7ds_level_4","7ds_level_5","7ds_level_6"}
+                    for i,v in ipairs(getgenv().levels) do
+                        getgenv().leveldrop:Update(getgenv().levels)
+                    end
                 end
             end;
             Options = {"Plannet Namak", "Shiganshinu District", "Snowy Town","Hidden Sand Village", "Marine's Ford","Ghoul City", "Hollow World", "Ant Kingdom", "Magic Town", "Cursed Academy","Clover Kingdom", "Clover Legend - HARD","Hollow Legend - HARD","Cape Canaveral","Alien Spaceship","Fabled Kingdom"};
@@ -563,7 +566,7 @@ unitselecttab:CreateButton({
                 getgenv().level = level
                 updatejson()
             end;
-            Options = {"Apple","Orange","Banana"};
+            Options = {"Kerem","is","best","myman"};
             ItemSelecting = true;
             DefaultItemSelected = getgenv().level;
             Warning = "Select Act";
@@ -1096,7 +1099,7 @@ autoclngtab:CreateToggle({
     local webhooktab = Webhook:CreateSection("Webhook")
     
     webhooktab:CreateToggle({
-        autoloadtab = "Auto Load Script";
+        Name = "Auto Load Script";
         Flag = "loaghjgdd";
         Default = getgenv().AutoLoadTP;
         Callback = function(bool)
@@ -1404,9 +1407,9 @@ autofarmset:CreateToggle({
                             SpawnUnitPos["opm"][UnitPos]["z"] = a.Position.Z
                         elseif game.Workspace._map:FindFirstChild("fence") then
                             print("7ds")
-                            SpawnUnitPos["7ds"][UnitPos]["x"] = a.Position.X
-                            SpawnUnitPos["7ds"][UnitPos]["y"] = a.Position.Y
-                            SpawnUnitPos["7ds"][UnitPos]["z"] = a.Position.Z
+                            SpawnUnitPos["asd"][UnitPos]["x"] = a.Position.X
+                            SpawnUnitPos["asd"][UnitPos]["y"] = a.Position.Y
+                            SpawnUnitPos["asd"][UnitPos]["z"] = a.Position.Z
                         end
 
                         updatejson()
@@ -1534,6 +1537,38 @@ else
         AutoBuyLockPotion = false,
     
         xspawnUnitPos  = {
+            asd = {
+                UP1 = {
+                    y = 212,9611053466797,
+                    x = -85.12884521484375,
+                    z = -167.95156860351562,
+                },
+                UP3 = {
+                    y = 212,9611053466797,
+                    x = -79.12884521484375,
+                    z = -168.95156860351562,
+                },
+                UP2 = {
+                    y = 212,9611053466797,
+                    x = -75.12884521484375,
+                    z = -174.95156860351562,
+                },
+                UP6 = {
+                    y = 212,9611053466797,
+                    x = -92.12884521484375,
+                    z = -155.95156860351562,
+                },
+                UP5 = {
+                    y = 212,9611053466797,
+                    x = -95.12884521484375,
+                    z = -165.95156860351562,
+                },
+                UP4 = {
+                    y = 212,9611053466797,
+                    x = -62.12884521484375,
+                    z = -171.95156860351562,
+                }
+               },
             black_clover  = {
               UP1  = {
                 y  = 1.4244641065597535,
@@ -2046,38 +2081,6 @@ else
               y = 361.61859130859377,
               x = -279.85382080078127,
               z = 1441.7813720703126
-            }
-           },
-           seven = {
-            UP1 = {
-                y = 212,9611053466797,
-                x = -85.12884521484375,
-                z = -167.95156860351562,
-            },
-            UP3 = {
-                y = 212,9611053466797,
-                x = -79.12884521484375,
-                z = -168.95156860351562,
-            },
-            UP2 = {
-                y = 212,9611053466797,
-                x = -75.12884521484375,
-                z = -174.95156860351562,
-            },
-            UP6 = {
-                y = 212,9611053466797,
-                x = -92.12884521484375,
-                z = -155.95156860351562,
-            },
-            UP5 = {
-                y = 212,9611053466797,
-                x = -95.12884521484375,
-                z = -165.95156860351562,
-            },
-            UP4 = {
-                y = 212,9611053466797,
-                x = -62.12884521484375,
-                z = -171.95156860351562,
             }
            }
          },
@@ -2934,7 +2937,7 @@ function placesex()
                     local unitinfo = getgenv().SelectedUnits["U" .. i]
                     if unitinfo ~= nil then
                         local unitinfo_ = unitinfo:split(" #")
-                        local pos = getgenv().SpawnUnitPos["seven"]["UP" .. i]
+                        local pos = getgenv().SpawnUnitPos["asd"]["UP"..i]
                         task.wait()
                         --place units 0
                         local args = {
