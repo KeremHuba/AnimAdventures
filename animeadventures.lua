@@ -1,4 +1,6 @@
+local versionx = "1.6.7"
 
+---// Loading Section \\---
 task.wait(2)
 repeat  task.wait() until game:IsLoaded()
 if game.PlaceId == 8304191830 then
@@ -23,11 +25,13 @@ getgenv().door = "_lobbytemplategreen1"
 --#region Webhook Sender
 local function webhook()
 	pcall(function()
-		local url = tostring(getgenv().weburl)
+		local url = tostring(getgenv().weburl) --webhook
+		print("webhook?")
 		if url == "" then
 			return
 		end 
 			
+    	XP = tostring(game:GetService("Players").LocalPlayer.PlayerGui.ResultsUI.Holder.LevelRewards.ScrollingFrame.XPReward.Main.Amount.Text)
 		gems = tostring(game:GetService("Players").LocalPlayer.PlayerGui.ResultsUI.Holder.LevelRewards.ScrollingFrame.GemReward.Main.Amount.Text)
 		cwaves = game:GetService("Players").LocalPlayer.PlayerGui.ResultsUI.Holder.Middle.WavesCompleted.Text
 		ctime = game:GetService("Players").LocalPlayer.PlayerGui.ResultsUI.Holder.Middle.Timer.Text
@@ -36,14 +40,16 @@ local function webhook()
 
 		local data = {
 			["content"] = "",
-			["username"] = "Xno Hub - Anime Adventures",
+			["username"] = "Anime Adventures",
+			["avatar_url"] = "https://tr.rbxcdn.com/e5b5844fb26df605986b94d87384f5fb/150/150/Image/Jpeg",
 			["embeds"] = {
 				{
 					["author"] = {
-						["name"] = "Results",
+						["name"] = "Anime Adventures | Result ✔",
+						["icon_url"] = "https://cdn.discordapp.com/emojis/997123585476927558.webp?size=96&quality=lossless"
 					},
-					["description"] = "||**"..game:GetService("Players").LocalPlayer.Name.."**||",
-					["color"] = tonumber("FF0000"),
+					["description"] = "🎮 ||**"..game:GetService("Players").LocalPlayer.Name.."**|| 🎮",
+					["color"] = 110335,
 
 					["thumbnail"] = {
 						['url'] = "https://www.roblox.com/headshot-thumbnail/image?userId=" .. game.Players.LocalPlayer.userId .. "&width=420&height=420&format=png"
@@ -51,23 +57,32 @@ local function webhook()
 
 					["fields"] = {
 						{
-							["name"] = "Completed Waves",
-							["value"] = tostring(waves[2]),
+							["name"] = "Total Waves:",
+							["value"] = tostring(waves[2]) ..
+								" <:wave:997136622363627530>",
 							["inline"] = true
 						}, {
 							["name"] = "Recieved Gems:",
-							["value"] = gems,
+							["value"] = gems .. " <:gem:997123585476927558>",
 							["inline"] = true
+						}, {
+                            ["name"] = "Recieved XP:",
+                            ["value"] = XP .. " 🧪",
+                            ["inline"] = true
                         }, {
-                            ["name"] = "Monkey's Level:",
+                            ["name"] = "Total Time:",
+                            ["value"] = tostring(ttime[2]) .. " ⏳",
+                            ["inline"] = true
+                        }, {
+                            ["name"] = "Current Gems:",
+                            ["value"] = tostring(game.Players.LocalPlayer._stats.gem_amount.Value).." <:gem:997123585476927558>",
+                            ["inline"] = true
+                        }, {
+                            ["name"] = "Current Level:",
                             ["value"] = tostring(game.Players.LocalPlayer.PlayerGui.spawn_units.Lives.Main.Desc.Level.Text).. " ✨",
                             ["inline"] = true
                         }
-					};
-					["footer"] = {
-                        ["text"] = "Anime Adventures - Xno Hub",
-                        ["icon_url"] = "https://i.imgur.com/qfTZMup.jpeg",
-                    }
+					}
 				}
 			}
 		}
@@ -77,6 +92,7 @@ local function webhook()
 		local headers = {["content-type"] = "application/json"}
 		request = http_request or request or HttpPost or syn.request or http.request
 		local sex = {Url = url, Body = porn, Method = "POST", Headers = headers}
+		warn("Sending webhook notification...")
 		request(sex)
 	end)
 end
@@ -189,7 +205,7 @@ end
         Credit = "Made By G.O.A.T";
         Color = Color3.fromRGB(255,0,0);
         Bind = "LeftControl";
-        UseLoader = false;
+        UseLoader = true;
         FullName = "Anime Adventures Auto Farm";
         CheckKey = function(inputtedKey)
             return inputtedKey=="kerem"
@@ -528,15 +544,9 @@ unitselecttab:CreateButton({
                     for i, v in ipairs(getgenv().levels) do
                         getgenv().leveldrop:Update(getgenv().levels)
                     end
-                elseif world == "Fabled Kingdom" then
-                    table.clear(levels)
-                    getgenv().levels = {"7ds_infinite","7ds_level_1","7ds_level_2","7ds_level_3","7ds_level_4","7ds_level_5","7ds_level_6"}
-                    for i,v in ipairs(getgenv().levels) do
-                        getgenv().leveldrop:Update(getgenv().levels)
-                    end
                 end
             end;
-            Options = {"Plannet Namak", "Shiganshinu District", "Snowy Town","Hidden Sand Village", "Marine's Ford","Ghoul City", "Hollow World", "Ant Kingdom", "Magic Town", "Cursed Academy","Clover Kingdom", "Clover Legend - HARD","Hollow Legend - HARD","Cape Canaveral","Alien Spaceship","Fabled Kingdom"};
+            Options = {"Plannet Namak", "Shiganshinu District", "Snowy Town","Hidden Sand Village", "Marine's Ford","Ghoul City", "Hollow World", "Ant Kingdom", "Magic Town", "Cursed Academy","Clover Kingdom", "Clover Legend - HARD","Hollow Legend - HARD","Cape Canaveral","Alien Spaceship"};
             ItemSelecting = true;
             DefaultItemSelected = getgenv().world;
             Warning = "Select World";
@@ -550,7 +560,7 @@ unitselecttab:CreateButton({
                 getgenv().level = level
                 updatejson()
             end;
-            Options = {"Kerem","is","best","myman"};
+            Options = {"Apple","Orange","Banana"};
             ItemSelecting = true;
             DefaultItemSelected = getgenv().level;
             Warning = "Select Act";
@@ -613,6 +623,17 @@ autofarmtab:CreateToggle({
     Default = getgenv().AutoLeave;
     Callback = function(bool)
         getgenv().AutoLeave = bool
+        updatejson()
+    end;
+    SavingDisabled = true;
+})
+
+autofarmtab:CreateToggle({
+    Name = "Auto Farm Event";
+    Flag = "farfqdasdmev";
+    Default = getgenv().AutoFarmTP;
+    Callback = function(bool)
+        getgenv().AutoFarmTP = bool
         updatejson()
     end;
     SavingDisabled = true;
@@ -704,32 +725,22 @@ autofarmtab:CreateTextBox({
     Warning = "";
     WarningIcon = 12345;
 })
-
-webhookserver:CreateToggle({
-    Name = "Auto Load Script";
-    Flag = "wergcadfgave";
-    Default = getgenv().AutoLoadTP;
-    Callback = function(x)
-        getgenv().AutoLoadTP = x
-        updatejson()
-        if exec == "Synapse X" and getgenv().AutoLoadTP then
-            syn.queue_on_teleport("loadstring(game:HttpGet('https://raw.githubusercontent.com/KeremHuba/AnimAdventures/main/animeadventures.lua'))()")
-        elseif exec ~= "Synapse X" and getgenv().AutoLoadTP then
-            queue_on_teleport("loadstring(game:HttpGet('https://raw.githubusercontent.com/KeremHuba/AnimAdventures/main/animeadventures.lua'))()")
-        end
-    end;
-    SavingDisabled = true;
-})
 		
+		local webhoolPlaceholde
+		if getgenv().weburl == "" then
+			webhoolPlaceholder = "Insert url here!"
+		else
+			webhoolPlaceholder = getgenv().weburl
+		end
+
         webhookserver:CreateTextBox({
             Name = "Webhook URL";
-            Flag = "waveg3fhe"; 
+            Flag = "wavegfhe"; 
             Callback = function(inputtedText,enterPressed)
                 getgenv().weburl = tostring(inputtedText)
-                updatejson()
             end;
             DefaultText = "";
-            PlaceholderText = "Write Webhook URL";
+            PlaceholderText = "Write Webhook";
             TabComplete = function(inputtedText)
                 getgenv().weburl = tostring(inputtedText)
                 updatejson()
@@ -762,7 +773,7 @@ local worlddrop = autoclngtab:CreateDropdown({
     end;
     Options = {"star_fruit_random","star_remnant","gems", "gold"};
     ItemSelecting = true;
-    DefaultItemSelected = "Robux";
+    DefaultItemSelected = "Deez";
     Warning = "Select Reward";
     WarningIcon = 12345;
 })
@@ -976,29 +987,23 @@ autoclngtab:CreateToggle({
         })
 
         spawn(function()
-            while wait(5) do
+            while wait(3) do
                 if game.Workspace:FindFirstChild("travelling_merchant"):FindFirstChild("is_open").Value == true then
                     if MerchBuyPot == true then
-                            for i,v in pairs(game.Workspace:FindFirstChild("travelling_merchant"):FindFirstChild("stand").items:GetChildren()) do
-                                if string.find(v.Name,"Luck") then
-                                    local args = {
-                                        [1] = v.Name
-                                    }
-                                    
-                                    game:GetService("ReplicatedStorage").endpoints.client_to_server.buy_travelling_merchant_item:InvokeServer(unpack(args))
-                                end
-                            end
+                        local args = {
+                            [1] = "LuckPotion310626"
+                        }
+                        
+                        game:GetService("ReplicatedStorage").endpoints.client_to_server.buy_travelling_merchant_item:InvokeServer(unpack(args))
                     else
                         if MerchTicket == true then
-                            for i,v in pairs(game.Workspace:FindFirstChild("travelling_merchant"):FindFirstChild("stand").items:GetChildren()) do
-                                if string.find(v.Name,"summon") then
-                                    local args = {
-                                        [1] = v.Name
-                                    }
-                                    
-                                    game:GetService("ReplicatedStorage").endpoints.client_to_server.buy_travelling_merchant_item:InvokeServer(unpack(args))
-                                end
-                            end
+
+                                local args = {
+                                    [1] = "summon_ticket310633"
+                                }
+
+                                game:GetService("ReplicatedStorage").endpoints.client_to_server.buy_travelling_merchant_item:InvokeServer(unpack(args))
+
                         end
                     end
                 end
@@ -1007,46 +1012,7 @@ autoclngtab:CreateToggle({
 
 
         spawn(function()
-            repeat task.wait(5)
-                local senzu = game:GetService("Players").LocalPlayer.PlayerGui.items.grid.List.Outer:FindFirstChild("ItemFrames")["senzu_bean"].OwnedAmount.Text
-                local beam = senzu:match("%d+")
-
-                local talisman = game:GetService("Players").LocalPlayer.PlayerGui.items.grid.List.Outer:FindFirstChild("ItemFrames")["jjk_talisman"].OwnedAmount.Text
-                local jjk = talisman:match("%d+")
-
-                local hxh = game:GetService("Players").LocalPlayer.PlayerGui.items.grid.List.Outer:FindFirstChild("ItemFrames")["hxh_fish"].OwnedAmount.Text
-                local hxhh = hxh:match("%d+")
-
-                local aot = game:GetService("Players").LocalPlayer.PlayerGui.items.grid.List.Outer:FindFirstChild("ItemFrames")["aot_fluid"].OwnedAmount.Text
-                local aut = aot:match("%d+")
-
-                local soul = game:GetService("Players").LocalPlayer.PlayerGui.items.grid.List.Outer:FindFirstChild("ItemFrames")["soul_candy"].OwnedAmount.Text
-                local candy = soul:match("%d+")
-
-                local black = game:GetService("Players").LocalPlayer.PlayerGui.items.grid.List.Outer:FindFirstChild("ItemFrames")["black_clover_stone"].OwnedAmount.Text
-                local niga = black:match("%d+")
-
-                local xpdf = game:GetService("Players").LocalPlayer.PlayerGui.items.grid.List.Outer:FindFirstChild("ItemFrames")["xp_devil_fruit"].OwnedAmount.Text
-                local df = xpdf:match("%d+")
-
-                local ramen = game:GetService("Players").LocalPlayer.PlayerGui.items.grid.List.Outer:FindFirstChild("ItemFrames")["ramen_xp"].OwnedAmount.Text
-                local nardo = ramen:match("%d+")
-
-                local jojo =game:GetService("Players").LocalPlayer.PlayerGui.items.grid.List.Outer:FindFirstChild("ItemFrames")["jojo_pendant"].OwnedAmount.Text
-                local gay = jojo:match("%d+")
-
-                local fairy = game:GetService("Players").LocalPlayer.PlayerGui.items.grid.List.Outer:FindFirstChild("ItemFrames")["fairy_tail_exp"].OwnedAmount.Text
-                local tail = fairy:match("%d+")
-
-                local flower = game:GetService("Players").LocalPlayer.PlayerGui.items.grid.List.Outer:FindFirstChild("ItemFrames")["wisteria_flower"].OwnedAmount.Text
-                local cicek = flower:match("%d+")
-
-                local coffe = game:GetService("Players").LocalPlayer.PlayerGui.items.grid.List.Outer:FindFirstChild("ItemFrames")["coffee"].OwnedAmount.Text
-                local kahve = coffe:match("%d+")
-
-                local opm = game:GetService("Players").LocalPlayer.PlayerGui.items.grid.List.Outer:FindFirstChild("ItemFrames")["opm_core"].OwnedAmount.Text
-                local saitama = opm:match("%d+")
-
+            while wait() do
                 if getgenv().AutoFeed == true then
                     task.wait(0.5)
 
@@ -1055,25 +1021,25 @@ autoclngtab:CreateToggle({
                 local args = {
                     [1] = FeedUnit,
                     [2] = {
-                        ["jjk_talisman"] = jjk,
-                        ["hxh_fish"] = hxhh,
-                        ["aot_fluid"] = aut,
-                        ["soul_candy"] = candy,
-                        ["black_clover_stone"] = niga,
-                        ["xp_devil_fruit"] = df,
-                        ["senzu_bean"] = beam,
-                        ["ramen_xp"] = nardo,
-                        ["jojo_pendant"] = gay,
-                        ["fairy_tail_exp"] = tail,
-                        ["wisteria_flower"] = cicek,
-                        ["coffee"] = kahve,
-                        ["opm_core"] = saitama
+                        ["jjk_talisman"] = 1,
+                        ["hxh_fish"] = 1,
+                        ["aot_fluid"] = 1,
+                        ["soul_candy"] = 1,
+                        ["black_clover_stone"] = 1,
+                        ["xp_devil_fruit"] = 1,
+                        ["senzu_bean"] = 1,
+                        ["ramen_xp"] = 1,
+                        ["jojo_pendant"] = 1,
+                        ["fairy_tail_exp"] = 1,
+                        ["wisteria_flower"] = 1,
+                        ["coffee"] = 1,
+                        ["opm_core"] = 1
                     }
                 }
                 
                 game:GetService("ReplicatedStorage").endpoints.client_to_server.level_up_feed:InvokeServer(unpack(args))
                 end
-            until not AutoFeed
+            end
         end)
 
 
@@ -1092,12 +1058,15 @@ autoclngtab:CreateToggle({
     local asdfg = UI:CreatePage("Settings")
     local autofarmset = asdfg:CreateSection("Settings")
 
+    local afset = UI:CreatePage("Auto Sell")
+    local autoseltab = afset:CreateSection("Auto Sell")
+
     local Webhook = UI:CreatePage("Webhook")
     local webhooktab = Webhook:CreateSection("Webhook")
     
-    webhooktab:CreateToggle({
-        Name = "Auto Load Script";
-        Flag = "loaghqejgdd";
+    --[[webhooktab:CreateToggle({
+        autoloadtab = "Auto Load Script";
+        Flag = "loaghjgdd";
         Default = getgenv().AutoLoadTP;
         Callback = function(bool)
             getgenv().AutoLoadTP = bool
@@ -1109,7 +1078,7 @@ autoclngtab:CreateToggle({
             end
         end;
         SavingDisabled = true;
-    })
+    }) ]] 
 
 
     --[[getgenv().portalname = devilcity:CreateDropdown({
@@ -1150,7 +1119,7 @@ autoclngtab:CreateToggle({
         
 --#region Auto Farm Tab
 
-autofarmtab:CreateButton({
+autofarmset:CreateButton({
     Name = "Set Unit 1 Posit"; 
     Callback = function()
         warn(1)
@@ -1159,7 +1128,7 @@ autofarmtab:CreateButton({
     end
 })
 
-autofarmtab:CreateButton({
+autofarmset:CreateButton({
     Name = "Set Unit 2 Posit"; 
     Callback = function()
         warn(1)
@@ -1168,7 +1137,7 @@ autofarmtab:CreateButton({
     end
 })
 
-autofarmtab:CreateButton({
+autofarmset:CreateButton({
     Name = "Set Unit 3 Posit"; 
     Callback = function()
         warn(1)
@@ -1177,7 +1146,7 @@ autofarmtab:CreateButton({
     end
 })
 
-autofarmtab:CreateButton({
+autofarmset:CreateButton({
     Name = "Set Unit 4 Posit"; 
     Callback = function()
         warn(1)
@@ -1190,7 +1159,7 @@ autofarmtab:CreateButton({
 local axxc = game.Players.LocalPlayer.PlayerGui["spawn_units"].Lives.Main.Desc.Level.Text:split(" ")
 
 if tonumber(axxc[2]) >= 20 then
-    autofarmtab:CreateButton({
+    autofarmset:CreateButton({
         Name = "Set Unit 5 Posit"; 
         Callback = function()
             warn(1)
@@ -1201,7 +1170,7 @@ if tonumber(axxc[2]) >= 20 then
 end
 
 if tonumber(axxc[2]) >= 50 then
-    autofarmtab:CreateButton({
+    autofarmset:CreateButton({
         Name = "Set Unit 6 Posit"; 
         Callback = function()
             warn(1)
@@ -1228,6 +1197,17 @@ autofarmset:CreateToggle({
     Default = getgenv().AutoLeave;
     Callback = function(bool)
         getgenv().AutoLeave = bool
+        updatejson()
+    end;
+    SavingDisabled = true;
+})
+
+autofarmset:CreateToggle({
+    Name = "Auto Farm Event";
+    Flag = "ftyhgrmev";
+    Default = getgenv().AutoFarmTP;
+    Callback = function(bool)
+        getgenv().AutoFarmTP = bool
         updatejson()
     end;
     SavingDisabled = true;
@@ -1316,7 +1296,10 @@ autofarmset:CreateToggle({
                         task.wait()
                         a.Anchored = true
                         a.CanCollide = false
-                        a.Transparency = 1
+                        for i = 0, 1, 0.1 do
+                            a.Transparency = i
+                            task.wait()
+                        end
                         a:Destroy()
 
                         if game.Workspace._map:FindFirstChild("namek mushroom model") then
@@ -1399,12 +1382,8 @@ autofarmset:CreateToggle({
                             SpawnUnitPos["opm"][UnitPos]["x"] = a.Position.X
                             SpawnUnitPos["opm"][UnitPos]["y"] = a.Position.Y
                             SpawnUnitPos["opm"][UnitPos]["z"] = a.Position.Z
-                        elseif game.Workspace._map:FindFirstChild("fence") then
-                            print("7ds")
-                            SpawnUnitPos["seven"][UnitPos]["x"] = a.Position.X
-                            SpawnUnitPos["seven"][UnitPos]["y"] = a.Position.Y
-                            SpawnUnitPos["seven"][UnitPos]["z"] = a.Position.Z
                         end
+
                         updatejson()
                     end
                 end)
@@ -1523,11 +1502,11 @@ else
         autostart = false,
         autoloadtp = false,
         autoupgrade = false,
-        AutoBuyLockPotion = false,
         difficulty = "nil",
         world = "nil",
         level = "nil",
         door = "nil",
+        AutoBuyLockPotion = false,
     
         xspawnUnitPos  = {
             black_clover  = {
@@ -1562,38 +1541,6 @@ else
                 z  = -51.20615005493164
              }
            },
-           seven  = {
-            UP1  = {
-              y  = 212,9611053466797,
-              x  = -85.12884521484375,
-              z  = -167.95156860351562
-           },
-            UP3  = {
-              y  = 212,9611053466797,
-              x  = -79.12884521484375,
-              z  = -168.95156860351562
-           },
-            UP2  = {
-              y  = 212,9611053466797,
-              x  = -75.12884521484375,
-              z  = -174.95156860351562
-           },
-            UP6  = {
-              y  = 212,9611053466797,
-              x  = -92.12884521484375,
-              z  = -155.95156860351562
-           },
-            UP5  = {
-              y  = 212,9611053466797,
-              x  = -95.12884521484375,
-              z  = -165.95156860351562
-           },
-            UP4  = {
-              y  = 212,9611053466797,
-              x  = -62.12884521484375,
-              z  = -171.95156860351562
-           }
-         },
            hollow_leg = {
             UP1 = {
                 x = -168.71795654296875,
@@ -2924,57 +2871,6 @@ function placesex()
                         game:GetService("ReplicatedStorage").endpoints.client_to_server.spawn_unit:InvokeServer(unpack(args))
                     end
                 end
-            elseif game.Workspace._map:FindFirstChild("fence") then
-                print("7ds")
-                for i = 1, 6 do
-                    local unitinfo = getgenv().SelectedUnits["U" .. i]
-                    if unitinfo ~= nil then
-                        local unitinfo_ = unitinfo:split(" #")
-                        local pos = getgenv().SpawnUnitPos["seven"]["UP"..i]
-                        task.wait()
-                        --place units 0
-                        local args = {
-                            [1] = unitinfo_[2],
-                            [2] = CFrame.new(Vector3.new(pos["x"], pos["y"] - y, pos["z"]), Vector3.new(0, 0, -1))
-                        }
-                        game:GetService("ReplicatedStorage").endpoints.client_to_server.spawn_unit:InvokeServer(unpack(args))
-
-                        --place units 1
-                        local args = {
-                            [1] = unitinfo_[2],
-                            [2] = CFrame.new(Vector3.new(pos["x"] - x, pos["y"] - y, pos["z"]), Vector3.new(0, 0, -1))
-                        }
-                        game:GetService("ReplicatedStorage").endpoints.client_to_server.spawn_unit:InvokeServer(unpack(args))
-
-                        --place units 2 
-                        local args = {
-                            [1] = unitinfo_[2],
-                            [2] = CFrame.new(Vector3.new(pos["x"], pos["y"] - y, pos["z"] + z), Vector3.new(0, 0, -1))
-                        }
-                        game:GetService("ReplicatedStorage").endpoints.client_to_server.spawn_unit:InvokeServer(unpack(args))
-
-                        --place units 3 
-                        local args = {
-                            [1] = unitinfo_[2],
-                            [2] = CFrame.new(Vector3.new(pos["x"] - x, pos["y"] - y, pos["z"] + z), Vector3.new(0, 0, -1))
-                        }
-                        game:GetService("ReplicatedStorage").endpoints.client_to_server.spawn_unit:InvokeServer(unpack(args))
-
-                        --place units 4
-                        local args = {
-                            [1] = unitinfo_[2],
-                            [2] = CFrame.new(Vector3.new(pos["x"]+ x, pos["y"] - y, pos["z"] + z), Vector3.new(0, 0, -1))
-                        }
-                        game:GetService("ReplicatedStorage").endpoints.client_to_server.spawn_unit:InvokeServer(unpack(args))
-
-                        --place units 5
-                        local args = {
-                            [1] = unitinfo_[2],
-                            [2] = CFrame.new(Vector3.new(pos["x"] + x, pos["y"] - y, pos["z"]), Vector3.new(0, 0, -1))
-                        }
-                        game:GetService("ReplicatedStorage").endpoints.client_to_server.spawn_unit:InvokeServer(unpack(args))
-                    end
-                end
             end
         end
     end
@@ -3031,7 +2927,7 @@ function TPReturner()
    local num = 0;
    local extranum = 0
    for i,v in pairs(Site.data) do
-       extranum = extranum + 1
+       extranum += 1
        local Possible = true
        ID = tostring(v.id)
        if tonumber(v.maxPlayers) > tonumber(v.playing) then
@@ -3048,7 +2944,7 @@ function TPReturner()
                else
                    if tonumber(actualHour) ~= tonumber(Existing) then
                        local delFile = pcall(function()
-                           delfile("SameServer.json")
+                           delfile("NotSameServers.json")
                            AllIDs = {}
                            table.insert(AllIDs, actualHour)
                        end)
@@ -3060,7 +2956,7 @@ function TPReturner()
                table.insert(AllIDs, ID)
                wait()
                pcall(function()
-                   writefile("SameServer.json", game:GetService('HttpService'):JSONEncode(AllIDs))
+                   writefile("NotSameServers.json", game:GetService('HttpService'):JSONEncode(AllIDs))
                    wait()
                    game:GetService("TeleportService"):TeleportToPlaceInstance(PlaceID, ID, game.Players.LocalPlayer)
                end)
@@ -3089,7 +2985,6 @@ coroutine.resume(coroutine.create(function()
         if GameFinished.Value == true then
             repeat task.wait() until  game:GetService("Players").LocalPlayer.PlayerGui.ResultsUI.Enabled == true
             task.wait()
-            pcall(function() webhook() end)
             task.wait(2.1)
             if getgenv().AutoReplay then
                 local a={[1]="replay"} game:GetService("ReplicatedStorage").endpoints.client_to_server.set_game_finished_vote:InvokeServer(unpack(a))
@@ -3148,6 +3043,8 @@ function autoupgradefunc()
     end)
 
     if err then
+        warn("//////////////////////////////////////////////////")
+        warn("//////////////////////////////////////////////////")
         getgenv().autoupgradeerr = true
         error(err)
     end
@@ -3218,6 +3115,8 @@ function autoabilityfunc()
     end)
      
      if err then
+         warn("//////////////////////////////////////////////////")
+         warn("//////////////////////////////////////////////////")
          getgenv().autoabilityerr = true
          error(err)
      end
@@ -3277,7 +3176,8 @@ end
 
 
 local function startfarming()
-    if getgenv().farmprotal == false and getgenv().autostart and getgenv().AutoFarm and getgenv().teleporting and getgenv().AutoFarmIC == false then
+    if getgenv().farmprotal == false and getgenv().autostart and getgenv().AutoFarm and getgenv().teleporting 
+                           and getgenv().AutoFarmTP == false and getgenv().AutoFarmIC == false then
 
         if game.PlaceId == 8304191830 then
             local cpos = plr.Character.HumanoidRootPart.CFrame
@@ -3334,7 +3234,7 @@ local function startfarming()
                 end
             end
 
-            warn("Farm Started")
+            warn("farming")
             task.wait(3)
         end
     elseif getgenv().autostart and getgenv().AutoFarm and getgenv().teleporting 
@@ -3447,6 +3347,34 @@ local function FarmCastlePark()
             
             task.wait(6)
         end
+    elseif getgenv().AutoFarmTP and getgenv().AutoFarm then
+        if game.PlaceId == 8304191830 then
+
+            local cpos = plr.Character.HumanoidRootPart.CFrame
+
+            for i, v in pairs(game:GetService("Workspace")["_EVENT_CHALLENGES"].Lobbies:GetDescendants()) do
+                    if v.Name == "Owner" and v.Value == nil then
+
+                        local args = {
+                            [1] = tostring(v.Parent.Name)
+                        }
+                        
+                        game:GetService("ReplicatedStorage").endpoints.client_to_server.request_join_lobby:InvokeServer(unpack(args))
+
+                        task.wait()
+
+                        plr.Character.HumanoidRootPart.CFrame = v.Parent.Door.CFrame
+                        break
+                    end
+                end
+
+            task.wait()
+
+            plr.Character.HumanoidRootPart.CFrame = cpos
+            warn("farming")
+            task.wait(5)
+
+        end
     end
 end
 
@@ -3463,6 +3391,20 @@ coroutine.resume(coroutine.create(function()
         end
     end
 end))
+
+getgenv().AutoLoadTP = true
+
+if getgenv().AutoLoadTP == true then
+    local exec = tostring(identifyexecutor())   
+
+    if exec == "Synapse X" then
+        syn.queue_on_teleport(loadstring(game:HttpGet("https://raw.githubusercontent.com/KeremHuba/AnimAdventures/main/animeadventures.lua"))())
+    else
+        queue_on_teleport(loadstring(game:HttpGet("https://raw.githubusercontent.com/KeremHuba/AnimAdventures/main/animeadventures.lua"))())
+    end
+
+end
+
 
 --hide name
 task.spawn(function()
