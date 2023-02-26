@@ -1,6 +1,4 @@
-local versionx = "1.6.7"
 
----// Loading Section \\---
 task.wait(2)
 repeat  task.wait() until game:IsLoaded()
 if game.PlaceId == 8304191830 then
@@ -25,8 +23,7 @@ getgenv().door = "_lobbytemplategreen1"
 --#region Webhook Sender
 local function webhook()
 	pcall(function()
-		local url = tostring(getgenv().weburl) --webhook
-		print("webhook?")
+		local url = tostring(getgenv().weburl)
 		if url == "" then
 			return
 		end 
@@ -40,16 +37,14 @@ local function webhook()
 
 		local data = {
 			["content"] = "",
-			["username"] = "Anime Adventures",
-			["avatar_url"] = "https://tr.rbxcdn.com/e5b5844fb26df605986b94d87384f5fb/150/150/Image/Jpeg",
+			["username"] = "Xno Hub - Anime Adventures",
 			["embeds"] = {
 				{
 					["author"] = {
-						["name"] = "Anime Adventures | Result ✔",
-						["icon_url"] = "https://cdn.discordapp.com/emojis/997123585476927558.webp?size=96&quality=lossless"
+						["name"] = "Results",
 					},
-					["description"] = "🎮 ||**"..game:GetService("Players").LocalPlayer.Name.."**|| 🎮",
-					["color"] = 110335,
+					["description"] = "||**"..game:GetService("Players").LocalPlayer.Name.."**||",
+					["color"] = tonumber("FF0000"),
 
 					["thumbnail"] = {
 						['url'] = "https://www.roblox.com/headshot-thumbnail/image?userId=" .. game.Players.LocalPlayer.userId .. "&width=420&height=420&format=png"
@@ -57,32 +52,27 @@ local function webhook()
 
 					["fields"] = {
 						{
-							["name"] = "Total Waves:",
-							["value"] = tostring(waves[2]) ..
-								" <:wave:997136622363627530>",
+							["name"] = "Completed Waves",
+							["value"] = tostring(waves[2]),
 							["inline"] = true
 						}, {
 							["name"] = "Recieved Gems:",
-							["value"] = gems .. " <:gem:997123585476927558>",
+							["value"] = gems,
 							["inline"] = true
 						}, {
-                            ["name"] = "Recieved XP:",
-                            ["value"] = XP .. " 🧪",
+                            ["name"] = "Received XP:",
+                            ["value"] = XP,
                             ["inline"] = true
                         }, {
-                            ["name"] = "Total Time:",
-                            ["value"] = tostring(ttime[2]) .. " ⏳",
-                            ["inline"] = true
-                        }, {
-                            ["name"] = "Current Gems:",
-                            ["value"] = tostring(game.Players.LocalPlayer._stats.gem_amount.Value).." <:gem:997123585476927558>",
-                            ["inline"] = true
-                        }, {
-                            ["name"] = "Current Level:",
+                            ["name"] = "Monkey's Level:",
                             ["value"] = tostring(game.Players.LocalPlayer.PlayerGui.spawn_units.Lives.Main.Desc.Level.Text).. " ✨",
                             ["inline"] = true
                         }
-					}
+					};
+					["footer"] = {
+                        ["text"] = "Anime Adventures - Xno Hub",
+                        ["icon_url"] = "https://i.imgur.com/qfTZMup.jpeg",
+                    }
 				}
 			}
 		}
@@ -92,7 +82,6 @@ local function webhook()
 		local headers = {["content-type"] = "application/json"}
 		request = http_request or request or HttpPost or syn.request or http.request
 		local sex = {Url = url, Body = porn, Method = "POST", Headers = headers}
-		warn("Sending webhook notification...")
 		request(sex)
 	end)
 end
@@ -737,21 +726,15 @@ webhookserver:CreateToggle({
     SavingDisabled = true;
 })
 		
-		local webhoolPlaceholde
-		if getgenv().weburl == "" then
-			webhoolPlaceholder = "Insert url here!"
-		else
-			webhoolPlaceholder = getgenv().weburl
-		end
-
         webhookserver:CreateTextBox({
             Name = "Webhook URL";
-            Flag = "wavegfhe"; 
+            Flag = "waveg3fhe"; 
             Callback = function(inputtedText,enterPressed)
                 getgenv().weburl = tostring(inputtedText)
+                updatejson()
             end;
             DefaultText = "";
-            PlaceholderText = "Write Webhook";
+            PlaceholderText = "Write Webhook URL";
             TabComplete = function(inputtedText)
                 getgenv().weburl = tostring(inputtedText)
                 updatejson()
@@ -3117,6 +3100,7 @@ coroutine.resume(coroutine.create(function()
         if GameFinished.Value == true then
             repeat task.wait() until  game:GetService("Players").LocalPlayer.PlayerGui.ResultsUI.Enabled == true
             task.wait()
+            pcall(function() webhook() end)
             task.wait(2.1)
             if getgenv().AutoReplay then
                 local a={[1]="replay"} game:GetService("ReplicatedStorage").endpoints.client_to_server.set_game_finished_vote:InvokeServer(unpack(a))
