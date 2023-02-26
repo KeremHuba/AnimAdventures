@@ -723,7 +723,7 @@ autofarmtab:CreateTextBox({
 
 webhookserver:CreateToggle({
     Name = "Auto Load Script";
-    Flag = "wergdfgave";
+    Flag = "wergcadfgave";
     Default = getgenv().AutoLoadTP;
     Callback = function(x)
         getgenv().AutoLoadTP = x
@@ -1001,20 +1001,26 @@ autoclngtab:CreateToggle({
             while wait(5) do
                 if game.Workspace:FindFirstChild("travelling_merchant"):FindFirstChild("is_open").Value == true then
                     if MerchBuyPot == true then
-                        local args = {
-                            [1] = "LuckPotion310626"
-                        }
-                        
-                        game:GetService("ReplicatedStorage").endpoints.client_to_server.buy_travelling_merchant_item:InvokeServer(unpack(args))
+                            for i,v in pairs(game.Workspace:FindFirstChild("travelling_merchant"):FindFirstChild("stand").items:GetChildren()) do
+                                if string.find(v.Name,"Luck") then
+                                    local args = {
+                                        [1] = v.Name
+                                    }
+                                    
+                                    game:GetService("ReplicatedStorage").endpoints.client_to_server.buy_travelling_merchant_item:InvokeServer(unpack(args))
+                                end
+                            end
                     else
                         if MerchTicket == true then
-
-                                local args = {
-                                    [1] = "summon_ticket310633"
-                                }
-
-                                game:GetService("ReplicatedStorage").endpoints.client_to_server.buy_travelling_merchant_item:InvokeServer(unpack(args))
-
+                            for i,v in pairs(game.Workspace:FindFirstChild("travelling_merchant"):FindFirstChild("stand").items:GetChildren()) do
+                                if string.find(v.Name,"summon") then
+                                    local args = {
+                                        [1] = v.Name
+                                    }
+                                    
+                                    game:GetService("ReplicatedStorage").endpoints.client_to_server.buy_travelling_merchant_item:InvokeServer(unpack(args))
+                                end
+                            end
                         end
                     end
                 end
@@ -1116,7 +1122,7 @@ autoclngtab:CreateToggle({
     
     webhooktab:CreateToggle({
         Name = "Auto Load Script";
-        Flag = "loaghjgdd";
+        Flag = "loaghqejgdd";
         Default = getgenv().AutoLoadTP;
         Callback = function(bool)
             getgenv().AutoLoadTP = bool
