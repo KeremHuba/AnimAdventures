@@ -767,7 +767,7 @@ local worlddrop = autoclngtab:CreateDropdown({
     end;
     Options = {"star_fruit_random","star_remnant","gems", "gold"};
     ItemSelecting = true;
-    DefaultItemSelected = "Deez";
+    DefaultItemSelected = "Robux";
     Warning = "Select Reward";
     WarningIcon = 12345;
 })
