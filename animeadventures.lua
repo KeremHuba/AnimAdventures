@@ -1426,6 +1426,17 @@ autofarmset:CreateToggle({
 })
 
 autofarmset:CreateToggle({
+    Name = "Auto Infinity Next Level";
+    Flag = "infinsek3sitgfhycastle";
+    Default = getgenv().AutoNextLevelIC;
+    Callback = function(bool)
+        getgenv().AutoNextLevelIC = bool
+        updatejson()
+    end;
+    SavingDisabled = true;
+})
+
+autofarmset:CreateToggle({
     Name = "Auto Farm";
     Flag = "farrthfgh";
     Default = getgenv().AutoFarm;
