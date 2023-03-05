@@ -1369,6 +1369,17 @@ autofarmset:CreateToggle({
 })
 
 autofarmset:CreateToggle({
+    Name = "Auto Start Story";
+    Flag = "leaasd311qdave";
+    Default = getgenv().autostartStory;
+    Callback = function(bool)
+        getgenv().autostartStory = bool
+		updatejson()
+    end;
+    SavingDisabled = true;
+})
+
+autofarmset:CreateToggle({
     Name = "Auto Leave";
     Flag = "leregdfgave";
     Default = getgenv().AutoLeave;
