@@ -114,7 +114,8 @@ function sex()
     getgenv().buyportal = data.buyportal
     getgenv().PortalID = data.PortalID
 
-
+    getgenv().autostartStory = data.autostartStory
+    getgenv().questtoday = data.questtoday
     getgenv().AutoLeave = data.AutoLeave
     getgenv().AutoReplay = data.AutoReplay
     getgenv().AutoChallenge = data.AutoChallenge  
@@ -153,6 +154,7 @@ end
             autoloadtp = getgenv().AutoLoadTP,
             AutoLeave = getgenv().AutoLeave,
             AutoReplay = getgenv().AutoReplay,
+            autostartStory = getgenv().autostartStory,
             AutoChallenge  = getgenv().AutoChallenge, 
             selectedreward = getgenv().selectedreward,
             AutoChallengeAll = getgenv().AutoChallengeAll, 
@@ -622,6 +624,17 @@ autofarmtab:CreateToggle({
 })
 
 autofarmtab:CreateToggle({
+    Name = "Auto Start Story";
+    Flag = "leaasd31qdave";
+    Default = getgenv().autostartStory;
+    Callback = function(bool)
+        getgenv().autostartStory = bool
+		updatejson()
+    end;
+    SavingDisabled = true;
+})
+
+autofarmtab:CreateToggle({
     Name = "Auto Infinity Castle";
     Flag = "infinitgfhycastle";
     Default = getgenv().AutoFarmIC;
@@ -711,7 +724,7 @@ autofarmtab:CreateTextBox({
 webhookserver:CreateToggle({
     Name = "Auto Load Script";
     Flag = "wergcadfgave";
-    Default = getgenv().AutoLoadTP;
+    Default = true;
     Callback = function(x)
         getgenv().AutoLoadTP = x
         updatejson()
@@ -935,6 +948,7 @@ autoclngtab:CreateToggle({
 
         local feed = misco:CreateSection("Auto Feed")
         local merch = misco:CreateSection("Auto Buy Merchant")
+        local miscoo = misco:CreateSection("Misc")
 
         feed:CreateDropdown({
             Name = "Select Unit to feed";
@@ -976,6 +990,36 @@ autoclngtab:CreateToggle({
                 getgenv().MerchTicket = bool
             end;
             SavingDisabled = true;
+        })
+
+        local MyParagraph2 = misc:CreateParagraph("Misc")
+
+        miscoo:CreateButton({
+            Name = "Use All Codes"; 
+            Callback = function()
+                local redeem_code = {
+					"HERO",
+					"UCHIHA",
+					"CLOUD",
+					"CHAINSAW",
+					"NEWYEAR2023",
+					"kingluffy",
+					"toadboigaming",
+					"noclypso",
+					"fictionthefirst",
+					"subtomaokuma",
+					"subtokelvingts",
+					"subtoblamspot",
+                    "SINS",
+                    "SINS2"
+				}
+				for i, v in ipairs(redeem_code) do
+					local args = {
+						[1] = tostring(v),
+					}
+					game:GetService("ReplicatedStorage").endpoints.client_to_server.redeem_code:InvokeServer(unpack(args))
+				end
+            end
         })
 
         spawn(function()
@@ -1095,16 +1139,13 @@ autoclngtab:CreateToggle({
     local asdfg = UI:CreatePage("Settings")
     local autofarmset = asdfg:CreateSection("Settings")
 
-    local afset = UI:CreatePage("Auto Sell")
-    local autoseltab = afset:CreateSection("Auto Sell")
-
     local Webhook = UI:CreatePage("Webhook")
     local webhooktab = Webhook:CreateSection("Webhook")
     
     webhooktab:CreateToggle({
         Name = "Auto Load Script";
         Flag = "loaghqejgdd";
-        Default = getgenv().AutoLoadTP;
+        Default = true;
         Callback = function(bool)
             getgenv().AutoLoadTP = bool
             updatejson()
@@ -1117,6 +1158,74 @@ autoclngtab:CreateToggle({
         SavingDisabled = true;
     })
 
+    webhooktab:CreateSlider({
+    Name = "Lag Time";
+    Flag = "LagTime"; 
+    Min = 0;
+    Max = 3;
+    AllowOutOfRange = true; 
+    Digits = 2; 
+    Default = getgenv().takeTime;
+    Callback = function(Value)
+        if game.PlaceId ~= 8304191830 then
+            if getgenv().timelock then
+                getgenv().takeTime = Value
+                updatejson()
+            end
+        end
+    end;
+    Warning = "";
+    WarningIcon = 12345;
+})
+
+    webhooktab:CreateToggle({
+        Name = "Lag";
+        Flag = "loaghqejgsaddd";
+        Default = getgenv().timelock;
+        Callback = function(bool)
+            getgenv().timelock = bool
+            updatejson()
+        end;
+        SavingDisabled = true;
+    })
+
+    spawn(function()
+        coroutine.resume(coroutine.create(function()
+            while task.wait(1) do
+                if game.PlaceId ~= 8304191830 then
+                    if getgenv().timelock then
+                        while wait(getgenv().takeTime) do
+                            if getgenv().timelock == false then
+                                break
+                            end
+                            local table1 = {}
+                            local table2 = {}
+                            local function loop(v1,v2)
+                                for i = v1,v2 do
+                                    table.insert(table1, table2)
+                                end
+                            end
+                            local function crash(v1) 
+                                for i = 1,v1 do
+                                    table.insert(table2[1], {})
+                                end 
+        
+                                if 499999/(v1+2) then
+                                    loop(1,499999/(v1+2))
+                                else
+                                    loop(1,499999)
+                                end
+                                game:GetService("RobloxReplicatedStorage").SetPlayerBlockList:FireServer(table1)
+                            end
+                            table.insert(table2, {})
+                            game:GetService("NetworkClient"):SetOutgoingKBPSLimit(math.huge)
+                            crash(250)
+                        end
+                    end
+                end
+            end
+        end))
+    end)
 
     --[[getgenv().portalname = devilcity:CreateDropdown({
         Name = "Select Portal";
@@ -1216,97 +1325,6 @@ if tonumber(axxc[2]) >= 50 then
         end
     })
 end
-
-autofarmset:CreateToggle({
-    Name = "Auto Replay";
-    Flag = "repfhglay";
-    Default = getgenv().AutoReplay;
-    Callback = function(bool)
-        getgenv().AutoReplay = bool
-        updatejson()
-    end;
-    SavingDisabled = true;
-})
-
-autofarmset:CreateToggle({
-    Name = "Auto Leave";
-    Flag = "leregdfgave";
-    Default = getgenv().AutoLeave;
-    Callback = function(bool)
-        getgenv().AutoLeave = bool
-        updatejson()
-    end;
-    SavingDisabled = true;
-})
-
-autofarmset:CreateToggle({
-    Name = "Auto Infinity Castle";
-    Flag = "infinityrtghfcastle";
-    Default = getgenv().AutoFarmIC;
-    Callback = function(bool)
-        getgenv().AutoFarmIC = bool
-        updatejson()
-    end;
-    SavingDisabled = true;
-})
-
-autofarmset:CreateToggle({
-    Name = "Auto Farm";
-    Flag = "farrthfgh";
-    Default = getgenv().AutoFarm;
-    Callback = function(bool)
-        getgenv().AutoFarm = bool
-        updatejson()
-    end;
-    SavingDisabled = true;
-})
-
-autofarmset:CreateToggle({
-    Name = "Auto Start";
-    Flag = "starrthfght";
-    Default = getgenv().autostart;
-    Callback = function(bool)
-        getgenv().autostart = bool
-        updatejson()
-    end;
-    SavingDisabled = true;
-})
-
-autofarmset:CreateToggle({
-    Name = "Auto Abilities";
-    Flag = "abilrthfghity";
-    Default = getgenv().autoabilities;
-    Callback = function(bool)
-        getgenv().autoabilities = bool
-        updatejson()
-    end;
-    SavingDisabled = true;
-})
-
-autofarmset:CreateToggle({
-    Name = "Auto Upgrade Units";
-    Flag = "upgrarthfghde";
-    Default = getgenv().autoupgrade;
-    Callback = function(bool)
-        getgenv().autoupgrade = bool
-        updatejson()
-    end;
-    SavingDisabled = true;
-})
-
-autofarmset:CreateToggle({
-    Name = "Auto Sell At Spectic Wave";
-    Flag = "wavrthfghe";
-    Default = getgenv().autosell;
-    Callback = function(x)
-        getgenv().autosell = x
-        updatejson()
-        if getgenv().autosell == false then
-            getgenv().disableatuofarm = false
-        end
-    end;
-    SavingDisabled = true;
-})
 
         function MouseClick(UnitPos)
             local connection
@@ -1456,20 +1474,6 @@ autoclngtab:CreateToggle({
 --#endregion
 
 --#region Auto Sell Tab
-autofarmset:CreateToggle({
-    Name = "Auto Sell At Specfic Wave";
-    Flag = "selafghfhtsp";
-    Default = true;
-    Callback = function(x)
-        getgenv().autosell = x
-            updatejson()
-            if getgenv().autosell == false then
-                getgenv().disableatuofarm = false
-            end
-    end;
-    SavingDisabled = true;
-})
-
 autofarmset:CreateTextBox({
     Name = "Select Wave Number For Auto Sell"; 
     Flag = "MyTfghfhextBox";
@@ -1529,6 +1533,8 @@ else
         autostart = false,
         autoloadtp = false,
         autoupgrade = false,
+        nextLevelINF = false,
+        autostartStory = false,
         AutoBuyLockPotion = false,
         difficulty = "nil",
         world = "nil",
@@ -3044,7 +3050,7 @@ function TPReturner()
            if extranum ~= 1 and tonumber(v.playing) < last or extranum == 1 then
                last = tonumber(v.playing)
            elseif extranum ~= 1 then
-               continue
+            continue
            end
            for _,Existing in pairs(AllIDs) do
                if num ~= 0 then
@@ -3097,14 +3103,21 @@ coroutine.resume(coroutine.create(function()
             task.wait()
             pcall(function() webhook() end)
             task.wait(2.1)
+
+        if getgenv().NextLevel then
+            local args = {
+                [1] = "next_story"
+            }
+            game:GetService("ReplicatedStorage").endpoints.client_to_server.set_game_finished_vote:InvokeServer(unpack(args))
+        else
             if getgenv().AutoReplay then
                 local a={[1]="replay"} game:GetService("ReplicatedStorage").endpoints.client_to_server.set_game_finished_vote:InvokeServer(unpack(a))
                 local a={[1]="replay"} game:GetService("ReplicatedStorage").endpoints.client_to_server.set_game_finished_vote:InvokeServer(unpack(a))
             elseif getgenv().AutoLeave and getgenv().AutoReplay ~= true then
-                --
                 Teleport()
                 -- game:GetService("TeleportService"):Teleport(8304191830, game.Players.LocalPlayer)
             end
+        end
         end
 	end)
 end))
@@ -3177,6 +3190,68 @@ coroutine.resume(coroutine.create(function()
 end))
 --#endregion
 
+tp_check = true
+local function startfarming_Story()
+	if getgenv().autostartStory and getgenv().teleporting and getgenv().AutoFarmTP == false and getgenv().AutoFarmIC == false then
+		if game.PlaceId == 8304191830 then
+			local cpos = plr.Character.HumanoidRootPart.CFrame
+			if tp_check then
+				for i, v in pairs(game:GetService("Workspace")["_LOBBIES"].Story:GetChildren()) do
+					check_door = tostring(game:GetService("Workspace")["_LOBBIES"].Story[v.Name].Owner.Value)
+					if check_door == "nil"  then
+						game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game:GetService("Workspace")["_LOBBIES"].Story[v.Name].Door.CFrame * CFrame.new(0, 0, 1)
+						wait(1)
+						if getgenv().autostartStory then
+							broke = false
+							for g, j in ipairs(game:GetService("Players").LocalPlayer.PlayerGui.LevelSelectGui.MapSelect.Main.Wrapper.Container :GetChildren()) do
+								if j:IsA("ImageButton") then
+									if j.Name == "ComingSoon" then
+										
+									else
+										local ClearStory = j.Main.Container.LevelsCleared:GetChildren()
+										for l, s in pairs(ClearStory) do
+											if s.Name == "V" then
+												chLevel = s.Text
+												waves = chLevel:split("/")
+												if waves[1] == "6" then
+													wait(1)
+												else
+													
+													st_farm = j.Name .. "_level_" .. waves[1] + 1
+													broke = true
+													wait(1)
+													local args = {
+														[1] = tostring(v.Name), -- Lobby
+														[2] = tostring(st_farm), -- World
+														[3] = getgenv().friendOnly, -- Friends Only or not
+														[4] = "Normal",
+													}
+													game:GetService("ReplicatedStorage").endpoints.client_to_server.request_lock_level:InvokeServer(unpack(args))
+													task.wait(13)
+													local args = {
+														[1] = tostring(v.Name),
+													}
+													game:GetService("ReplicatedStorage").endpoints.client_to_server.request_start_game:InvokeServer(unpack(args))
+													break
+												end
+											end
+										end
+									end
+								end
+								if broke then
+									break
+								end
+							end
+						end
+						tp_check = false
+						break
+					end
+				end
+			end
+			wait(2)
+		end
+	end
+end
 
 ------// Auto Sell \\------
 --#region Auto Sell loop
@@ -3424,6 +3499,19 @@ coroutine.resume(coroutine.create(function()
 end))
 --#endregion
 
+coroutine.resume(coroutine.create(function()
+	while task.wait() do
+		if getgenv().autostartStory then
+			wait(3)
+			local checkmatch = game:GetService("Workspace"):FindFirstChild("_PORTALS")
+			if checkmatch then
+				startfarming_Story()
+				wait(62)
+			end
+			--break
+		end
+	end
+end))
 
 ------// Auto Start Infiniy Castle && Thriller Park \\------
 
