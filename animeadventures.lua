@@ -1357,6 +1357,108 @@ if tonumber(axxc[2]) >= 50 then
     })
 end
 
+autofarmset:CreateToggle({
+    Name = "Auto Replay";
+    Flag = "repfhglay";
+    Default = getgenv().AutoReplay;
+    Callback = function(bool)
+        getgenv().AutoReplay = bool
+        updatejson()
+    end;
+    SavingDisabled = true;
+})
+
+autofarmset:CreateToggle({
+    Name = "Auto Leave";
+    Flag = "leregdfgave";
+    Default = getgenv().AutoLeave;
+    Callback = function(bool)
+        getgenv().AutoLeave = bool
+        updatejson()
+    end;
+    SavingDisabled = true;
+})
+
+autofarmset:CreateToggle({
+    Name = "Auto Farm Event";
+    Flag = "ftyhgrmev";
+    Default = getgenv().AutoFarmTP;
+    Callback = function(bool)
+        getgenv().AutoFarmTP = bool
+        updatejson()
+    end;
+    SavingDisabled = true;
+})
+
+autofarmset:CreateToggle({
+    Name = "Auto Infinity Castle";
+    Flag = "infinityrtghfcastle";
+    Default = getgenv().AutoFarmIC;
+    Callback = function(bool)
+        getgenv().AutoFarmIC = bool
+        updatejson()
+    end;
+    SavingDisabled = true;
+})
+
+autofarmset:CreateToggle({
+    Name = "Auto Farm";
+    Flag = "farrthfgh";
+    Default = getgenv().AutoFarm;
+    Callback = function(bool)
+        getgenv().AutoFarm = bool
+        updatejson()
+    end;
+    SavingDisabled = true;
+})
+
+autofarmset:CreateToggle({
+    Name = "Auto Start";
+    Flag = "starrthfght";
+    Default = getgenv().autostart;
+    Callback = function(bool)
+        getgenv().autostart = bool
+        updatejson()
+    end;
+    SavingDisabled = true;
+})
+
+autofarmset:CreateToggle({
+    Name = "Auto Abilities";
+    Flag = "abilrthfghity";
+    Default = getgenv().autoabilities;
+    Callback = function(bool)
+        getgenv().autoabilities = bool
+        updatejson()
+    end;
+    SavingDisabled = true;
+})
+
+autofarmset:CreateToggle({
+    Name = "Auto Upgrade Units";
+    Flag = "upgrarthfghde";
+    Default = getgenv().autoupgrade;
+    Callback = function(bool)
+        getgenv().autoupgrade = bool
+        updatejson()
+    end;
+    SavingDisabled = true;
+})
+
+autofarmset:CreateToggle({
+    Name = "Auto Sell At Spectic Wave";
+    Flag = "wavrthfghe";
+    Default = getgenv().autosell;
+    Callback = function(x)
+        getgenv().autosell = x
+        updatejson()
+        if getgenv().autosell == false then
+            getgenv().disableatuofarm = false
+        end
+    end;
+    SavingDisabled = true;
+})
+
         function MouseClick(UnitPos)
             local connection
             local _map = game:GetService("Workspace")["_BASES"].player.base["fake_unit"]:WaitForChild("HumanoidRootPart")
