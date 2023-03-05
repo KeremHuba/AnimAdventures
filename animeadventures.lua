@@ -1129,6 +1129,20 @@ autoclngtab:CreateToggle({
 --------------------------------------------------
 --------------------------------------------------
     else
+        spawn(function()
+            for i,v in pairs(game.Workspace._UNITS:GetChildren()) do
+                if v:FindFirstChild("_hitbox") then
+                    v:FindFirstChild("_hitbox").Size = Vector3.new(0.1,0.1,0.1)
+                end
+            end
+        end)
+        
+        game.Workspace._UNITS.ChildAdded:Connect(function(child)
+            if child:FindFirstChild("_hitbox") then
+                child:FindFirstChild("_hitbox").Size = Vector3.new(0.1,0.1,0.1)
+            end
+        end)
+
         game.Players.LocalPlayer.PlayerGui.MessageGui.Enabled = false
         game:GetService("ReplicatedStorage").packages.assets["ui_sfx"].error.Volume = 0
         game:GetService("ReplicatedStorage").packages.assets["ui_sfx"].error_old.Volume = 0
