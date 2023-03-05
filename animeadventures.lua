@@ -139,11 +139,9 @@ function sex()
     getgenv().SelectedUnits = data.xselectedUnits
     getgenv().autoabilities = data.autoabilities
     getgenv().MerchBuyPot = data.autobuypotion
-end
 
     function updatejson()
         local xdata = {
-            --Devil City
             portalnameX = getgenv().portalnameX,
             farmportal = getgenv().farmprotal,
             buyportal = getgenv().buyportal,
@@ -1526,7 +1524,7 @@ autofarmset:CreateTextBox({
 })
 
 --#endregion
-
+end
 end
 
 --------------------------------------------------
