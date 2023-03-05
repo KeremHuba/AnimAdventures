@@ -3275,7 +3275,6 @@ coroutine.resume(coroutine.create(function()
             }
             game:GetService("ReplicatedStorage").endpoints.client_to_server.set_game_finished_vote:InvokeServer(unpack(args))
         elseif getgenv().AutoNextLevelIC == true and getgenv().autostartStory == false then
-            task.wait(2.1)
             game:GetService("ReplicatedStorage").endpoints.client_to_server.request_start_infinite_tower_from_game:InvokeServer()
         else
             if getgenv().AutoReplay and getgenv().autostartStory == false then
