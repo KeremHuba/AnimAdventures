@@ -840,11 +840,13 @@ autoclngtab:CreateToggle({
             Flag = "autorgegfd1";
             Default = getgenv().autosummonticketse;
             Callback = function(bool)
-                getgenv().autosummonticketse = bool
-            while getgenv().autosummonticketse do
-                autobuyfunc("EventClover", "ticket")
-            end
+            getgenv().autosummonticketse = bool
             updatejson()
+            pcall(function()
+                while getgenv().autosummonticketse do
+                    autobuyfunc("EventClover", "ticket")
+                end
+            end)
             end;
             SavingDisabled = true;
         })
@@ -855,10 +857,12 @@ autoclngtab:CreateToggle({
             Default = getgenv().autosummongeme;
             Callback = function(bool)
                 getgenv().autosummongeme = bool
-                while getgenv().autosummongeme do
-                    autobuyfunc("EventClover", "gems")
-                end
                 updatejson()
+                pcall(function()
+                    while getgenv().autosummongeme do
+                        autobuyfunc("EventClover", "gems")
+                    end
+                end)
             end;
             SavingDisabled = true;
         })
@@ -869,10 +873,12 @@ autoclngtab:CreateToggle({
             Default = getgenv().autosummongem10e;
             Callback = function(bool)
                 getgenv().autosummongem10e = bool
-                while getgenv().autosummongem10e do
-                    autobuyfunc("EventClover", "gems")
-                end
                 updatejson()
+                pcall(function()
+                    while getgenv().autosummongem10e do
+                        autobuyfunc("EventClover", "gems")
+                    end
+                end)
             end;
             SavingDisabled = true;
         })
@@ -885,10 +891,12 @@ autoclngtab:CreateToggle({
             Default = getgenv().autosummontickets;
             Callback = function(bool)
                 getgenv().autosummontickets = bool
-                while getgenv().autosummontickets do
-                    autobuyfunc("Standard", "ticket")
-                end
                 updatejson()
+                pcall(function()
+                    while getgenv().autosummontickets do
+                        autobuyfunc("Standard", "ticket")
+                    end
+                end)
             end;
             SavingDisabled = true;
         })
@@ -899,10 +907,12 @@ autoclngtab:CreateToggle({
             Default = getgenv().autosummongem;
             Callback = function(bool)
                 getgenv().autosummongem = bool
-                while getgenv().autosummongem do
-                    autobuyfunc("Standard", "gems")
-                end
                 updatejson()
+                pcall(function()
+                    while getgenv().autosummongem do
+                        autobuyfunc("Standard", "gems")
+                    end
+                end)
             end;
             SavingDisabled = true;
         })
@@ -913,9 +923,11 @@ autoclngtab:CreateToggle({
             Default = getgenv().autosummongem10;
             Callback = function(bool)
                 getgenv().autosummongem10 = bool
-                while getgenv().autosummongem10 do
-                    autobuyfunc("Standard", "gems10")
-                end
+                pcall(function()
+                    while getgenv().autosummongem10 do
+                        autobuyfunc("Standard", "gems10")
+                    end
+                end)
                 updatejson()
             end;
             SavingDisabled = true;
@@ -927,6 +939,7 @@ autoclngtab:CreateToggle({
             Name = "Select Rarity";
             Callback = function(u)
                 getgenv().UnitToSell = u
+                updatejson()
             end;
             Options = {"Rare", "Epic"};
             ItemSelecting = true;
@@ -942,6 +955,7 @@ autoclngtab:CreateToggle({
             Default = getgenv().UnitSellTog;
             Callback = function(bool)
                 getgenv().UnitSellTog = bool
+                updatejson()
             end;
             SavingDisabled = true;
         })
@@ -968,6 +982,7 @@ autoclngtab:CreateToggle({
             Default = getgenv().AutoFeed;
             Callback = function(bool)
                 getgenv().AutoFeed = bool
+                updatejson()
             end;
             SavingDisabled = true;
         })
@@ -978,6 +993,7 @@ autoclngtab:CreateToggle({
             Default = getgenv().MerchBuyPot;
             Callback = function(bool)
                 getgenv().MerchBuyPot = bool
+                updatejson()
             end;
             SavingDisabled = true;
         })
@@ -988,6 +1004,7 @@ autoclngtab:CreateToggle({
             Default = getgenv().MerchTicket;
             Callback = function(bool)
                 getgenv().MerchTicket = bool
+                updatejson()
             end;
             SavingDisabled = true;
         })
