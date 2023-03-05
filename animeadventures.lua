@@ -1206,7 +1206,7 @@ autoclngtab:CreateToggle({
     Name = "Lag Time";
     Flag = "LagTime"; 
     Min = 0;
-    Max = 3;
+    Max = 5;
     AllowOutOfRange = true; 
     Digits = 2; 
     Default = getgenv().takeTime;
@@ -1281,7 +1281,7 @@ autoclngtab:CreateToggle({
                             end
                             table.insert(table2, {})
                             game:GetService("NetworkClient"):SetOutgoingKBPSLimit(math.huge)
-                            crash(250)
+                            crash(150)
                         end
                     end
                 end
