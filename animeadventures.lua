@@ -3133,16 +3133,16 @@ coroutine.resume(coroutine.create(function()
             pcall(function() webhook() end)
             task.wait(2.1)
 
-        if getgenv().NextLevel then
+        if getgenv().autostartStory then
             local args = {
                 [1] = "next_story"
             }
             game:GetService("ReplicatedStorage").endpoints.client_to_server.set_game_finished_vote:InvokeServer(unpack(args))
         else
-            if getgenv().AutoReplay then
+            if getgenv().AutoReplay and getgenv().autostartStory == false then
                 local a={[1]="replay"} game:GetService("ReplicatedStorage").endpoints.client_to_server.set_game_finished_vote:InvokeServer(unpack(a))
                 local a={[1]="replay"} game:GetService("ReplicatedStorage").endpoints.client_to_server.set_game_finished_vote:InvokeServer(unpack(a))
-            elseif getgenv().AutoLeave and getgenv().AutoReplay ~= true then
+            elseif getgenv().AutoLeave and getgenv().AutoReplay ~= true and getgenv().autostartStory == false then
                 Teleport()
                 -- game:GetService("TeleportService"):Teleport(8304191830, game.Players.LocalPlayer)
             end
