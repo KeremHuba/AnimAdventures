@@ -1249,6 +1249,7 @@ autoclngtab:CreateToggle({
         ClearTextOnFocus = false;
         Warning = "";
         WarningIcon = 12345;
+    })
 
     spawn(function()
         coroutine.resume(coroutine.create(function()
