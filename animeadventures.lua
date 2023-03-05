@@ -113,6 +113,7 @@ function sex()
     getgenv().farmprotal = data.farmportal
     getgenv().buyportal = data.buyportal
     getgenv().PortalID = data.PortalID
+    getgenv().AutoNextLevelIC = data.AutoNextLevelIC
 
     getgenv().autostartStory = data.autostartStory
     getgenv().questtoday = data.questtoday
@@ -146,6 +147,7 @@ function sex()
             farmportal = getgenv().farmprotal,
             buyportal = getgenv().buyportal,
             PortalID = getgenv().PortalID,
+            AutoNextLevelIC = getgenv().AutoNextLevelIC
 
             -- unitname = getgenv().unitname,
             -- unitid = getgenv().unitid,
@@ -638,6 +640,17 @@ autofarmtab:CreateToggle({
     Default = getgenv().AutoFarmIC;
     Callback = function(bool)
         getgenv().AutoFarmIC = bool
+        updatejson()
+    end;
+    SavingDisabled = true;
+})
+
+autofarmtab:CreateToggle({
+    Name = "Auto Infinity Next Level";
+    Flag = "infinseksitgfhycastle";
+    Default = getgenv().AutoNextLevelIC;
+    Callback = function(bool)
+        getgenv().AutoNextLevelIC = bool
         updatejson()
     end;
     SavingDisabled = true;
@@ -3245,11 +3258,14 @@ coroutine.resume(coroutine.create(function()
             task.wait()
             pcall(function() webhook() end)
 
-        if getgenv().autostartStory then
+        if getgenv().autostartStory and getgenv().AutoNextLevelIC == false then
             local args = {
                 [1] = "next_story"
             }
             game:GetService("ReplicatedStorage").endpoints.client_to_server.set_game_finished_vote:InvokeServer(unpack(args))
+        elseif getgenv().AutoNextLevelIC == true and getgenv().autostartStory == false then
+            task.wait(2.1)
+            game:GetService("ReplicatedStorage").endpoints.client_to_server.request_start_infinite_tower_from_game:InvokeServer()
         else
             if getgenv().AutoReplay and getgenv().autostartStory == false then
                 local a={[1]="replay"} game:GetService("ReplicatedStorage").endpoints.client_to_server.set_game_finished_vote:InvokeServer(unpack(a))
