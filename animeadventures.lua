@@ -297,7 +297,7 @@ function sex()
             end;
             Options = Units;
             ItemSelecting = true;
-            DefaultItemSelected = "";
+            DefaultItemSelected = getgenv().SelectedUnits["U1"];
             Warning = "Select Unit 1 Monkey";
             WarningIcon = 12345;
         })
@@ -310,7 +310,7 @@ function sex()
             end;
             Options = Units;
             ItemSelecting = true;
-            DefaultItemSelected = "";
+            DefaultItemSelected = getgenv().SelectedUnits["U2"];
             Warning = "Select Unit 2 Monkey";
             WarningIcon = 12345;
         })
@@ -323,12 +323,12 @@ function sex()
             end;
             Options = Units;
             ItemSelecting = true;
-            DefaultItemSelected = "";
+            DefaultItemSelected = getgenv().SelectedUnits["U3"];
             Warning = "Select Unit 3 Monkey";
             WarningIcon = 12345;
         }) 
 
-        local dro4p = unitselecttab:CreateDropdown({
+        local drop4 = unitselecttab:CreateDropdown({
             Name = "Unit 4";
             Callback = function(bool)
                 getgenv().SelectedUnits["U4"] = bool
@@ -336,7 +336,7 @@ function sex()
             end;
             Options = Units;
             ItemSelecting = true;
-            DefaultItemSelected = "";
+            DefaultItemSelected = getgenv().SelectedUnits["U4"];
             Warning = "Select Unit 4 Monkey";
             WarningIcon = 12345;
         })
@@ -353,7 +353,7 @@ function sex()
                 end;
                 Options = Units;
                 ItemSelecting = true;
-                DefaultItemSelected = "";
+                DefaultItemSelected = getgenv().SelectedUnits["U5"];
                 Warning = "Select Unit 5 Monkey";
                 WarningIcon = 12345;
             })
@@ -368,7 +368,7 @@ function sex()
                 end;
                 Options = Units;
                 ItemSelecting = true;
-                DefaultItemSelected = "";
+                DefaultItemSelected = getgenv().SelectedUnits["U6"];
                 Warning = "Select Unit 6 Monkey";
                 WarningIcon = 12345;
             })
@@ -776,7 +776,7 @@ local worlddrop = autoclngtab:CreateDropdown({
     end;
     Options = {"star_fruit_random","star_remnant","gems", "gold"};
     ItemSelecting = true;
-    DefaultItemSelected = "Robux";
+    DefaultItemSelected = getgenv().selectedreward;
     Warning = "Select Reward";
     WarningIcon = 12345;
 })
