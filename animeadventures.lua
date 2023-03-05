@@ -1233,6 +1233,23 @@ autoclngtab:CreateToggle({
         SavingDisabled = true;
     })
 
+    webhooktab:CreateTextBox({
+        Name = "Webhook URL";
+        Flag = "waveg23fhe"; 
+        Callback = function(inputtedText,enterPressed)
+            getgenv().weburl = tostring(inputtedText)
+            updatejson()
+        end;
+        DefaultText = "";
+        PlaceholderText = "Write Webhook URL";
+        TabComplete = function(inputtedText)
+            getgenv().weburl = tostring(inputtedText)
+            updatejson()
+        end;
+        ClearTextOnFocus = false;
+        Warning = "";
+        WarningIcon = 12345;
+
     spawn(function()
         coroutine.resume(coroutine.create(function()
             while task.wait(1) do
