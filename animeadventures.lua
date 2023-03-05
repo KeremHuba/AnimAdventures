@@ -1054,73 +1054,75 @@ autoclngtab:CreateToggle({
 
 
         spawn(function()
-            repeat task.wait(5)
-                local senzu = game:GetService("Players").LocalPlayer.PlayerGui.items.grid.List.Outer:FindFirstChild("ItemFrames")["senzu_bean"].OwnedAmount.Text
-                local beam = senzu:match("%d+")
-
-                local talisman = game:GetService("Players").LocalPlayer.PlayerGui.items.grid.List.Outer:FindFirstChild("ItemFrames")["jjk_talisman"].OwnedAmount.Text
-                local jjk = talisman:match("%d+")
-
-                local hxh = game:GetService("Players").LocalPlayer.PlayerGui.items.grid.List.Outer:FindFirstChild("ItemFrames")["hxh_fish"].OwnedAmount.Text
-                local hxhh = hxh:match("%d+")
-
-                local aot = game:GetService("Players").LocalPlayer.PlayerGui.items.grid.List.Outer:FindFirstChild("ItemFrames")["aot_fluid"].OwnedAmount.Text
-                local aut = aot:match("%d+")
-
-                local soul = game:GetService("Players").LocalPlayer.PlayerGui.items.grid.List.Outer:FindFirstChild("ItemFrames")["soul_candy"].OwnedAmount.Text
-                local candy = soul:match("%d+")
-
-                local black = game:GetService("Players").LocalPlayer.PlayerGui.items.grid.List.Outer:FindFirstChild("ItemFrames")["black_clover_stone"].OwnedAmount.Text
-                local niga = black:match("%d+")
-
-                local xpdf = game:GetService("Players").LocalPlayer.PlayerGui.items.grid.List.Outer:FindFirstChild("ItemFrames")["xp_devil_fruit"].OwnedAmount.Text
-                local df = xpdf:match("%d+")
-
-                local ramen = game:GetService("Players").LocalPlayer.PlayerGui.items.grid.List.Outer:FindFirstChild("ItemFrames")["ramen_xp"].OwnedAmount.Text
-                local nardo = ramen:match("%d+")
-
-                local jojo =game:GetService("Players").LocalPlayer.PlayerGui.items.grid.List.Outer:FindFirstChild("ItemFrames")["jojo_pendant"].OwnedAmount.Text
-                local gay = jojo:match("%d+")
-
-                local fairy = game:GetService("Players").LocalPlayer.PlayerGui.items.grid.List.Outer:FindFirstChild("ItemFrames")["fairy_tail_exp"].OwnedAmount.Text
-                local tail = fairy:match("%d+")
-
-                local flower = game:GetService("Players").LocalPlayer.PlayerGui.items.grid.List.Outer:FindFirstChild("ItemFrames")["wisteria_flower"].OwnedAmount.Text
-                local cicek = flower:match("%d+")
-
-                local coffe = game:GetService("Players").LocalPlayer.PlayerGui.items.grid.List.Outer:FindFirstChild("ItemFrames")["coffee"].OwnedAmount.Text
-                local kahve = coffe:match("%d+")
-
-                local opm = game:GetService("Players").LocalPlayer.PlayerGui.items.grid.List.Outer:FindFirstChild("ItemFrames")["opm_core"].OwnedAmount.Text
-                local saitama = opm:match("%d+")
-
-                if getgenv().AutoFeed == true then
-                    task.wait(0.5)
-
-
-
-                local args = {
-                    [1] = FeedUnit,
-                    [2] = {
-                        ["jjk_talisman"] = jjk,
-                        ["hxh_fish"] = hxhh,
-                        ["aot_fluid"] = aut,
-                        ["soul_candy"] = candy,
-                        ["black_clover_stone"] = niga,
-                        ["xp_devil_fruit"] = df,
-                        ["senzu_bean"] = beam,
-                        ["ramen_xp"] = nardo,
-                        ["jojo_pendant"] = gay,
-                        ["fairy_tail_exp"] = tail,
-                        ["wisteria_flower"] = cicek,
-                        ["coffee"] = kahve,
-                        ["opm_core"] = saitama
+            if getgenv().AutoFeed then
+                repeat task.wait(5)
+                    local senzu = game:GetService("Players").LocalPlayer.PlayerGui.items.grid.List.Outer:FindFirstChild("ItemFrames")["senzu_bean"].OwnedAmount.Text
+                    local beam = senzu:match("%d+")
+    
+                    local talisman = game:GetService("Players").LocalPlayer.PlayerGui.items.grid.List.Outer:FindFirstChild("ItemFrames")["jjk_talisman"].OwnedAmount.Text
+                    local jjk = talisman:match("%d+")
+    
+                    local hxh = game:GetService("Players").LocalPlayer.PlayerGui.items.grid.List.Outer:FindFirstChild("ItemFrames")["hxh_fish"].OwnedAmount.Text
+                    local hxhh = hxh:match("%d+")
+    
+                    local aot = game:GetService("Players").LocalPlayer.PlayerGui.items.grid.List.Outer:FindFirstChild("ItemFrames")["aot_fluid"].OwnedAmount.Text
+                    local aut = aot:match("%d+")
+    
+                    local soul = game:GetService("Players").LocalPlayer.PlayerGui.items.grid.List.Outer:FindFirstChild("ItemFrames")["soul_candy"].OwnedAmount.Text
+                    local candy = soul:match("%d+")
+    
+                    local black = game:GetService("Players").LocalPlayer.PlayerGui.items.grid.List.Outer:FindFirstChild("ItemFrames")["black_clover_stone"].OwnedAmount.Text
+                    local niga = black:match("%d+")
+    
+                    local xpdf = game:GetService("Players").LocalPlayer.PlayerGui.items.grid.List.Outer:FindFirstChild("ItemFrames")["xp_devil_fruit"].OwnedAmount.Text
+                    local df = xpdf:match("%d+")
+    
+                    local ramen = game:GetService("Players").LocalPlayer.PlayerGui.items.grid.List.Outer:FindFirstChild("ItemFrames")["ramen_xp"].OwnedAmount.Text
+                    local nardo = ramen:match("%d+")
+    
+                    local jojo =game:GetService("Players").LocalPlayer.PlayerGui.items.grid.List.Outer:FindFirstChild("ItemFrames")["jojo_pendant"].OwnedAmount.Text
+                    local gay = jojo:match("%d+")
+    
+                    local fairy = game:GetService("Players").LocalPlayer.PlayerGui.items.grid.List.Outer:FindFirstChild("ItemFrames")["fairy_tail_exp"].OwnedAmount.Text
+                    local tail = fairy:match("%d+")
+    
+                    local flower = game:GetService("Players").LocalPlayer.PlayerGui.items.grid.List.Outer:FindFirstChild("ItemFrames")["wisteria_flower"].OwnedAmount.Text
+                    local cicek = flower:match("%d+")
+    
+                    local coffe = game:GetService("Players").LocalPlayer.PlayerGui.items.grid.List.Outer:FindFirstChild("ItemFrames")["coffee"].OwnedAmount.Text
+                    local kahve = coffe:match("%d+")
+    
+                    local opm = game:GetService("Players").LocalPlayer.PlayerGui.items.grid.List.Outer:FindFirstChild("ItemFrames")["opm_core"].OwnedAmount.Text
+                    local saitama = opm:match("%d+")
+    
+                    if getgenv().AutoFeed == true then
+                        task.wait(0.5)
+    
+    
+    
+                    local args = {
+                        [1] = FeedUnit,
+                        [2] = {
+                            ["jjk_talisman"] = jjk,
+                            ["hxh_fish"] = hxhh,
+                            ["aot_fluid"] = aut,
+                            ["soul_candy"] = candy,
+                            ["black_clover_stone"] = niga,
+                            ["xp_devil_fruit"] = df,
+                            ["senzu_bean"] = beam,
+                            ["ramen_xp"] = nardo,
+                            ["jojo_pendant"] = gay,
+                            ["fairy_tail_exp"] = tail,
+                            ["wisteria_flower"] = cicek,
+                            ["coffee"] = kahve,
+                            ["opm_core"] = saitama
+                        }
                     }
-                }
-                
-                game:GetService("ReplicatedStorage").endpoints.client_to_server.level_up_feed:InvokeServer(unpack(args))
-                end
-            until not AutoFeed
+                    
+                    game:GetService("ReplicatedStorage").endpoints.client_to_server.level_up_feed:InvokeServer(unpack(args))
+                    end
+                until not AutoFeed
+            end
         end)
 
 
