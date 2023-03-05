@@ -17,7 +17,7 @@ local RunService = game:GetService("RunService")
 local mouse = game.Players.LocalPlayer:GetMouse()
 local UserInputService = game:GetService("UserInputService")
 
-getgenv().savefilename = "XnoHUBANIMEADVENTURES"..".json"
+getgenv().savefilename = "XnoHUBANIMEADVENTURES_"..game.Players.LocalPlayer.Name..".json"
 getgenv().door = "_lobbytemplategreen1"
 
 --#region Webhook Sender
@@ -3244,7 +3244,6 @@ coroutine.resume(coroutine.create(function()
             repeat task.wait() until  game:GetService("Players").LocalPlayer.PlayerGui.ResultsUI.Enabled == true
             task.wait()
             pcall(function() webhook() end)
-            task.wait(2.1)
 
         if getgenv().autostartStory then
             local args = {
