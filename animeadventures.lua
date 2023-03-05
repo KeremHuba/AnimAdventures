@@ -17,7 +17,7 @@ local RunService = game:GetService("RunService")
 local mouse = game.Players.LocalPlayer:GetMouse()
 local UserInputService = game:GetService("UserInputService")
 
-getgenv().savefilename = "XnoHUBANIMEADVENTURES_"..game.Players.LocalPlayer.Name..".json"
+getgenv().savefilename = "XnoHUBANIMEADVENTURES"..".json"
 getgenv().door = "_lobbytemplategreen1"
 
 --#region Webhook Sender
@@ -1515,10 +1515,8 @@ end
 
 ---// Checks if file exist or not\\---
 if isfile(savefilename) then 
-
     local jsonData = readfile(savefilename)
     local data = HttpService:JSONDecode(jsonData)
-
     sex()
 
 else
