@@ -147,7 +147,7 @@ function sex()
             farmportal = getgenv().farmprotal,
             buyportal = getgenv().buyportal,
             PortalID = getgenv().PortalID,
-            AutoNextLevelIC = getgenv().AutoNextLevelIC
+            AutoNextLevelIC = getgenv().AutoNextLevelIC,
 
             -- unitname = getgenv().unitname,
             -- unitid = getgenv().unitid,
