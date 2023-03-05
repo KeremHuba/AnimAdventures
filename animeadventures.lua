@@ -646,6 +646,17 @@ autofarmtab:CreateToggle({
 })
 
 autofarmtab:CreateToggle({
+    Name = "Auto Infinity Next Level";
+    Flag = "infinseksitgfhycastle";
+    Default = getgenv().AutoNextLevelIC;
+    Callback = function(bool)
+        getgenv().AutoNextLevelIC = bool
+        updatejson()
+    end;
+    SavingDisabled = true;
+})
+
+autofarmtab:CreateToggle({
     Name = "Auto Farm";
     Flag = "farghjghjm";
     Default = getgenv().AutoFarm;
@@ -3247,11 +3258,14 @@ coroutine.resume(coroutine.create(function()
             task.wait()
             pcall(function() webhook() end)
 
-        if getgenv().autostartStory then
+        if getgenv().autostartStory and getgenv().AutoNextLevelIC == false then
             local args = {
                 [1] = "next_story"
             }
             game:GetService("ReplicatedStorage").endpoints.client_to_server.set_game_finished_vote:InvokeServer(unpack(args))
+        elseif getgenv().AutoNextLevelIC == true and getgenv().autostartStory == false then
+            task.wait(2.1)
+            game:GetService("ReplicatedStorage").endpoints.client_to_server.request_start_infinite_tower_from_game:InvokeServer()
         else
             if getgenv().AutoReplay and getgenv().autostartStory == false then
                 local a={[1]="replay"} game:GetService("ReplicatedStorage").endpoints.client_to_server.set_game_finished_vote:InvokeServer(unpack(a))
